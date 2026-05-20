@@ -1214,7 +1214,7 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
         <div style={{display:"flex",borderTop:"1px solid rgba(255,255,255,.25)",background:"transparent"}}>
           {["타임라인","라인업","통계"].map((t,i)=>{
             const k=["timeline","lineup","stats"][i];
-            return <button key={t} onClick={()=>setTab(k)} style={{flex:1,padding:"11px 0",border:"none",background:"transparent",cursor:"pointer",fontSize:15,fontWeight:tab===k?800:500,color:tab===k?"#2ecc71":"#64748b",borderBottom:tab===k?"2px solid #2ecc71":"2px solid transparent"}}>{t}</button>;
+            return <button key={t} onClick={()=>setTab(k)} style={{flex:1,padding:"11px 0",border:"none",background:"transparent",cursor:"pointer",fontSize:15,fontWeight:tab===k?800:500,color:tab===k?"#ffffff":"rgba(255,255,255,.65)",borderBottom:tab===k?"2px solid #ffffff":"2px solid transparent"}}>{t}</button>;
           })}
         </div>
       </div>
@@ -1621,7 +1621,7 @@ function CheerGloryInput({ user, targetMatchId, targetMatch, onSent, isGlory }) 
             🙏
           </button>
           <button onClick={submit} disabled={!text.trim()||sending}
-            style={{width:34,height:26,borderRadius:6,background:text.trim()?"linear-gradient(135deg,#f1c40f,#d4ac0d)":"#1e293b",border:"none",color:text.trim()?"#000":"#64748b",fontSize:16,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
+            style={{width:34,height:26,borderRadius:6,background:text.trim()?"linear-gradient(135deg,#f59e0b,#d97706)":"#f1f5f9",border:"1px solid #e2e8f0",color:text.trim()?"#fff":"#94a3b8",fontSize:16,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
             {sending?"⏳":"↑"}
           </button>
         </div>
@@ -1789,7 +1789,7 @@ function CheerTab({ matches, user }) {
         {/* 영광 탭 입력 */}
         {innerTab==="glory"&&(
           <div>
-            <div style={{fontSize:14,color:"#f1c40f80",marginBottom:8,textAlign:"center"}}>🙏 하나님께 영광 돌리는 메시지를 남겨주세요</div>
+            <div style={{fontSize:13,color:"#d97706",fontWeight:700,marginBottom:8,textAlign:"center"}}>🙏 하나님께 영광 돌리는 메시지를 남겨주세요</div>
             <CheerGloryInput user={user} targetMatchId={targetMatchId} targetMatch={targetMatch} onSent={(newC)=>setAllComments(prev=>[...prev,newC])} isGlory={true}/>
           </div>
         )}
