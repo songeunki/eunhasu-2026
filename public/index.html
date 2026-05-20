@@ -1174,9 +1174,9 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
       <div style={{background:"linear-gradient(135deg,#1e3a5f,#2563eb)",borderBottom:"none",boxShadow:"0 2px 8px rgba(37,99,235,.2)",position:"sticky",top:0,zIndex:10}}>
         <div style={{display:"flex",alignItems:"center",padding:"14px 16px 0"}}>
           <button onClick={onBack} style={{background:"rgba(255,255,255,.15)",border:"none",borderRadius:10,width:34,height:34,color:"#ffffff",fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>←</button>
-          <div style={{flex:1,textAlign:"center",fontSize:15,color:"#64748b"}}>{match.date} · {match.field}</div>
+          <div style={{flex:1,textAlign:"center",fontSize:15,color:"rgba(255,255,255,.9)",fontWeight:600}}>{match.date} · {match.field}</div>
           <div style={{display:"flex",alignItems:"center",gap:5}}>
-            {isRunning&&<div style={{background:`${PHASE_COLOR[phase]}20`,border:`1px solid ${PHASE_COLOR[phase]}50`,borderRadius:20,padding:"3px 8px",display:"flex",alignItems:"center",gap:4}}>
+            {isRunning&&<div style={{background:"rgba(255,255,255,.2)",border:"1px solid rgba(255,255,255,.4)",borderRadius:20,padding:"3px 8px",display:"flex",alignItems:"center",gap:4}}>
               <span style={{width:5,height:5,borderRadius:"50%",background:PHASE_COLOR[phase],display:"inline-block",animation:"blink 1s infinite"}}/>
               <span style={{fontSize:15,fontWeight:900,color:PHASE_COLOR[phase],fontVariantNumeric:"tabular-nums"}}>{dispStr}</span>
             </div>}
@@ -1262,7 +1262,7 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
                   <button onClick={()=>setModal("goal_away")} style={{background:`linear-gradient(135deg,${match.away.color},${match.away.color}bb)`,border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:15,cursor:"pointer"}}>⚽ {match.away.emoji} 원정 골</button>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:7}}>
-                  <button onClick={()=>setModal("yellow")} style={{background:"rgba(241,196,15,.12)",border:"1px solid #f1c40f40",borderRadius:8,padding:"10px 4px",color:"#f1c40f",fontWeight:700,fontSize:15,cursor:"pointer"}}>🟨 옐로카드</button>
+                  <button onClick={()=>setModal("yellow")} style={{background:"rgba(241,196,15,.12)",border:"1px solid #fbbf24",borderRadius:8,padding:"10px 4px",color:"#f1c40f",fontWeight:700,fontSize:15,cursor:"pointer"}}>🟨 옐로카드</button>
                   <button onClick={()=>setModal("red")} style={{background:"rgba(231,76,60,.12)",border:"1px solid #e74c3c40",borderRadius:8,padding:"10px 4px",color:"#e74c3c",fontWeight:700,fontSize:15,cursor:"pointer"}}>🟥 레드카드</button>
                   <button onClick={()=>setModal("sub")} style={{background:"rgba(148,163,184,.1)",border:"1px solid #94a3b840",borderRadius:8,padding:"10px 4px",color:"#64748b",fontWeight:700,fontSize:15,cursor:"pointer"}}>🔄 선수교체</button>
                 </div>
@@ -1613,7 +1613,7 @@ function CheerGloryInput({ user, targetMatchId, targetMatch, onSent, isGlory }) 
           <textarea value={text} onChange={e=>setText(e.target.value)}
             onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submit();}}}
             placeholder="하나님께 영광 돌리는 메시지를 남겨주세요 🙏"
-            style={{width:"100%",background:"#ffffff",border:"1px solid #f1c40f40",borderRadius:8,padding:"9px 11px",color:"#1e293b",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:48,lineHeight:1.5}}/>
+            style={{width:"100%",background:"#ffffff",border:"1px solid #fbbf24",borderRadius:8,padding:"9px 11px",color:"#1e293b",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:48,lineHeight:1.5}}/>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:4,flexShrink:0}}>
           <button onClick={()=>setShowEmoji(v=>!v)}
