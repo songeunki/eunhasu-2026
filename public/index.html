@@ -1723,7 +1723,7 @@ function CheerTab({ matches, user }) {
   const cheerList = byMatch.filter(c=>!c.imgUrl);
   const photoList = byMatch.filter(c=>!!c.imgUrl);
   const gloryList   = byMatch.filter(c=>c.isGlory);
-  const displayList = innerTab==="glory" ? gloryList : innerTab==="cheer" ? cheerList : photoList;
+  const displayList = innerTab==="glory" ? gloryList : photoList;
   const matchesWithComments = matches.filter(m=>allComments.some(c=>c.matchId===m.id));
 
   const CommentItem = ({c}) => {
@@ -1752,12 +1752,12 @@ function CheerTab({ matches, user }) {
       {/* 탭 헤더 */}
       <div style={{position:"sticky",top:60,zIndex:10,background:"#0a0e1a",padding:"12px 16px 0",borderBottom:"1px solid #1e3060"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
-          <div style={{fontSize:13,fontWeight:800}}>📣 응원 모아보기</div>
+          <div style={{fontSize:13,fontWeight:800}}>🙏 영광 · 포토</div>
           <div style={{display:"flex",background:"#0f1d35",borderRadius:20,padding:2,border:"1px solid #1e3060"}}>
-            <button onClick={()=>setInnerTab("cheer")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="cheer"?"#2ecc71":"transparent",color:innerTab==="cheer"?"#000":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer",transition:"all .2s"}}>
-              💬 응원{innerTab==="cheer"?` (${cheerList.length})`:""}
+            <button onClick={()=>setInnerTab("glory")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="glory"?"#f1c40f":"transparent",color:innerTab==="glory"?"#000":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer"}}>
+              🙏 영광{innerTab==="glory"?` (${gloryList.length})`:""}
             </button>
-            <button onClick={()=>setInnerTab("photo")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer",transition:"all .2s"}}>
+            <button onClick={()=>setInnerTab("photo")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer"}}>
               📷 포토{innerTab==="photo"?` (${photoList.length})`:""}
             </button>
           </div>
@@ -1794,43 +1794,6 @@ function CheerTab({ matches, user }) {
           </div>
         )}
 
-        {/* 응원 탭 입력 */}
-        {innerTab==="cheer"&&(
-          <>
-            {showEmoji&&(
-              <div style={{marginBottom:8,background:"#0f172a",borderRadius:10,padding:"8px 10px",border:"1px solid #1e3060"}}>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(10,1fr)",gap:4}}>
-                  {CHEER_EMOJIS.map(e=>(
-                    <button key={e} onClick={()=>{setCheerText(t=>t+e); setShowEmoji(false);}}
-                      style={{background:"transparent",border:"none",borderRadius:6,padding:"4px 0",fontSize:18,cursor:"pointer",textAlign:"center",lineHeight:1}}>
-                      {e}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {sendErr&&<div style={{fontSize:11,color:"#ff4757",marginBottom:5}}>⚠ {sendErr}</div>}
-            <div style={{display:"flex",gap:6,alignItems:"flex-end"}}>
-              <div style={{flex:1}}>
-                <textarea value={cheerText} onChange={e=>setCheerText(e.target.value)}
-                  onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submitCheer();}}}
-                  placeholder="이 경기에 응원 메시지를 남겨요 ⚽"
-                  style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:12,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:48,lineHeight:1.5}}/>
-              </div>
-              <div style={{display:"flex",flexDirection:"column",gap:4,flexShrink:0}}>
-                <button onClick={()=>setShowEmoji(v=>!v)}
-                  style={{width:34,height:20,borderRadius:6,background:showEmoji?"rgba(241,196,15,.2)":"#1e293b",border:`1px solid ${showEmoji?"#f1c40f":"#334155"}`,color:showEmoji?"#f1c40f":"#64748b",fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
-                  😊
-                </button>
-                <button onClick={submitCheer} disabled={!cheerText.trim()||sending}
-                  style={{width:34,height:26,borderRadius:6,background:cheerText.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",color:cheerText.trim()?"#000":"#334155",fontSize:13,cursor:cheerText.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
-                  {sending?"⏳":"↑"}
-                </button>
-              </div>
-            </div>
-          </>
-        )}
-
         {/* 포토 탭 입력 */}
         {innerTab==="photo"&&(
           <>
@@ -1854,8 +1817,8 @@ function CheerTab({ matches, user }) {
           ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569",fontSize:12}}>⏳ 불러오는 중...</div>
           :displayList.length===0
             ?<div style={{textAlign:"center",padding:"32px 0",color:"#334155"}}>
-              <div style={{fontSize:28,marginBottom:8}}>{innerTab==="glory"?"🙏":innerTab==="cheer"?"📣":"📷"}</div>
-              <div style={{fontSize:12}}>{innerTab==="glory"?"첫 번째 영광의 메시지를 남겨주세요!":innerTab==="cheer"?"첫 응원을 남겨보세요!":"첫 사진을 공유해보세요!"}</div>
+              <div style={{fontSize:28,marginBottom:8}}>{innerTab==="glory"?"🙏":"📷"}</div>
+              <div style={{fontSize:12}}>{innerTab==="glory"?"첫 번째 영광의 메시지를 남겨주세요!":"첫 응원을 남겨보세요!":"첫 사진을 공유해보세요!"}</div>
             </div>
             :innerTab==="photo"
               ?<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,paddingTop:12}}>
@@ -2840,7 +2803,7 @@ function App() {
     {id:"notice",  icon:"📢", label:"공지"},
     {id:"schedule",icon:"📅", label:"일정"},
     {id:"ranking", icon:"🏆", label:"순위"},
-    {id:"cheer",   icon:"📣", label:"응원"},
+    {id:"cheer",   icon:"🙏", label:"영광"},
   ];
 
   const liveCount=matches.filter(m=>m.phase==="first_half"||m.phase==="second_half").length;
