@@ -280,42 +280,42 @@ function BottomSheet({ onClose, children }) {
 
 function Notif({notif}) {
   if (!notif) return null;
-  return <div style={{position:"fixed",top:20,left:"50%",transform:"translateX(-50%)",background:"#1a2a4a",border:`1px solid ${notif.color}`,color:notif.color,padding:"9px 20px",borderRadius:30,fontSize:16,fontWeight:600,zIndex:400,boxShadow:`0 4px 20px ${notif.color}40`,whiteSpace:"nowrap"}}>{notif.msg}</div>;
+  return <div style={{position:"fixed",top:20,left:"50%",transform:"translateX(-50%)",background:"#1a2a4a",border:`1px solid ${notif.color}`,color:notif.color,padding:"9px 20px",borderRadius:30,fontSize:15,fontWeight:600,zIndex:400,boxShadow:`0 4px 20px ${notif.color}40`,whiteSpace:"nowrap"}}>{notif.msg}</div>;
 }
 
 function MinInput({ value, onChange }) {
   return (
     <div style={{display:"flex",alignItems:"center",gap:8}}>
-      <button onClick={()=>onChange(Math.max(1,value-1))} style={{width:34,height:34,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:16,cursor:"pointer",fontWeight:700}}>−</button>
+      <button onClick={()=>onChange(Math.max(1,value-1))} style={{width:34,height:34,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:15,cursor:"pointer",fontWeight:700}}>−</button>
       <div style={{flex:1,textAlign:"center"}}>
         <input type="number" min={1} max={120} value={value} onChange={e=>onChange(Math.min(120,Math.max(1,Number(e.target.value))))}
-          style={{width:58,textAlign:"center",background:"#0f172a",border:"1px solid #2ecc71",borderRadius:8,padding:"6px 0",color:"#2ecc71",fontSize:16,fontWeight:900,outline:"none",fontFamily:"inherit"}}/>
-        <span style={{fontSize:16,color:"#64748b",marginLeft:4}}>분</span>
+          style={{width:58,textAlign:"center",background:"#0f172a",border:"1px solid #2ecc71",borderRadius:8,padding:"6px 0",color:"#2ecc71",fontSize:15,fontWeight:900,outline:"none",fontFamily:"inherit"}}/>
+        <span style={{fontSize:15,color:"#64748b",marginLeft:4}}>분</span>
       </div>
-      <button onClick={()=>onChange(Math.min(120,value+1))} style={{width:34,height:34,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:16,cursor:"pointer",fontWeight:700}}>+</button>
+      <button onClick={()=>onChange(Math.min(120,value+1))} style={{width:34,height:34,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:15,cursor:"pointer",fontWeight:700}}>+</button>
     </div>
   );
 }
 
 function Inp({ value, onChange, placeholder, type="text" }) {
   return <input type={type} value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder}
-    style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:10,padding:"11px 14px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>;
+    style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:10,padding:"11px 14px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>;
 }
 
 function SectionLabel({ children }) {
-  return <div style={{fontSize:16,fontWeight:700,color:"#7b9bc8",marginBottom:8,letterSpacing:1}}>{children}</div>;
+  return <div style={{fontSize:15,fontWeight:700,color:"#7b9bc8",marginBottom:8,letterSpacing:1}}>{children}</div>;
 }
 
 function DeleteConfirmSheet({ title, body, onConfirm, onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div style={{textAlign:"center",padding:"8px 0 20px"}}>
-        <div style={{fontSize:16,marginBottom:12}}>🗑</div>
-        <div style={{fontSize:16,fontWeight:800,color:"#e2e8f0",marginBottom:8}}>{title}</div>
-        <div style={{fontSize:16,color:"#64748b",marginBottom:20}}>{body}</div>
+        <div style={{fontSize:15,marginBottom:12}}>🗑</div>
+        <div style={{fontSize:15,fontWeight:800,color:"#e2e8f0",marginBottom:8}}>{title}</div>
+        <div style={{fontSize:15,color:"#64748b",marginBottom:20}}>{body}</div>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-          <button onClick={onClose} style={{background:"#1e293b",border:"1px solid #334155",borderRadius:10,padding:"12px 0",color:"#94a3b8",fontWeight:700,fontSize:16,cursor:"pointer"}}>취소</button>
-          <button onClick={onConfirm} style={{background:"#ff4757",border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:16,cursor:"pointer"}}>삭제</button>
+          <button onClick={onClose} style={{background:"#1e293b",border:"1px solid #334155",borderRadius:10,padding:"12px 0",color:"#94a3b8",fontWeight:700,fontSize:15,cursor:"pointer"}}>취소</button>
+          <button onClick={onConfirm} style={{background:"#ff4757",border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:15,cursor:"pointer"}}>삭제</button>
         </div>
       </div>
     </BottomSheet>
@@ -332,31 +332,31 @@ function GoalModal({ side, match, currentMin, onConfirm, onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-        <span style={{fontSize:16}}>{info.emoji}</span>
-        <div><div style={{fontSize:16,fontWeight:800,color:info.color}}>⚽ 골 등록</div><div style={{fontSize:16,color:"#64748b"}}>{info.name}</div></div>
-        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:16,cursor:"pointer"}}>✕</button>
+        <span style={{fontSize:15}}>{info.emoji}</span>
+        <div><div style={{fontSize:15,fontWeight:800,color:info.color}}>⚽ 골 등록</div><div style={{fontSize:15,color:"#64748b"}}>{info.name}</div></div>
+        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:15,cursor:"pointer"}}>✕</button>
       </div>
       <div style={{marginBottom:14}}><SectionLabel>⏱ 발생 시간</SectionLabel><MinInput value={min} onChange={setMin}/></div>
       <div style={{marginBottom:14}}>
         <SectionLabel>⚽ 득점 선수 *</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-          {players.map(p=><button key={p} onClick={()=>{setSelP(p);if(selA===p)setSelA("없음");}} style={{display:"flex",alignItems:"center",gap:6,background:selP===p?`${info.color}25`:"#0f172a",border:`1px solid ${selP===p?info.color:"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:selP===p?info.color:"#94a3b8",fontWeight:selP===p?800:500,fontSize:16,cursor:"pointer"}}>👤 {p}{selP===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
+          {players.map(p=><button key={p} onClick={()=>{setSelP(p);if(selA===p)setSelA("없음");}} style={{display:"flex",alignItems:"center",gap:6,background:selP===p?`${info.color}25`:"#0f172a",border:`1px solid ${selP===p?info.color:"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:selP===p?info.color:"#94a3b8",fontWeight:selP===p?800:500,fontSize:15,cursor:"pointer"}}>👤 {p}{selP===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
         </div>
       </div>
       <div style={{marginBottom:14}}>
         <SectionLabel>🤝 어시스트 선수 (선택)</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-          <button onClick={()=>setSelA("없음")} style={{background:selA==="없음"?"rgba(100,116,139,.25)":"#0f172a",border:`1px solid ${selA==="없음"?"#64748b":"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:selA==="없음"?"#94a3b8":"#64748b",fontWeight:selA==="없음"?700:400,fontSize:16,cursor:"pointer"}}>없음</button>
-          {players.filter(p=>p!==selP).map(p=><button key={p} onClick={()=>setSelA(p)} style={{display:"flex",alignItems:"center",gap:6,background:selA===p?"rgba(52,152,219,.2)":"#0f172a",border:`1px solid ${selA===p?"#3498db":"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:selA===p?"#3498db":"#94a3b8",fontWeight:selA===p?800:500,fontSize:16,cursor:"pointer"}}>👤 {p}{selA===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
+          <button onClick={()=>setSelA("없음")} style={{background:selA==="없음"?"rgba(100,116,139,.25)":"#0f172a",border:`1px solid ${selA==="없음"?"#64748b":"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:selA==="없음"?"#94a3b8":"#64748b",fontWeight:selA==="없음"?700:400,fontSize:15,cursor:"pointer"}}>없음</button>
+          {players.filter(p=>p!==selP).map(p=><button key={p} onClick={()=>setSelA(p)} style={{display:"flex",alignItems:"center",gap:6,background:selA===p?"rgba(52,152,219,.2)":"#0f172a",border:`1px solid ${selA===p?"#3498db":"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:selA===p?"#3498db":"#94a3b8",fontWeight:selA===p?800:500,fontSize:15,cursor:"pointer"}}>👤 {p}{selA===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
         </div>
       </div>
       <div style={{marginBottom:20}}>
         <SectionLabel>⚽ 골 방식 *</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6}}>
-          {GOAL_METHODS.map(m=><button key={m} onClick={()=>setSelM(m)} style={{background:selM===m?"rgba(46,204,113,.2)":"#0f172a",border:`1px solid ${selM===m?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"9px 4px",color:selM===m?"#2ecc71":"#64748b",fontWeight:selM===m?800:500,fontSize:16,cursor:"pointer"}}>{m}</button>)}
+          {GOAL_METHODS.map(m=><button key={m} onClick={()=>setSelM(m)} style={{background:selM===m?"rgba(46,204,113,.2)":"#0f172a",border:`1px solid ${selM===m?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"9px 4px",color:selM===m?"#2ecc71":"#64748b",fontWeight:selM===m?800:500,fontSize:15,cursor:"pointer"}}>{m}</button>)}
         </div>
       </div>
-      <button onClick={()=>ok&&onConfirm(selP,selA==="없음"?"":selA,selM,min)} style={{width:"100%",background:ok?`linear-gradient(135deg,${info.color},${info.color}bb)`:"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:ok?"#fff":"#475569",fontWeight:800,fontSize:16,cursor:ok?"pointer":"not-allowed"}}>
+      <button onClick={()=>ok&&onConfirm(selP,selA==="없음"?"":selA,selM,min)} style={{width:"100%",background:ok?`linear-gradient(135deg,${info.color},${info.color}bb)`:"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:ok?"#fff":"#475569",fontWeight:800,fontSize:15,cursor:ok?"pointer":"not-allowed"}}>
         {ok?`⚽ ${selP}${selA&&selA!=="없음"?" 🤝"+selA:""} · ${selM} · ${min}'`:"선수와 방식을 선택해주세요"}
       </button>
     </BottomSheet>
@@ -374,17 +374,17 @@ function CardModal({ type, match, currentMin, onConfirm, onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-        <span style={{fontSize:16}}>{icon}</span>
-        <div style={{fontSize:16,fontWeight:800,color}}>{isY?"옐로":"레드"}카드 등록</div>
-        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:16,cursor:"pointer"}}>✕</button>
+        <span style={{fontSize:15}}>{icon}</span>
+        <div style={{fontSize:15,fontWeight:800,color}}>{isY?"옐로":"레드"}카드 등록</div>
+        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:15,cursor:"pointer"}}>✕</button>
       </div>
       <div style={{marginBottom:14}}><SectionLabel>⏱ 발생 시간</SectionLabel><MinInput value={min} onChange={setMin}/></div>
       <div style={{marginBottom:12}}>
         <SectionLabel>🏟 대상 팀 *</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
           {[{key:"home",info:match.home},{key:"away",info:match.away}].map(({key,info})=>(
-            <button key={key} onClick={()=>{setTeam(key);setPlayer(null);}} style={{display:"flex",alignItems:"center",gap:8,background:team===key?`${info.color}20`:"#0f172a",border:`1px solid ${team===key?info.color:"#1e3060"}`,borderRadius:10,padding:"10px",color:team===key?info.color:"#64748b",fontWeight:700,fontSize:16,cursor:"pointer"}}>
-              <span style={{fontSize:16}}>{info.emoji}</span>{info.name}
+            <button key={key} onClick={()=>{setTeam(key);setPlayer(null);}} style={{display:"flex",alignItems:"center",gap:8,background:team===key?`${info.color}20`:"#0f172a",border:`1px solid ${team===key?info.color:"#1e3060"}`,borderRadius:10,padding:"10px",color:team===key?info.color:"#64748b",fontWeight:700,fontSize:15,cursor:"pointer"}}>
+              <span style={{fontSize:15}}>{info.emoji}</span>{info.name}
             </button>
           ))}
         </div>
@@ -392,11 +392,11 @@ function CardModal({ type, match, currentMin, onConfirm, onClose }) {
       {team&&<div style={{marginBottom:12}}>
         <SectionLabel>👤 대상 선수 *</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-          {players.map(p=><button key={p} onClick={()=>setPlayer(p)} style={{display:"flex",alignItems:"center",gap:6,background:player===p?`${color}20`:"#0f172a",border:`1px solid ${player===p?color:"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:player===p?color:"#94a3b8",fontWeight:player===p?800:500,fontSize:16,cursor:"pointer"}}>👤 {p}{player===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
+          {players.map(p=><button key={p} onClick={()=>setPlayer(p)} style={{display:"flex",alignItems:"center",gap:6,background:player===p?`${color}20`:"#0f172a",border:`1px solid ${player===p?color:"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:player===p?color:"#94a3b8",fontWeight:player===p?800:500,fontSize:15,cursor:"pointer"}}>👤 {p}{player===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
         </div>
       </div>}
       <div style={{marginBottom:20}}><SectionLabel>📝 사유 (선택)</SectionLabel><Inp value={reason} onChange={setReason} placeholder="거친 태클, 핸드볼..."/></div>
-      <button onClick={()=>ok&&onConfirm(team,player,reason||(isY?"옐로카드":"레드카드"),min)} style={{width:"100%",background:ok?`linear-gradient(135deg,${color},${color}bb)`:"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:ok?"#000":"#475569",fontWeight:800,fontSize:16,cursor:ok?"pointer":"not-allowed"}}>
+      <button onClick={()=>ok&&onConfirm(team,player,reason||(isY?"옐로카드":"레드카드"),min)} style={{width:"100%",background:ok?`linear-gradient(135deg,${color},${color}bb)`:"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:ok?"#000":"#475569",fontWeight:800,fontSize:15,cursor:ok?"pointer":"not-allowed"}}>
         {ok?`${icon} ${player} · ${min}' 확정`:"팀과 선수를 선택해주세요"}
       </button>
     </BottomSheet>
@@ -413,17 +413,17 @@ function SubModal({ match, currentMin, onConfirm, onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-        <span style={{fontSize:16}}>🔄</span>
-        <div style={{fontSize:16,fontWeight:800,color:"#94a3b8"}}>선수 교체 등록</div>
-        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:16,cursor:"pointer"}}>✕</button>
+        <span style={{fontSize:15}}>🔄</span>
+        <div style={{fontSize:15,fontWeight:800,color:"#94a3b8"}}>선수 교체 등록</div>
+        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:15,cursor:"pointer"}}>✕</button>
       </div>
       <div style={{marginBottom:14}}><SectionLabel>⏱ 발생 시간</SectionLabel><MinInput value={min} onChange={setMin}/></div>
       <div style={{marginBottom:12}}>
         <SectionLabel>🏟 교체 팀 *</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
           {[{key:"home",info:match.home},{key:"away",info:match.away}].map(({key,info})=>(
-            <button key={key} onClick={()=>{setTeam(key);setOut(null);}} style={{display:"flex",alignItems:"center",gap:8,background:team===key?`${info.color}20`:"#0f172a",border:`1px solid ${team===key?info.color:"#1e3060"}`,borderRadius:10,padding:"10px",color:team===key?info.color:"#64748b",fontWeight:700,fontSize:16,cursor:"pointer"}}>
-              <span style={{fontSize:16}}>{info.emoji}</span>{info.name}
+            <button key={key} onClick={()=>{setTeam(key);setOut(null);}} style={{display:"flex",alignItems:"center",gap:8,background:team===key?`${info.color}20`:"#0f172a",border:`1px solid ${team===key?info.color:"#1e3060"}`,borderRadius:10,padding:"10px",color:team===key?info.color:"#64748b",fontWeight:700,fontSize:15,cursor:"pointer"}}>
+              <span style={{fontSize:15}}>{info.emoji}</span>{info.name}
             </button>
           ))}
         </div>
@@ -431,12 +431,12 @@ function SubModal({ match, currentMin, onConfirm, onClose }) {
       {team&&<div style={{marginBottom:12}}>
         <SectionLabel>↑ 아웃 선수 *</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-          {players.map(p=><button key={p} onClick={()=>setOut(p)} style={{display:"flex",alignItems:"center",gap:6,background:out===p?"rgba(255,71,87,.2)":"#0f172a",border:`1px solid ${out===p?"#ff4757":"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:out===p?"#ff4757":"#94a3b8",fontWeight:out===p?800:500,fontSize:16,cursor:"pointer"}}>👤 {p}{out===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
+          {players.map(p=><button key={p} onClick={()=>setOut(p)} style={{display:"flex",alignItems:"center",gap:6,background:out===p?"rgba(255,71,87,.2)":"#0f172a",border:`1px solid ${out===p?"#ff4757":"#1e3060"}`,borderRadius:10,padding:"9px 12px",color:out===p?"#ff4757":"#94a3b8",fontWeight:out===p?800:500,fontSize:15,cursor:"pointer"}}>👤 {p}{out===p&&<span style={{marginLeft:"auto"}}>✓</span>}</button>)}
         </div>
       </div>}
       <div style={{marginBottom:12}}><SectionLabel>↓ 인 선수 이름 *</SectionLabel><Inp value={inP} onChange={setInP} placeholder="교체 들어오는 선수 이름"/></div>
       <div style={{marginBottom:20}}><SectionLabel>📝 비고 (선택)</SectionLabel><Inp value={note} onChange={setNote} placeholder="부상, 전술적 교체..."/></div>
-      <button onClick={()=>ok&&onConfirm(team,out,inP.trim(),note,min)} style={{width:"100%",background:ok?"linear-gradient(135deg,#475569,#334155)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:ok?"#fff":"#475569",fontWeight:800,fontSize:16,cursor:ok?"pointer":"not-allowed"}}>
+      <button onClick={()=>ok&&onConfirm(team,out,inP.trim(),note,min)} style={{width:"100%",background:ok?"linear-gradient(135deg,#475569,#334155)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:ok?"#fff":"#475569",fontWeight:800,fontSize:15,cursor:ok?"pointer":"not-allowed"}}>
         {ok?`🔄 ${out} → ${inP} · ${min}' 확정`:"팀·아웃·인 선수를 모두 입력해주세요"}
       </button>
     </BottomSheet>
@@ -488,9 +488,9 @@ function MatchFormModal({ editMatch, teams, fields, onSave, onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:18}}>
-        <div style={{fontSize:16}}>{isEdit?"E":"+"}</div>
-        <div style={{fontSize:16,fontWeight:800,color:"#e2e8f0"}}>{isEdit?"경기 수정":"경기 개설"}</div>
-        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:16,cursor:"pointer"}}>✕</button>
+        <div style={{fontSize:15}}>{isEdit?"E":"+"}</div>
+        <div style={{fontSize:15,fontWeight:800,color:"#e2e8f0"}}>{isEdit?"경기 수정":"경기 개설"}</div>
+        <button onClick={onClose} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:15,cursor:"pointer"}}>✕</button>
       </div>
 
       <div style={{marginBottom:14}}>
@@ -511,7 +511,7 @@ function MatchFormModal({ editMatch, teams, fields, onSave, onClose }) {
               background:group===g?"rgba(46,204,113,.25)":"#0f172a",
               border:`1px solid ${group===g?"#2ecc71":"#1e3060"}`,
               color:group===g?"#2ecc71":"#64748b",
-              fontWeight:group===g?800:500,fontSize:16,cursor:"pointer",
+              fontWeight:group===g?800:500,fontSize:15,cursor:"pointer",
             }}>{g}</button>
           ))}
         </div>
@@ -521,7 +521,7 @@ function MatchFormModal({ editMatch, teams, fields, onSave, onClose }) {
         <SectionLabel>🏟 경기장 *</SectionLabel>
         <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
           {fields.map(f=>(
-            <button key={f.id} onClick={()=>setField(f.name)} style={{background:field===f.name?"rgba(46,204,113,.2)":"#0f172a",border:`1px solid ${field===f.name?"#2ecc71":"#1e3060"}`,borderRadius:8,padding:"7px 12px",color:field===f.name?"#2ecc71":"#64748b",fontWeight:field===f.name?700:500,fontSize:16,cursor:"pointer"}}>{f.name}</button>
+            <button key={f.id} onClick={()=>setField(f.name)} style={{background:field===f.name?"rgba(46,204,113,.2)":"#0f172a",border:`1px solid ${field===f.name?"#2ecc71":"#1e3060"}`,borderRadius:8,padding:"7px 12px",color:field===f.name?"#2ecc71":"#64748b",fontWeight:field===f.name?700:500,fontSize:15,cursor:"pointer"}}>{f.name}</button>
           ))}
         </div>
       </div>
@@ -529,11 +529,11 @@ function MatchFormModal({ editMatch, teams, fields, onSave, onClose }) {
       <div style={{marginBottom:14}}>
         <SectionLabel>🏠 홈팀 *</SectionLabel>
         {teams.length>0&&<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:8}}>
-          {teams.map(t=><button key={t.id} onClick={()=>selectTeam("home",t)} style={{display:"flex",alignItems:"center",gap:6,background:homeId===t.id?`${t.color}20`:"#0f172a",border:`1px solid ${homeId===t.id?t.color:"#1e3060"}`,borderRadius:9,padding:"8px 10px",color:homeId===t.id?t.color:"#94a3b8",fontWeight:homeId===t.id?700:500,fontSize:16,cursor:"pointer"}}><span style={{fontSize:16}}>{t.emoji}</span>{t.name}</button>)}
+          {teams.map(t=><button key={t.id} onClick={()=>selectTeam("home",t)} style={{display:"flex",alignItems:"center",gap:6,background:homeId===t.id?`${t.color}20`:"#0f172a",border:`1px solid ${homeId===t.id?t.color:"#1e3060"}`,borderRadius:9,padding:"8px 10px",color:homeId===t.id?t.color:"#94a3b8",fontWeight:homeId===t.id?700:500,fontSize:15,cursor:"pointer"}}><span style={{fontSize:15}}>{t.emoji}</span>{t.name}</button>)}
         </div>}
         <Inp value={hName} onChange={setHName} placeholder="홈팀 이름 직접 입력"/>
         <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:8}}>
-          {TEAM_EMOJIS.map(e=><button key={e} onClick={()=>setHEmoji(e)} style={{width:32,height:32,borderRadius:7,background:hEmoji===e?"rgba(255,255,255,.15)":"#0f172a",border:`1px solid ${hEmoji===e?"#fff":"#1e3060"}`,fontSize:16,cursor:"pointer"}}>{e}</button>)}
+          {TEAM_EMOJIS.map(e=><button key={e} onClick={()=>setHEmoji(e)} style={{width:32,height:32,borderRadius:7,background:hEmoji===e?"rgba(255,255,255,.15)":"#0f172a",border:`1px solid ${hEmoji===e?"#fff":"#1e3060"}`,fontSize:15,cursor:"pointer"}}>{e}</button>)}
         </div>
         <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:8}}>
           {TEAM_COLORS.map(c=><button key={c} onClick={()=>setHColor(c)} style={{width:26,height:26,borderRadius:"50%",background:c,border:hColor===c?"3px solid #fff":"2px solid transparent",cursor:"pointer"}}/>)}
@@ -544,18 +544,18 @@ function MatchFormModal({ editMatch, teams, fields, onSave, onClose }) {
       <div style={{marginBottom:20}}>
         <SectionLabel>원정팀 *</SectionLabel>
         {teams.length>0&&<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:8}}>
-          {teams.map(t=><button key={t.id} onClick={()=>selectTeam("away",t)} style={{display:"flex",alignItems:"center",gap:6,background:awayId===t.id?`${t.color}20`:"#0f172a",border:`1px solid ${awayId===t.id?t.color:"#1e3060"}`,borderRadius:9,padding:"8px 10px",color:awayId===t.id?t.color:"#94a3b8",fontWeight:awayId===t.id?700:500,fontSize:16,cursor:"pointer"}}><span style={{fontSize:16}}>{t.emoji}</span>{t.name}</button>)}
+          {teams.map(t=><button key={t.id} onClick={()=>selectTeam("away",t)} style={{display:"flex",alignItems:"center",gap:6,background:awayId===t.id?`${t.color}20`:"#0f172a",border:`1px solid ${awayId===t.id?t.color:"#1e3060"}`,borderRadius:9,padding:"8px 10px",color:awayId===t.id?t.color:"#94a3b8",fontWeight:awayId===t.id?700:500,fontSize:15,cursor:"pointer"}}><span style={{fontSize:15}}>{t.emoji}</span>{t.name}</button>)}
         </div>}
         <Inp value={aName} onChange={setAName} placeholder="원정팀 이름 직접 입력"/>
         <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:8}}>
-          {TEAM_EMOJIS.map(e=><button key={e} onClick={()=>setAEmoji(e)} style={{width:32,height:32,borderRadius:7,background:aEmoji===e?"rgba(255,255,255,.15)":"#0f172a",border:`1px solid ${aEmoji===e?"#fff":"#1e3060"}`,fontSize:16,cursor:"pointer"}}>{e}</button>)}
+          {TEAM_EMOJIS.map(e=><button key={e} onClick={()=>setAEmoji(e)} style={{width:32,height:32,borderRadius:7,background:aEmoji===e?"rgba(255,255,255,.15)":"#0f172a",border:`1px solid ${aEmoji===e?"#fff":"#1e3060"}`,fontSize:15,cursor:"pointer"}}>{e}</button>)}
         </div>
         <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:8}}>
           {TEAM_COLORS.map(c=><button key={c} onClick={()=>setAColor(c)} style={{width:26,height:26,borderRadius:"50%",background:c,border:aColor===c?"3px solid #fff":"2px solid transparent",cursor:"pointer"}}/>)}
         </div>
       </div>
 
-      <button onClick={handleSave} style={{width:"100%",background:ok?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"15px 0",color:ok?"#000":"#475569",fontWeight:800,fontSize:16,cursor:ok?"pointer":"not-allowed"}}>
+      <button onClick={handleSave} style={{width:"100%",background:ok?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"15px 0",color:ok?"#000":"#475569",fontWeight:800,fontSize:15,cursor:ok?"pointer":"not-allowed"}}>
         {isEdit?"수정 완료":"경기 개설"}
       </button>
     </BottomSheet>
@@ -635,18 +635,18 @@ function TeamTab({ teams, setTeams, canManage, showNotif }) {
     return (
       <div style={{padding:16}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
-          <button onClick={()=>setPlayerForm(null)} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:16,cursor:"pointer"}}>←</button>
-          <div style={{fontSize:16,fontWeight:800}}>{editPid?"선수 수정":"선수 추가"}</div>
+          <button onClick={()=>setPlayerForm(null)} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:15,cursor:"pointer"}}>←</button>
+          <div style={{fontSize:15,fontWeight:800}}>{editPid?"선수 수정":"선수 추가"}</div>
         </div>
         <div style={{marginBottom:12}}><SectionLabel>이름 *</SectionLabel><Inp value={pForm.name} onChange={v=>setPForm(p=>({...p,name:v}))} placeholder="선수 이름"/></div>
         <div style={{marginBottom:12}}>
           <SectionLabel>포지션 *</SectionLabel>
           <div style={{display:"flex",gap:8}}>
-            {POS_LIST.map(pos=><button key={pos} onClick={()=>setPForm(p=>({...p,pos}))} style={{flex:1,background:pForm.pos===pos?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${pForm.pos===pos?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"11px 0",color:pForm.pos===pos?"#2ecc71":"#64748b",fontWeight:700,fontSize:16,cursor:"pointer"}}>{pos}</button>)}
+            {POS_LIST.map(pos=><button key={pos} onClick={()=>setPForm(p=>({...p,pos}))} style={{flex:1,background:pForm.pos===pos?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${pForm.pos===pos?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"11px 0",color:pForm.pos===pos?"#2ecc71":"#64748b",fontWeight:700,fontSize:15,cursor:"pointer"}}>{pos}</button>)}
           </div>
         </div>
         <div style={{marginBottom:20}}><SectionLabel>생년월일</SectionLabel><Inp value={pForm.birth} onChange={v=>setPForm(p=>({...p,birth:v}))} placeholder="2013-05-20"/></div>
-        <button onClick={savePlayer} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"14px 0",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>
+        <button onClick={savePlayer} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"14px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>
           {editPid?"✓ 수정 완료":"➕ 선수 추가"}
         </button>
         {delPlayer&&<DeleteConfirmSheet title="선수를 삭제하시겠습니까?" body={`${delPlayer.name} (${delPlayer.pos})`} onConfirm={()=>deletePlayer(delPlayer.id)} onClose={()=>setDelPlayer(null)}/>}
@@ -662,20 +662,20 @@ function TeamTab({ teams, setTeams, canManage, showNotif }) {
         {delPlayer&&<DeleteConfirmSheet title="선수를 삭제하시겠습니까?" body={`${delPlayer.name} (${delPlayer.pos})`} onConfirm={()=>deletePlayer(delPlayer.id)} onClose={()=>setDelPlayer(null)}/>}
         {delTarget&&<DeleteConfirmSheet title="팀을 삭제하시겠습니까?" body={t.name} onConfirm={()=>deleteTeam(t.id)} onClose={()=>setDel(null)}/>}
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-          <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:16,cursor:"pointer"}}>←</button>
+          <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:15,cursor:"pointer"}}>←</button>
           <div style={{flex:1}}>
-            <div style={{fontSize:16,fontWeight:800}}>{t.emoji} {t.name}</div>
-            <div style={{fontSize:16,color:"#64748b"}}>{t.region} · {t.group}조 · 감독: {t.coach||"미입력"}</div>
+            <div style={{fontSize:15,fontWeight:800}}>{t.emoji} {t.name}</div>
+            <div style={{fontSize:15,color:"#64748b"}}>{t.region} · {t.group}조 · 감독: {t.coach||"미입력"}</div>
           </div>
           {canManage&&<div style={{display:"flex",gap:6}}>
-            <button onClick={()=>openEdit(t)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:16,fontWeight:700,cursor:"pointer"}}>수정</button>
-            <button onClick={()=>setDel(t)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:16,fontWeight:700,cursor:"pointer"}}>🗑</button>
+            <button onClick={()=>openEdit(t)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:15,fontWeight:700,cursor:"pointer"}}>수정</button>
+            <button onClick={()=>setDel(t)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:15,fontWeight:700,cursor:"pointer"}}>🗑</button>
           </div>}
         </div>
 
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
-          <div style={{fontSize:16,fontWeight:700}}>선수 명단 ({t.players.length}명)</div>
-          {canManage&&<button onClick={openNewPlayer} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:9,padding:"7px 12px",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>➕ 선수 추가</button>}
+          <div style={{fontSize:15,fontWeight:700}}>선수 명단 ({t.players.length}명)</div>
+          {canManage&&<button onClick={openNewPlayer} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:9,padding:"7px 12px",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>➕ 선수 추가</button>}
         </div>
 
         {["GK","DF","MF","FW"].map(pos=>{
@@ -683,24 +683,24 @@ function TeamTab({ teams, setTeams, canManage, showNotif }) {
           if(!ps.length) return null;
           return (
             <div key={pos} style={{marginBottom:12}}>
-              <div style={{fontSize:16,fontWeight:700,color:t.color,marginBottom:6,letterSpacing:1}}>{pos}</div>
+              <div style={{fontSize:15,fontWeight:700,color:t.color,marginBottom:6,letterSpacing:1}}>{pos}</div>
               {ps.map(p=>(
                 <div key={p.id} style={{display:"flex",alignItems:"center",gap:10,background:"#0f1d35",border:"1px solid #1e3060",borderRadius:10,padding:"10px 12px",marginBottom:6}}>
-                  <div style={{width:32,height:32,borderRadius:"50%",background:t.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>👤</div>
+                  <div style={{width:32,height:32,borderRadius:"50%",background:t.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,flexShrink:0}}>👤</div>
                   <div style={{flex:1}}>
-                    <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
-                    <div style={{fontSize:16,color:"#64748b"}}>{p.birth||"생년월일 미입력"}</div>
+                    <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
+                    <div style={{fontSize:15,color:"#64748b"}}>{p.birth||"생년월일 미입력"}</div>
                   </div>
                   {canManage&&<div style={{display:"flex",gap:5}}>
-                    <button onClick={()=>openEditPlayer(p)} style={{background:"rgba(59,130,246,.15)",border:"none",borderRadius:7,padding:"5px 8px",color:"#60a5fa",fontSize:16,cursor:"pointer"}}>수정</button>
-                    <button onClick={()=>setDelPlayer(p)} style={{background:"rgba(255,71,87,.1)",border:"none",borderRadius:7,padding:"5px 8px",color:"#ff4757",fontSize:16,cursor:"pointer"}}>🗑</button>
+                    <button onClick={()=>openEditPlayer(p)} style={{background:"rgba(59,130,246,.15)",border:"none",borderRadius:7,padding:"5px 8px",color:"#60a5fa",fontSize:15,cursor:"pointer"}}>수정</button>
+                    <button onClick={()=>setDelPlayer(p)} style={{background:"rgba(255,71,87,.1)",border:"none",borderRadius:7,padding:"5px 8px",color:"#ff4757",fontSize:15,cursor:"pointer"}}>🗑</button>
                   </div>}
                 </div>
               ))}
             </div>
           );
         })}
-        {t.players.length===0&&<div style={{textAlign:"center",padding:"32px 0",color:"#475569"}}><div style={{fontSize:16,marginBottom:8}}>👥</div><div>선수가 없습니다</div>{canManage&&<button onClick={openNewPlayer} style={{marginTop:12,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc71",borderRadius:9,padding:"9px 18px",color:"#2ecc71",fontWeight:700,fontSize:16,cursor:"pointer"}}>첫 선수 추가</button>}</div>}
+        {t.players.length===0&&<div style={{textAlign:"center",padding:"32px 0",color:"#475569"}}><div style={{fontSize:15,marginBottom:8}}>👥</div><div>선수가 없습니다</div>{canManage&&<button onClick={openNewPlayer} style={{marginTop:12,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc71",borderRadius:9,padding:"9px 18px",color:"#2ecc71",fontWeight:700,fontSize:15,cursor:"pointer"}}>첫 선수 추가</button>}</div>}
       </div>
     );
   }
@@ -710,8 +710,8 @@ function TeamTab({ teams, setTeams, canManage, showNotif }) {
     return (
       <div style={{padding:16}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
-          <button onClick={()=>setView(editTeam?"detail":"list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:16,cursor:"pointer"}}>←</button>
-          <div style={{fontSize:16,fontWeight:800}}>{editTeam?"팀 수정":"팀 개설"}</div>
+          <button onClick={()=>setView(editTeam?"detail":"list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:15,cursor:"pointer"}}>←</button>
+          <div style={{fontSize:15,fontWeight:800}}>{editTeam?"팀 수정":"팀 개설"}</div>
         </div>
         <div style={{marginBottom:12}}><SectionLabel>팀 이름 *</SectionLabel><Inp value={form.name} onChange={v=>setForm(f=>({...f,name:v}))} placeholder="예) 서울 드래곤스"/></div>
         <div style={{marginBottom:12}}><SectionLabel>지역</SectionLabel><Inp value={form.region} onChange={v=>setForm(f=>({...f,region:v}))} placeholder="예) 서울특별시"/></div>
@@ -719,13 +719,13 @@ function TeamTab({ teams, setTeams, canManage, showNotif }) {
         <div style={{marginBottom:12}}>
           <SectionLabel>조 배정</SectionLabel>
           <div style={{display:"flex",gap:8}}>
-            {GROUPS.map(g=><button key={g} onClick={()=>setForm(f=>({...f,group:g}))} style={{flex:1,background:form.group===g?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${form.group===g?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"10px 0",color:form.group===g?"#2ecc71":"#64748b",fontWeight:700,fontSize:16,cursor:"pointer"}}>{g}</button>)}
+            {GROUPS.map(g=><button key={g} onClick={()=>setForm(f=>({...f,group:g}))} style={{flex:1,background:form.group===g?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${form.group===g?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"10px 0",color:form.group===g?"#2ecc71":"#64748b",fontWeight:700,fontSize:15,cursor:"pointer"}}>{g}</button>)}
           </div>
         </div>
         <div style={{marginBottom:12}}>
           <SectionLabel>엠블럼</SectionLabel>
           <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-            {TEAM_EMOJIS.map(e=><button key={e} onClick={()=>setForm(f=>({...f,emoji:e}))} style={{width:36,height:36,borderRadius:8,background:form.emoji===e?"rgba(255,255,255,.15)":"#0f172a",border:`1px solid ${form.emoji===e?"#fff":"#1e3060"}`,fontSize:16,cursor:"pointer"}}>{e}</button>)}
+            {TEAM_EMOJIS.map(e=><button key={e} onClick={()=>setForm(f=>({...f,emoji:e}))} style={{width:36,height:36,borderRadius:8,background:form.emoji===e?"rgba(255,255,255,.15)":"#0f172a",border:`1px solid ${form.emoji===e?"#fff":"#1e3060"}`,fontSize:15,cursor:"pointer"}}>{e}</button>)}
           </div>
         </div>
         <div style={{marginBottom:20}}>
@@ -734,7 +734,7 @@ function TeamTab({ teams, setTeams, canManage, showNotif }) {
             {TEAM_COLORS.map(c=><button key={c} onClick={()=>setForm(f=>({...f,color:c}))} style={{width:28,height:28,borderRadius:"50%",background:c,border:form.color===c?"3px solid #fff":"2px solid transparent",cursor:"pointer"}}/>)}
           </div>
         </div>
-        <button onClick={saveTeam} style={{width:"100%",background:form.name.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:form.name.trim()?"#000":"#475569",fontWeight:800,fontSize:16,cursor:form.name.trim()?"pointer":"not-allowed"}}>
+        <button onClick={saveTeam} style={{width:"100%",background:form.name.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:form.name.trim()?"#000":"#475569",fontWeight:800,fontSize:15,cursor:form.name.trim()?"pointer":"not-allowed"}}>
           {editTeam?"✓ 수정 완료":"➕ 팀 개설"}
         </button>
       </div>
@@ -745,29 +745,29 @@ function TeamTab({ teams, setTeams, canManage, showNotif }) {
   return (
     <div style={{padding:16}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-        <div><div style={{fontSize:16,fontWeight:800}}>팀 관리</div><div style={{fontSize:16,color:"#64748b",marginTop:2}}>총 {teams.length}팀 등록</div></div>
-        {canManage&&<button onClick={openNew} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>➕ 팀 개설</button>}
+        <div><div style={{fontSize:15,fontWeight:800}}>팀 관리</div><div style={{fontSize:15,color:"#64748b",marginTop:2}}>총 {teams.length}팀 등록</div></div>
+        {canManage&&<button onClick={openNew} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>➕ 팀 개설</button>}
       </div>
       {teams.length===0?(
         <div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}>
-          <div style={{fontSize:16,marginBottom:12}}>👥</div>
+          <div style={{fontSize:15,marginBottom:12}}>👥</div>
           <div>등록된 팀이 없습니다</div>
-          {canManage&&<button onClick={openNew} style={{marginTop:14,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc71",borderRadius:10,padding:"10px 20px",color:"#2ecc71",fontWeight:700,fontSize:16,cursor:"pointer"}}>첫 팀 개설하기</button>}
+          {canManage&&<button onClick={openNew} style={{marginTop:14,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc71",borderRadius:10,padding:"10px 20px",color:"#2ecc71",fontWeight:700,fontSize:15,cursor:"pointer"}}>첫 팀 개설하기</button>}
         </div>
       ):(
         teams.map(t=>(
           <div key={t.id} style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,padding:14,marginBottom:10}}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:44,height:44,borderRadius:12,background:`${t.color}25`,border:`1px solid ${t.color}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{t.emoji}</div>
+              <div style={{width:44,height:44,borderRadius:12,background:`${t.color}25`,border:`1px solid ${t.color}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,flexShrink:0}}>{t.emoji}</div>
               <div style={{flex:1}}>
-                <div style={{fontSize:16,fontWeight:800,color:"#e2e8f0"}}>{t.name}</div>
-                <div style={{fontSize:16,color:"#64748b",marginTop:2}}>{t.region} · {t.group}조 · 선수 {t.players.length}명</div>
+                <div style={{fontSize:15,fontWeight:800,color:"#e2e8f0"}}>{t.name}</div>
+                <div style={{fontSize:15,color:"#64748b",marginTop:2}}>{t.region} · {t.group}조 · 선수 {t.players.length}명</div>
               </div>
               <div style={{display:"flex",gap:6}}>
-                <button onClick={()=>openDetail(t)} style={{background:"rgba(46,204,113,.15)",border:"1px solid #2ecc7140",borderRadius:8,padding:"5px 10px",color:"#2ecc71",fontSize:16,fontWeight:700,cursor:"pointer"}}>상세</button>
+                <button onClick={()=>openDetail(t)} style={{background:"rgba(46,204,113,.15)",border:"1px solid #2ecc7140",borderRadius:8,padding:"5px 10px",color:"#2ecc71",fontSize:15,fontWeight:700,cursor:"pointer"}}>상세</button>
                 {canManage&&<>
-                  <button onClick={()=>openEdit(t)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:16,fontWeight:700,cursor:"pointer"}}>수정</button>
-                  <button onClick={()=>setDel(t)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:16,fontWeight:700,cursor:"pointer"}}>🗑</button>
+                  <button onClick={()=>openEdit(t)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:15,fontWeight:700,cursor:"pointer"}}>수정</button>
+                  <button onClick={()=>setDel(t)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:15,fontWeight:700,cursor:"pointer"}}>🗑</button>
                 </>}
               </div>
             </div>
@@ -812,20 +812,20 @@ function FieldTab({ fields, setFields, canManage, showNotif }) {
     return (
       <div style={{padding:16}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
-          <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:16,cursor:"pointer"}}>←</button>
-          <div style={{fontSize:16,fontWeight:800}}>{editF?"경기장 수정":"경기장 개설"}</div>
+          <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:15,cursor:"pointer"}}>←</button>
+          <div style={{fontSize:15,fontWeight:800}}>{editF?"경기장 수정":"경기장 개설"}</div>
         </div>
         <div style={{marginBottom:12}}><SectionLabel>경기장 이름 *</SectionLabel><Inp value={form.name} onChange={v=>setForm(f=>({...f,name:v}))} placeholder="예) A구장"/></div>
         <div style={{marginBottom:12}}><SectionLabel>위치</SectionLabel><Inp value={form.location} onChange={v=>setForm(f=>({...f,location:v}))} placeholder="예) 대회본부 서측"/></div>
         <div style={{marginBottom:12}}>
           <SectionLabel>잔디 종류</SectionLabel>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
-            {SURFACE_OPTS.map(s=><button key={s} onClick={()=>setForm(f=>({...f,surface:s}))} style={{background:form.surface===s?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${form.surface===s?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"10px 6px",color:form.surface===s?"#2ecc71":"#64748b",fontWeight:form.surface===s?700:500,fontSize:16,cursor:"pointer"}}>{s}</button>)}
+            {SURFACE_OPTS.map(s=><button key={s} onClick={()=>setForm(f=>({...f,surface:s}))} style={{background:form.surface===s?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${form.surface===s?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"10px 6px",color:form.surface===s?"#2ecc71":"#64748b",fontWeight:form.surface===s?700:500,fontSize:15,cursor:"pointer"}}>{s}</button>)}
           </div>
         </div>
         <div style={{marginBottom:12}}><SectionLabel>수용 인원</SectionLabel><Inp value={form.capacity} onChange={v=>setForm(f=>({...f,capacity:v}))} placeholder="예) 500"/></div>
         <div style={{marginBottom:20}}><SectionLabel>비고</SectionLabel><Inp value={form.note} onChange={v=>setForm(f=>({...f,note:v}))} placeholder="예) 메인 경기장, 야간 조명 있음"/></div>
-        <button onClick={saveField} style={{width:"100%",background:form.name.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:form.name.trim()?"#000":"#475569",fontWeight:800,fontSize:16,cursor:form.name.trim()?"pointer":"not-allowed"}}>
+        <button onClick={saveField} style={{width:"100%",background:form.name.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:form.name.trim()?"#000":"#475569",fontWeight:800,fontSize:15,cursor:form.name.trim()?"pointer":"not-allowed"}}>
           {editF?"✓ 수정 완료":"➕ 경기장 개설"}
         </button>
       </div>
@@ -835,32 +835,32 @@ function FieldTab({ fields, setFields, canManage, showNotif }) {
   return (
     <div style={{padding:16}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-        <div><div style={{fontSize:16,fontWeight:800}}>경기장 관리</div><div style={{fontSize:16,color:"#64748b",marginTop:2}}>총 {fields.length}개 경기장</div></div>
-        {canManage&&<button onClick={openNew} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>➕ 경기장 개설</button>}
+        <div><div style={{fontSize:15,fontWeight:800}}>경기장 관리</div><div style={{fontSize:15,color:"#64748b",marginTop:2}}>총 {fields.length}개 경기장</div></div>
+        {canManage&&<button onClick={openNew} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>➕ 경기장 개설</button>}
       </div>
       {fields.length===0?(
         <div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}>
-          <div style={{fontSize:16,marginBottom:12}}>🏟</div>
+          <div style={{fontSize:15,marginBottom:12}}>🏟</div>
           <div>등록된 경기장이 없습니다</div>
-          {canManage&&<button onClick={openNew} style={{marginTop:14,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc71",borderRadius:10,padding:"10px 20px",color:"#2ecc71",fontWeight:700,fontSize:16,cursor:"pointer"}}>첫 경기장 개설하기</button>}
+          {canManage&&<button onClick={openNew} style={{marginTop:14,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc71",borderRadius:10,padding:"10px 20px",color:"#2ecc71",fontWeight:700,fontSize:15,cursor:"pointer"}}>첫 경기장 개설하기</button>}
         </div>
       ):(
         fields.map(f=>(
           <div key={f.id} style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,padding:14,marginBottom:10}}>
             <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
-              <div style={{width:44,height:44,borderRadius:12,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc7130",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>🏟</div>
+              <div style={{width:44,height:44,borderRadius:12,background:"rgba(46,204,113,.15)",border:"1px solid #2ecc7130",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,flexShrink:0}}>🏟</div>
               <div style={{flex:1}}>
-                <div style={{fontSize:16,fontWeight:800,color:"#e2e8f0"}}>{f.name}</div>
-                <div style={{fontSize:16,color:"#64748b",marginTop:3,lineHeight:1.6}}>
+                <div style={{fontSize:15,fontWeight:800,color:"#e2e8f0"}}>{f.name}</div>
+                <div style={{fontSize:15,color:"#64748b",marginTop:3,lineHeight:1.6}}>
                   {f.location&&<span>📍 {f.location} · </span>}
                   <span>🌿 {f.surface}</span>
                   {f.capacity&&<span> · 👥 {f.capacity}명</span>}
                 </div>
-                {f.note&&<div style={{fontSize:16,color:"#475569",marginTop:2}}>💬 {f.note}</div>}
+                {f.note&&<div style={{fontSize:15,color:"#475569",marginTop:2}}>💬 {f.note}</div>}
               </div>
               {canManage&&<div style={{display:"flex",gap:6,flexShrink:0}}>
-                <button onClick={()=>openEdit(f)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:16,fontWeight:700,cursor:"pointer"}}>수정</button>
-                <button onClick={()=>setDelF(f)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:16,fontWeight:700,cursor:"pointer"}}>🗑</button>
+                <button onClick={()=>openEdit(f)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:15,fontWeight:700,cursor:"pointer"}}>수정</button>
+                <button onClick={()=>setDelF(f)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:15,fontWeight:700,cursor:"pointer"}}>🗑</button>
               </div>}
             </div>
           </div>
@@ -883,24 +883,24 @@ function RegisterTab({ user, teams }) {
   if(done) return (
     <div style={{padding:20}}>
       <div style={{background:"rgba(46,204,113,.1)",border:"2px solid #2ecc71",borderRadius:16,padding:24,textAlign:"center"}}>
-        <div style={{fontSize:16,marginBottom:10}}>✅</div>
-        <div style={{fontSize:16,fontWeight:800,color:"#2ecc71",marginBottom:6}}>등록 완료!</div>
-        <div style={{fontSize:16,color:"#64748b"}}><strong style={{color:"#e2e8f0"}}>{rForm.name}</strong>님의 등록이 접수되었습니다<br/>운영진 검토 후 승인 알림을 드립니다</div>
-        <button onClick={reset} style={{marginTop:14,background:"#1e3060",border:"none",borderRadius:10,padding:"9px 18px",color:"#7b9bc8",fontWeight:600,fontSize:16,cursor:"pointer"}}>추가 등록</button>
+        <div style={{fontSize:15,marginBottom:10}}>✅</div>
+        <div style={{fontSize:15,fontWeight:800,color:"#2ecc71",marginBottom:6}}>등록 완료!</div>
+        <div style={{fontSize:15,color:"#64748b"}}><strong style={{color:"#e2e8f0"}}>{rForm.name}</strong>님의 등록이 접수되었습니다<br/>운영진 검토 후 승인 알림을 드립니다</div>
+        <button onClick={reset} style={{marginTop:14,background:"#1e3060",border:"none",borderRadius:10,padding:"9px 18px",color:"#7b9bc8",fontWeight:600,fontSize:15,cursor:"pointer"}}>추가 등록</button>
       </div>
     </div>
   );
 
   return (
     <div style={{padding:16}}>
-      <div style={{fontSize:16,fontWeight:800,marginBottom:4}}>참가자 등록</div>
-      <div style={{fontSize:16,color:"#7b9bc8",marginBottom:16}}>선수·감독·코치·심판 등 모든 참가자 등록 가능</div>
+      <div style={{fontSize:15,fontWeight:800,marginBottom:4}}>참가자 등록</div>
+      <div style={{fontSize:15,color:"#7b9bc8",marginBottom:16}}>선수·감독·코치·심판 등 모든 참가자 등록 가능</div>
 
       <div style={{marginBottom:14}}>
         <SectionLabel>등록 구분 *</SectionLabel>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6}}>
           {["선수","감독","코치","심판","트레이너","스태프"].map(r=>(
-            <button key={r} onClick={()=>setRole(r)} style={{background:role===r?"rgba(46,204,113,.15)":"#0f1d35",border:`1px solid ${role===r?"#2ecc71":"#1e3060"}`,borderRadius:8,padding:"9px 4px",color:role===r?"#2ecc71":"#64748b",fontWeight:600,fontSize:16,cursor:"pointer"}}>{r}</button>
+            <button key={r} onClick={()=>setRole(r)} style={{background:role===r?"rgba(46,204,113,.15)":"#0f1d35",border:`1px solid ${role===r?"#2ecc71":"#1e3060"}`,borderRadius:8,padding:"9px 4px",color:role===r?"#2ecc71":"#64748b",fontWeight:600,fontSize:15,cursor:"pointer"}}>{r}</button>
           ))}
         </div>
       </div>
@@ -910,7 +910,7 @@ function RegisterTab({ user, teams }) {
       <div style={{marginBottom:12}}>
         <SectionLabel>소속 팀 *</SectionLabel>
         {teams.length>0&&<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}>
-          {teams.map(t=><button key={t.id} onClick={()=>setRForm(p=>({...p,team:t.name}))} style={{display:"flex",alignItems:"center",gap:6,background:rForm.team===t.name?`${t.color}20`:"#0f172a",border:`1px solid ${rForm.team===t.name?t.color:"#1e3060"}`,borderRadius:9,padding:"7px 10px",color:rForm.team===t.name?t.color:"#94a3b8",fontWeight:rForm.team===t.name?700:500,fontSize:16,cursor:"pointer"}}><span style={{fontSize:16}}>{t.emoji}</span>{t.name}</button>)}
+          {teams.map(t=><button key={t.id} onClick={()=>setRForm(p=>({...p,team:t.name}))} style={{display:"flex",alignItems:"center",gap:6,background:rForm.team===t.name?`${t.color}20`:"#0f172a",border:`1px solid ${rForm.team===t.name?t.color:"#1e3060"}`,borderRadius:9,padding:"7px 10px",color:rForm.team===t.name?t.color:"#94a3b8",fontWeight:rForm.team===t.name?700:500,fontSize:15,cursor:"pointer"}}><span style={{fontSize:15}}>{t.emoji}</span>{t.name}</button>)}
         </div>}
         <Inp value={rForm.team} onChange={v=>setRForm(p=>({...p,team:v}))} placeholder="팀 이름 직접 입력"/>
       </div>
@@ -921,15 +921,15 @@ function RegisterTab({ user, teams }) {
         <div style={{marginBottom:12}}>
           <SectionLabel>포지션</SectionLabel>
           <div style={{display:"flex",gap:8}}>
-            {POS_LIST.map(p=><button key={p} onClick={()=>setPos(p)} style={{flex:1,background:pos===p?"rgba(46,204,113,.15)":"#0f1d35",border:`1px solid ${pos===p?"#2ecc71":"#1e3060"}`,borderRadius:8,padding:"10px 0",color:pos===p?"#2ecc71":"#64748b",fontWeight:700,fontSize:16,cursor:"pointer"}}>{p}</button>)}
+            {POS_LIST.map(p=><button key={p} onClick={()=>setPos(p)} style={{flex:1,background:pos===p?"rgba(46,204,113,.15)":"#0f1d35",border:`1px solid ${pos===p?"#2ecc71":"#1e3060"}`,borderRadius:8,padding:"10px 0",color:pos===p?"#2ecc71":"#64748b",fontWeight:700,fontSize:15,cursor:"pointer"}}>{p}</button>)}
           </div>
         </div>
       )}
 
-      <button onClick={()=>{ if(rForm.name&&rForm.team&&role) setDone(true); }} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"14px 0",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer",boxShadow:"0 4px 16px rgba(46,204,113,.25)",marginTop:4}}>📋 등록 신청하기</button>
+      <button onClick={()=>{ if(rForm.name&&rForm.team&&role) setDone(true); }} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"14px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(46,204,113,.25)",marginTop:4}}>📋 등록 신청하기</button>
 
       <div style={{marginTop:12,background:"rgba(46,204,113,.05)",border:"1px solid #2ecc7120",borderRadius:10,padding:"9px 14px"}}>
-        <div style={{fontSize:16,color:"#475569"}}>현재 로그인: <strong style={{color:user.color}}>{user.icon} {user.label}</strong> · {user.name}</div>
+        <div style={{fontSize:15,color:"#475569"}}>현재 로그인: <strong style={{color:user.color}}>{user.icon} {user.label}</strong> · {user.name}</div>
       </div>
     </div>
   );
@@ -1033,34 +1033,34 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
 
   const PhaseBar=()=>(
     <div style={{background:"#0a1428",border:"1px solid #1e3060",borderRadius:14,padding:14,marginBottom:12}}>
-      <div style={{fontSize:16,fontWeight:700,color:"#7b9bc8",marginBottom:10,letterSpacing:1}}>🎮 경기 진행 관리</div>
+      <div style={{fontSize:15,fontWeight:700,color:"#7b9bc8",marginBottom:10,letterSpacing:1}}>🎮 경기 진행 관리</div>
 
       {/* 경기 시작 전 설정 */}
       {isPre&&(
         <div style={{marginBottom:12}}>
           {/* 날짜/시간/경기장 */}
           <div style={{background:"rgba(59,130,246,.07)",border:"1px solid #3b82f620",borderRadius:10,padding:12,marginBottom:8}}>
-            <div style={{fontSize:16,fontWeight:700,color:"#60a5fa",marginBottom:8,letterSpacing:1}}>📅 경기 일정 수정</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#60a5fa",marginBottom:8,letterSpacing:1}}>📅 경기 일정 수정</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
               <div>
-                <div style={{fontSize:16,color:"#475569",marginBottom:4}}>날짜</div>
+                <div style={{fontSize:15,color:"#475569",marginBottom:4}}>날짜</div>
                 <input value={match.date} onChange={e=>update(prev=>({...prev,date:e.target.value}))}
-                  style={{width:"100%",background:"#0f172a",border:"1px solid #3b82f640",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
+                  style={{width:"100%",background:"#0f172a",border:"1px solid #3b82f640",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
               </div>
               <div>
-                <div style={{fontSize:16,color:"#475569",marginBottom:4}}>시작 시간</div>
+                <div style={{fontSize:15,color:"#475569",marginBottom:4}}>시작 시간</div>
                 <input value={match.time} onChange={e=>update(prev=>({...prev,time:e.target.value}))} placeholder="HH:MM"
-                  style={{width:"100%",background:"#0f172a",border:"1px solid #3b82f640",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
+                  style={{width:"100%",background:"#0f172a",border:"1px solid #3b82f640",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
               </div>
             </div>
-            <div style={{fontSize:16,color:"#475569",marginBottom:4}}>경기장</div>
+            <div style={{fontSize:15,color:"#475569",marginBottom:4}}>경기장</div>
             <input value={match.field} onChange={e=>update(prev=>({...prev,field:e.target.value}))}
-              style={{width:"100%",background:"#0f172a",border:"1px solid #3b82f640",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
+              style={{width:"100%",background:"#0f172a",border:"1px solid #3b82f640",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
           </div>
 
           {/* 러닝타임 설정 */}
           <div style={{background:"rgba(46,204,113,.07)",border:"1px solid #2ecc7130",borderRadius:10,padding:12}}>
-            <div style={{fontSize:16,fontWeight:700,color:"#2ecc71",marginBottom:10,letterSpacing:1}}>⏱ 전반/후반 러닝타임 설정</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#2ecc71",marginBottom:10,letterSpacing:1}}>⏱ 전반/후반 러닝타임 설정</div>
             {/* 조별 빠른 선택 */}
             <div style={{display:"flex",gap:6,marginBottom:10}}>
               {[
@@ -1073,21 +1073,21 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
                   border:`1px solid ${halfDur===p.val?p.color:"#1e3060"}`,
                   borderRadius:8, padding:"8px 4px",
                   color:halfDur===p.val?p.color:"#64748b",
-                  fontWeight:halfDur===p.val?800:500, fontSize:16, cursor:"pointer",
+                  fontWeight:halfDur===p.val?800:500, fontSize:15, cursor:"pointer",
                 }}>{p.label}</button>
               ))}
             </div>
             {/* 직접 조정 */}
             <div style={{display:"flex",alignItems:"center",gap:8}}>
-              <button onClick={()=>setHalfDur(halfDur-1)} style={{width:36,height:36,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:16,cursor:"pointer",fontWeight:700}}>−</button>
+              <button onClick={()=>setHalfDur(halfDur-1)} style={{width:36,height:36,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:15,cursor:"pointer",fontWeight:700}}>−</button>
               <div style={{flex:1,textAlign:"center"}}>
-                <span style={{fontSize:16,fontWeight:900,color:"#2ecc71"}}>{halfDur}</span>
-                <span style={{fontSize:16,color:"#64748b",marginLeft:4}}>분</span>
-                <div style={{fontSize:16,color:"#475569",marginTop:3}}>전반 {halfDur}분 + 후반 {halfDur}분 = 총 {halfDur*2}분</div>
+                <span style={{fontSize:15,fontWeight:900,color:"#2ecc71"}}>{halfDur}</span>
+                <span style={{fontSize:15,color:"#64748b",marginLeft:4}}>분</span>
+                <div style={{fontSize:15,color:"#475569",marginTop:3}}>전반 {halfDur}분 + 후반 {halfDur}분 = 총 {halfDur*2}분</div>
               </div>
-              <button onClick={()=>setHalfDur(halfDur+1)} style={{width:36,height:36,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:16,cursor:"pointer",fontWeight:700}}>+</button>
+              <button onClick={()=>setHalfDur(halfDur+1)} style={{width:36,height:36,borderRadius:8,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:15,cursor:"pointer",fontWeight:700}}>+</button>
             </div>
-            <div style={{fontSize:16,color:"#475569",textAlign:"center",marginTop:6}}>5분 ~ 30분 범위에서 설정 가능</div>
+            <div style={{fontSize:15,color:"#475569",textAlign:"center",marginTop:6}}>5분 ~ 30분 범위에서 설정 가능</div>
           </div>
         </div>
       )}
@@ -1096,33 +1096,33 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
       <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12,padding:"12px 14px",background:"rgba(0,0,0,.3)",borderRadius:10,border:`1px solid ${PHASE_COLOR[phase]}30`}}>
         <div style={{width:8,height:8,borderRadius:"50%",background:PHASE_COLOR[phase],flexShrink:0,animation:isRunning?"blink 1s infinite":"none"}}/>
         <div style={{flex:1}}>
-          <div style={{fontSize:16,color:PHASE_COLOR[phase],fontWeight:700}}>{PHASE_LABEL[phase]}</div>
-          {isRunning&&<div style={{fontSize:16,color:"#475569",marginTop:1}}>
+          <div style={{fontSize:15,color:PHASE_COLOR[phase],fontWeight:700}}>{PHASE_LABEL[phase]}</div>
+          {isRunning&&<div style={{fontSize:15,color:"#475569",marginTop:1}}>
             전후반 각 {halfDur}분{extraMin>0?" · ⏱ 추가시간":""}</div>}
-          {isHalf&&<div style={{fontSize:16,color:"#475569",marginTop:1}}>하프타임</div>}
-          {isPre&&<div style={{fontSize:16,color:"#475569",marginTop:1}}>전후반 각 {halfDur}분 예정</div>}
+          {isHalf&&<div style={{fontSize:15,color:"#475569",marginTop:1}}>하프타임</div>}
+          {isPre&&<div style={{fontSize:15,color:"#475569",marginTop:1}}>전후반 각 {halfDur}분 예정</div>}
         </div>
-        <div style={{fontSize:16,fontWeight:900,color:extraMin>0?"#f1c40f":PHASE_COLOR[phase],fontVariantNumeric:"tabular-nums",letterSpacing:-1}}>{dispStr}</div>
+        <div style={{fontSize:15,fontWeight:900,color:extraMin>0?"#f1c40f":PHASE_COLOR[phase],fontVariantNumeric:"tabular-nums",letterSpacing:-1}}>{dispStr}</div>
       </div>
 
       {/* 추가시간 설정 (전반/후반 진행 중) */}
       {(isFirst||isSecond)&&(
         <div style={{marginBottom:12}}>
-          <div style={{fontSize:16,fontWeight:700,color:"#64748b",marginBottom:7,letterSpacing:1}}>
+          <div style={{fontSize:15,fontWeight:700,color:"#64748b",marginBottom:7,letterSpacing:1}}>
             ⏱ {isFirst?"전반":"후반"} 추가시간
           </div>
           <div style={{display:"flex",alignItems:"center",gap:8,background:"rgba(241,196,15,.06)",border:"1px solid #f1c40f20",borderRadius:10,padding:"10px 12px"}}>
             <button onClick={()=>setExtra(isFirst?"first":"second",(isFirst?extraFirst:extraSecond)-1)}
-              style={{width:30,height:30,borderRadius:7,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:16,cursor:"pointer",fontWeight:700}}>−</button>
+              style={{width:30,height:30,borderRadius:7,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:15,cursor:"pointer",fontWeight:700}}>−</button>
             <div style={{flex:1,textAlign:"center"}}>
-              <span style={{fontSize:16,fontWeight:900,color:"#f1c40f"}}>{isFirst?extraFirst:extraSecond}</span>
-              <span style={{fontSize:16,color:"#64748b",marginLeft:4}}>분 추가</span>
+              <span style={{fontSize:15,fontWeight:900,color:"#f1c40f"}}>{isFirst?extraFirst:extraSecond}</span>
+              <span style={{fontSize:15,color:"#64748b",marginLeft:4}}>분 추가</span>
             </div>
             <button onClick={()=>setExtra(isFirst?"first":"second",(isFirst?extraFirst:extraSecond)+1)}
-              style={{width:30,height:30,borderRadius:7,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:16,cursor:"pointer",fontWeight:700}}>+</button>
+              style={{width:30,height:30,borderRadius:7,background:"#1e293b",border:"1px solid #334155",color:"#94a3b8",fontSize:15,cursor:"pointer",fontWeight:700}}>+</button>
           </div>
           {(isFirst?extraFirst:extraSecond)>0&&(
-            <div style={{fontSize:16,color:"#f1c40f",marginTop:5,textAlign:"center"}}>
+            <div style={{fontSize:15,color:"#f1c40f",marginTop:5,textAlign:"center"}}>
               {isFirst?"전반":"후반"} {isFirst?halfDur:fullDur}+{isFirst?extraFirst:extraSecond}분까지 진행
             </div>
           )}
@@ -1130,19 +1130,19 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
       )}
 
       {/* 단계 버튼 */}
-      {isPre&&<button onClick={()=>goPhase("first_half","▶ 경기 시작!")} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"13px 0",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>
+      {isPre&&<button onClick={()=>goPhase("first_half","▶ 경기 시작!")} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"13px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>
         ▶ 경기 시작 (전반 {halfDur}분)
       </button>}
-      {isFirst&&<button onClick={()=>goPhase("half_time","⏸ 전반전 종료","#f1c40f")} style={{width:"100%",background:"linear-gradient(135deg,#f1c40f,#d4ac0d)",border:"none",borderRadius:10,padding:"12px 0",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>
+      {isFirst&&<button onClick={()=>goPhase("half_time","⏸ 전반전 종료","#f1c40f")} style={{width:"100%",background:"linear-gradient(135deg,#f1c40f,#d4ac0d)",border:"none",borderRadius:10,padding:"12px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>
         ⏸ 전반 종료{extraFirst>0?` (+${extraFirst}분)`:""}
       </button>}
-      {isHalf&&<button onClick={()=>goPhase("second_half","▶ 후반전 시작!")} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"12px 0",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>
+      {isHalf&&<button onClick={()=>goPhase("second_half","▶ 후반전 시작!")} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"12px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>
         ▶ 후반 시작 (후반 {halfDur}분)
       </button>}
-      {isSecond&&<button onClick={()=>goPhase("finished","🏁 경기 종료!","#ff4757")} style={{width:"100%",background:"linear-gradient(135deg,#ff4757,#c0392b)",border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:16,cursor:"pointer"}}>
+      {isSecond&&<button onClick={()=>goPhase("finished","🏁 경기 종료!","#ff4757")} style={{width:"100%",background:"linear-gradient(135deg,#ff4757,#c0392b)",border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:15,cursor:"pointer"}}>
         🏁 경기 종료{extraSecond>0?` (+${extraSecond}분)`:""}
       </button>}
-      {isFinished&&<div style={{textAlign:"center",padding:"8px 0",fontSize:16,color:"#64748b"}}>경기 종료 (전후반 각 {halfDur}분)</div>}
+      {isFinished&&<div style={{textAlign:"center",padding:"8px 0",fontSize:15,color:"#64748b"}}>경기 종료 (전후반 각 {halfDur}분)</div>}
     </div>
   );
 
@@ -1156,14 +1156,14 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
       {modal==="sub"&&<SubModal match={match} currentMin={curMin} onConfirm={addSub} onClose={()=>setModal(null)}/>}
       {modal==="cancel"&&(
         <BottomSheet onClose={()=>setModal(null)}>
-          <div style={{fontSize:16,fontWeight:800,color:"#ff4757",marginBottom:14}}>🚫 골 취소</div>
+          <div style={{fontSize:15,fontWeight:800,color:"#ff4757",marginBottom:14}}>🚫 골 취소</div>
           {match.events.filter(e=>e.type==="goal").length===0
-            ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:16}}>취소할 골 기록이 없습니다</div>
+            ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:15}}>취소할 골 기록이 없습니다</div>
             :match.events.filter(e=>e.type==="goal").map(e=>(
               <div key={e.id} style={{display:"flex",alignItems:"center",gap:10,background:"rgba(255,71,87,.07)",border:"1px solid #ff475730",borderRadius:10,padding:"10px 12px",marginBottom:7}}>
-                <span style={{fontSize:16}}>⚽</span>
-                <div style={{flex:1}}><div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{e.player}{e.assist&&<span style={{fontSize:16,color:"#3498db"}}> 🤝{e.assist}</span>}</div><div style={{fontSize:16,color:"#64748b"}}>{e.desc} · {e.min}' · {e.team==="home"?match.home.name:match.away.name}</div></div>
-                <button onClick={()=>cancelGoal(e.id)} style={{background:"#ff4757",border:"none",borderRadius:8,padding:"6px 12px",color:"#fff",fontSize:16,fontWeight:800,cursor:"pointer"}}>취소</button>
+                <span style={{fontSize:15}}>⚽</span>
+                <div style={{flex:1}}><div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{e.player}{e.assist&&<span style={{fontSize:15,color:"#3498db"}}> 🤝{e.assist}</span>}</div><div style={{fontSize:15,color:"#64748b"}}>{e.desc} · {e.min}' · {e.team==="home"?match.home.name:match.away.name}</div></div>
+                <button onClick={()=>cancelGoal(e.id)} style={{background:"#ff4757",border:"none",borderRadius:8,padding:"6px 12px",color:"#fff",fontSize:15,fontWeight:800,cursor:"pointer"}}>취소</button>
               </div>
             ))
           }
@@ -1172,48 +1172,48 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
 
       <div style={{background:"linear-gradient(160deg,#0d1b3e 0%,#1a2a5e 60%,#0a0e1a 100%)",borderBottom:"1px solid #1e3060",position:"sticky",top:0,zIndex:10}}>
         <div style={{display:"flex",alignItems:"center",padding:"14px 16px 0"}}>
-          <button onClick={onBack} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:16,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>←</button>
-          <div style={{flex:1,textAlign:"center",fontSize:16,color:"#64748b"}}>{match.date} · {match.field}</div>
+          <button onClick={onBack} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>←</button>
+          <div style={{flex:1,textAlign:"center",fontSize:15,color:"#64748b"}}>{match.date} · {match.field}</div>
           <div style={{display:"flex",alignItems:"center",gap:5}}>
             {isRunning&&<div style={{background:`${PHASE_COLOR[phase]}20`,border:`1px solid ${PHASE_COLOR[phase]}50`,borderRadius:20,padding:"3px 8px",display:"flex",alignItems:"center",gap:4}}>
               <span style={{width:5,height:5,borderRadius:"50%",background:PHASE_COLOR[phase],display:"inline-block",animation:"blink 1s infinite"}}/>
-              <span style={{fontSize:16,fontWeight:900,color:PHASE_COLOR[phase],fontVariantNumeric:"tabular-nums"}}>{dispStr}</span>
+              <span style={{fontSize:15,fontWeight:900,color:PHASE_COLOR[phase],fontVariantNumeric:"tabular-nums"}}>{dispStr}</span>
             </div>}
-            {isHalf&&<div style={{background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",borderRadius:20,padding:"3px 9px",fontSize:16,fontWeight:800,color:"#f1c40f"}}>HT</div>}
-            {isFinished&&<div style={{background:"rgba(148,163,184,.1)",border:"1px solid #33415540",borderRadius:20,padding:"3px 9px",fontSize:16,fontWeight:800,color:"#94a3b8"}}>FT</div>}
-            <div style={{background:`${user.color}20`,border:`1px solid ${user.color}50`,borderRadius:20,padding:"3px 8px",fontSize:16,fontWeight:700,color:user.color}}>{user.icon}</div>
+            {isHalf&&<div style={{background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",borderRadius:20,padding:"3px 9px",fontSize:15,fontWeight:800,color:"#f1c40f"}}>HT</div>}
+            {isFinished&&<div style={{background:"rgba(148,163,184,.1)",border:"1px solid #33415540",borderRadius:20,padding:"3px 9px",fontSize:15,fontWeight:800,color:"#94a3b8"}}>FT</div>}
+            <div style={{background:`${user.color}20`,border:`1px solid ${user.color}50`,borderRadius:20,padding:"3px 8px",fontSize:15,fontWeight:700,color:user.color}}>{user.icon}</div>
           </div>
         </div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 20px 12px"}}>
           <div style={{flex:1,textAlign:"center"}}>
-            <div style={{fontSize:16,lineHeight:1}}>{match.home.emoji}</div>
-            <div style={{fontSize:16,fontWeight:800,marginTop:6,color:"#e2e8f0"}}>{match.home.name}</div>
+            <div style={{fontSize:15,lineHeight:1}}>{match.home.emoji}</div>
+            <div style={{fontSize:15,fontWeight:800,marginTop:6,color:"#e2e8f0"}}>{match.home.name}</div>
           </div>
           <div style={{textAlign:"center",padding:"0 10px"}}>
             {isPre?(
-              <div><div style={{fontSize:16,fontWeight:900,color:"#64748b"}}>VS</div><div style={{fontSize:16,color:"#60a5fa",marginTop:4,background:"rgba(59,130,246,.1)",padding:"3px 10px",borderRadius:20}}>{match.time}</div></div>
+              <div><div style={{fontSize:15,fontWeight:900,color:"#64748b"}}>VS</div><div style={{fontSize:15,color:"#60a5fa",marginTop:4,background:"rgba(59,130,246,.1)",padding:"3px 10px",borderRadius:20}}>{match.time}</div></div>
             ):(
               <div>
-                <div style={{fontSize:24,fontWeight:900,letterSpacing:4,lineHeight:1}}>
+                <div style={{fontSize:23,fontWeight:900,letterSpacing:4,lineHeight:1}}>
                   <span style={{color:(match.hs||0)>(match.as||0)?"#e2e8f0":"#64748b"}}>{match.hs??0}</span>
-                  <span style={{color:"#2ecc71",fontSize:16,margin:"0 4px"}}>:</span>
+                  <span style={{color:"#2ecc71",fontSize:15,margin:"0 4px"}}>:</span>
                   <span style={{color:(match.as||0)>(match.hs||0)?"#e2e8f0":"#64748b"}}>{match.as??0}</span>
                 </div>
-                <div style={{marginTop:4,fontSize:16,color:"#64748b"}}>
+                <div style={{marginTop:4,fontSize:15,color:"#64748b"}}>
                   {match.events.filter(e=>e.type==="goal").map((g,i)=><div key={i}>{g.player} {g.min}'</div>)}
                 </div>
               </div>
             )}
           </div>
           <div style={{flex:1,textAlign:"center"}}>
-            <div style={{fontSize:16,lineHeight:1}}>{match.away.emoji}</div>
-            <div style={{fontSize:16,fontWeight:800,marginTop:6,color:"#e2e8f0"}}>{match.away.name}</div>
+            <div style={{fontSize:15,lineHeight:1}}>{match.away.emoji}</div>
+            <div style={{fontSize:15,fontWeight:800,marginTop:6,color:"#e2e8f0"}}>{match.away.name}</div>
           </div>
         </div>
         <div style={{display:"flex",borderTop:"1px solid #1e3060"}}>
           {["타임라인","라인업","통계"].map((t,i)=>{
             const k=["timeline","lineup","stats"][i];
-            return <button key={t} onClick={()=>setTab(k)} style={{flex:1,padding:"11px 0",border:"none",background:"transparent",cursor:"pointer",fontSize:16,fontWeight:tab===k?800:500,color:tab===k?"#2ecc71":"#64748b",borderBottom:tab===k?"2px solid #2ecc71":"2px solid transparent"}}>{t}</button>;
+            return <button key={t} onClick={()=>setTab(k)} style={{flex:1,padding:"11px 0",border:"none",background:"transparent",cursor:"pointer",fontSize:15,fontWeight:tab===k?800:500,color:tab===k?"#2ecc71":"#64748b",borderBottom:tab===k?"2px solid #2ecc71":"2px solid transparent"}}>{t}</button>;
           })}
         </div>
       </div>
@@ -1222,13 +1222,13 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
         {tab==="timeline"&&(
           <div>
             {user.canRecord&&<PhaseBar/>}
-            {isPre&&!user.canRecord&&<div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}><div style={{fontSize:16,marginBottom:12}}>⏳</div><div style={{fontSize:16,fontWeight:600}}>경기 시작 전입니다</div></div>}
+            {isPre&&!user.canRecord&&<div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}><div style={{fontSize:15,marginBottom:12}}>⏳</div><div style={{fontSize:15,fontWeight:600}}>경기 시작 전입니다</div></div>}
             {!isPre&&(
               <div style={{background:"#0f172a",border:"1px solid #1e293b",borderRadius:14,padding:16,marginBottom:12}}>
                 <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
-                  <span style={{fontSize:16,fontWeight:700,color:match.home.color}}>{match.home.name}</span>
-                  <span style={{fontSize:16,color:"#475569"}}>이벤트 타임라인</span>
-                  <span style={{fontSize:16,fontWeight:700,color:match.away.color}}>{match.away.name}</span>
+                  <span style={{fontSize:15,fontWeight:700,color:match.home.color}}>{match.home.name}</span>
+                  <span style={{fontSize:15,color:"#475569"}}>이벤트 타임라인</span>
+                  <span style={{fontSize:15,fontWeight:700,color:match.away.color}}>{match.away.name}</span>
                 </div>
                 <div style={{position:"relative",height:8,background:"#1e293b",borderRadius:4,marginBottom:16}}>
                   {match.events.filter(e=>e.type==="goal").map((e,i)=>(
@@ -1238,12 +1238,12 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
                   <div style={{position:"absolute",left:"50%",top:-3,bottom:-3,width:1,background:"#334155"}}/>
                 </div>
                 {match.events.length===0
-                  ?<div style={{textAlign:"center",padding:"12px 0",color:"#475569",fontSize:16}}>아직 기록된 이벤트가 없습니다</div>
+                  ?<div style={{textAlign:"center",padding:"12px 0",color:"#475569",fontSize:15}}>아직 기록된 이벤트가 없습니다</div>
                   :match.events.map((e,i)=>{
                     const isH=e.team==="home";
                     return <div key={e.id} style={{display:"flex",flexDirection:isH?"row":"row-reverse",alignItems:"center",gap:8,padding:"7px 0",borderBottom:i<match.events.length-1?"1px solid #1e293b":"none"}}>
-                      <div style={{flex:1,textAlign:isH?"left":"right"}}><div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{e.player}</div>{e.assist&&<div style={{fontSize:16,color:"#3498db"}}>🤝 {e.assist}</div>}<div style={{fontSize:16,color:"#475569",marginTop:1}}>{e.desc}</div></div>
-                      <div style={{textAlign:"center",flexShrink:0}}><div style={{fontSize:16}}>{eIcon(e.type)}</div><div style={{fontSize:16,color:"#64748b",fontWeight:700}}>{e.min}'</div></div>
+                      <div style={{flex:1,textAlign:isH?"left":"right"}}><div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{e.player}</div>{e.assist&&<div style={{fontSize:15,color:"#3498db"}}>🤝 {e.assist}</div>}<div style={{fontSize:15,color:"#475569",marginTop:1}}>{e.desc}</div></div>
+                      <div style={{textAlign:"center",flexShrink:0}}><div style={{fontSize:15}}>{eIcon(e.type)}</div><div style={{fontSize:15,color:"#64748b",fontWeight:700}}>{e.min}'</div></div>
                       <div style={{flex:1}}/>
                     </div>;
                   })
@@ -1253,22 +1253,22 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
             {user.canRecord&&isRunning&&(
               <div style={{background:"#0f172a",border:"2px solid #f1c40f",borderRadius:14,padding:14}}>
                 <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-                  <span>📝</span><span style={{fontSize:16,fontWeight:800,color:"#f1c40f"}}>이벤트 입력</span>
-                  <button onClick={()=>setModal("cancel")} style={{marginLeft:"auto",background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:20,padding:"4px 12px",color:"#ff4757",fontSize:16,fontWeight:700,cursor:"pointer"}}>🚫 골 취소</button>
+                  <span>📝</span><span style={{fontSize:15,fontWeight:800,color:"#f1c40f"}}>이벤트 입력</span>
+                  <button onClick={()=>setModal("cancel")} style={{marginLeft:"auto",background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:20,padding:"4px 12px",color:"#ff4757",fontSize:15,fontWeight:700,cursor:"pointer"}}>🚫 골 취소</button>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
-                  <button onClick={()=>setModal("goal_home")} style={{background:`linear-gradient(135deg,${match.home.color},${match.home.color}bb)`,border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:16,cursor:"pointer"}}>⚽ {match.home.emoji} 홈 골</button>
-                  <button onClick={()=>setModal("goal_away")} style={{background:`linear-gradient(135deg,${match.away.color},${match.away.color}bb)`,border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:16,cursor:"pointer"}}>⚽ {match.away.emoji} 원정 골</button>
+                  <button onClick={()=>setModal("goal_home")} style={{background:`linear-gradient(135deg,${match.home.color},${match.home.color}bb)`,border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:15,cursor:"pointer"}}>⚽ {match.home.emoji} 홈 골</button>
+                  <button onClick={()=>setModal("goal_away")} style={{background:`linear-gradient(135deg,${match.away.color},${match.away.color}bb)`,border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:15,cursor:"pointer"}}>⚽ {match.away.emoji} 원정 골</button>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:7}}>
-                  <button onClick={()=>setModal("yellow")} style={{background:"rgba(241,196,15,.12)",border:"1px solid #f1c40f40",borderRadius:8,padding:"10px 4px",color:"#f1c40f",fontWeight:700,fontSize:16,cursor:"pointer"}}>🟨 옐로카드</button>
-                  <button onClick={()=>setModal("red")} style={{background:"rgba(231,76,60,.12)",border:"1px solid #e74c3c40",borderRadius:8,padding:"10px 4px",color:"#e74c3c",fontWeight:700,fontSize:16,cursor:"pointer"}}>🟥 레드카드</button>
-                  <button onClick={()=>setModal("sub")} style={{background:"rgba(148,163,184,.1)",border:"1px solid #94a3b840",borderRadius:8,padding:"10px 4px",color:"#94a3b8",fontWeight:700,fontSize:16,cursor:"pointer"}}>🔄 선수교체</button>
+                  <button onClick={()=>setModal("yellow")} style={{background:"rgba(241,196,15,.12)",border:"1px solid #f1c40f40",borderRadius:8,padding:"10px 4px",color:"#f1c40f",fontWeight:700,fontSize:15,cursor:"pointer"}}>🟨 옐로카드</button>
+                  <button onClick={()=>setModal("red")} style={{background:"rgba(231,76,60,.12)",border:"1px solid #e74c3c40",borderRadius:8,padding:"10px 4px",color:"#e74c3c",fontWeight:700,fontSize:15,cursor:"pointer"}}>🟥 레드카드</button>
+                  <button onClick={()=>setModal("sub")} style={{background:"rgba(148,163,184,.1)",border:"1px solid #94a3b840",borderRadius:8,padding:"10px 4px",color:"#94a3b8",fontWeight:700,fontSize:15,cursor:"pointer"}}>🔄 선수교체</button>
                 </div>
               </div>
             )}
-            {user.canRecord&&!isRunning&&!isPre&&<div style={{background:"rgba(241,196,15,.05)",border:"1px solid #f1c40f20",borderRadius:12,padding:12,textAlign:"center"}}><div style={{fontSize:16,color:"#f1c40f60"}}>{isFinished?"경기 종료 — 입력 마감":isHalf?"하프타임 — 후반 시작 후 입력 가능":""}</div></div>}
-            {!user.canRecord&&!isPre&&<div style={{background:"rgba(100,116,139,.08)",border:"1px solid #33415520",borderRadius:12,padding:12,textAlign:"center"}}><div style={{fontSize:16,color:"#475569"}}>👁 {user.label}는 조회 전용입니다</div></div>}
+            {user.canRecord&&!isRunning&&!isPre&&<div style={{background:"rgba(241,196,15,.05)",border:"1px solid #f1c40f20",borderRadius:12,padding:12,textAlign:"center"}}><div style={{fontSize:15,color:"#f1c40f60"}}>{isFinished?"경기 종료 — 입력 마감":isHalf?"하프타임 — 후반 시작 후 입력 가능":""}</div></div>}
+            {!user.canRecord&&!isPre&&<div style={{background:"rgba(100,116,139,.08)",border:"1px solid #33415520",borderRadius:12,padding:12,textAlign:"center"}}><div style={{fontSize:15,color:"#475569"}}>👁 {user.label}는 조회 전용입니다</div></div>}
           </div>
         )}
         {tab==="lineup"&&(
@@ -1277,12 +1277,12 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
               const m=match[side]; const l=match.lineup[side];
               const pl=[...l.gk.map(p=>({p,pos:"GK"})),...l.df.map(p=>({p,pos:"DF"})),...l.mf.map(p=>({p,pos:"MF"})),...l.fw.map(p=>({p,pos:"FW"}))];
               return <div key={side} style={{background:"#0f172a",border:"1px solid #1e293b",borderRadius:14,padding:16,marginBottom:10}}>
-                <div style={{fontSize:16,fontWeight:800,color:m.color,marginBottom:10}}>{m.emoji} {m.name} ({l.formation})</div>
+                <div style={{fontSize:15,fontWeight:800,color:m.color,marginBottom:10}}>{m.emoji} {m.name} ({l.formation})</div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4px 10px"}}>
                   {pl.map(({p,pos})=>(
                     <div key={p} style={{display:"flex",alignItems:"center",gap:6,padding:"5px 0",borderBottom:"1px solid #1e293b"}}>
-                      <span style={{fontSize:16,fontWeight:800,padding:"2px 4px",borderRadius:4,background:`${m.color}20`,color:m.color,minWidth:18,textAlign:"center"}}>{pos}</span>
-                      <span style={{fontSize:16,color:"#e2e8f0"}}>{p}</span>
+                      <span style={{fontSize:15,fontWeight:800,padding:"2px 4px",borderRadius:4,background:`${m.color}20`,color:m.color,minWidth:18,textAlign:"center"}}>{pos}</span>
+                      <span style={{fontSize:15,color:"#e2e8f0"}}>{p}</span>
                     </div>
                   ))}
                 </div>
@@ -1292,13 +1292,13 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
         )}
         {tab==="stats"&&(
           <div style={{background:"#0f172a",border:"1px solid #1e293b",borderRadius:14,padding:18}}>
-            {isPre?<div style={{textAlign:"center",padding:"28px 0",color:"#475569"}}><div style={{fontSize:16,marginBottom:8}}>📊</div><div>경기 시작 후 통계가 표시됩니다</div></div>:(
+            {isPre?<div style={{textAlign:"center",padding:"28px 0",color:"#475569"}}><div style={{fontSize:15,marginBottom:8}}>📊</div><div>경기 시작 후 통계가 표시됩니다</div></div>:(
               <div>
                 <div style={{marginBottom:18}}>
                   <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}>
-                    <span style={{fontWeight:900,fontSize:16,color:match.home.color}}>{match.stats.possession[0]}%</span>
-                    <span style={{fontSize:16,color:"#64748b"}}>점유율</span>
-                    <span style={{fontWeight:900,fontSize:16,color:match.away.color}}>{match.stats.possession[1]}%</span>
+                    <span style={{fontWeight:900,fontSize:15,color:match.home.color}}>{match.stats.possession[0]}%</span>
+                    <span style={{fontSize:15,color:"#64748b"}}>점유율</span>
+                    <span style={{fontWeight:900,fontSize:15,color:match.away.color}}>{match.stats.possession[1]}%</span>
                   </div>
                   <div style={{display:"flex",height:8,borderRadius:4,overflow:"hidden"}}>
                     <div style={{flex:match.stats.possession[0],background:match.home.color,borderRadius:"4px 0 0 4px"}}/>
@@ -1308,9 +1308,9 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
                 {[["슈팅","shots"],["유효슈팅","shotsOnTarget"],["코너킥","corners"],["파울","fouls"],["옐로카드","yellowCards"]].map(([label,k])=>{
                   const h=match.stats[k][0],a=match.stats[k][1],tot=h+a||1;
                   return <div key={k} style={{marginBottom:12}}>
-                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:4,fontSize:16}}>
+                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:4,fontSize:15}}>
                       <span style={{fontWeight:700,color:"#e2e8f0"}}>{h}</span>
-                      <span style={{color:"#64748b",fontSize:16}}>{label}</span>
+                      <span style={{color:"#64748b",fontSize:15}}>{label}</span>
                       <span style={{fontWeight:700,color:"#e2e8f0"}}>{a}</span>
                     </div>
                     <div style={{display:"flex",height:5,borderRadius:4,overflow:"hidden"}}>
@@ -1356,36 +1356,36 @@ function MatchCard({ match, onTap, onEdit, onDelete, canManage }) {
   return (
     <div style={{background:"#0f1d35",border:`1px solid ${isLive?"#2ecc71":"#1e3060"}`,borderRadius:14,padding:14,marginBottom:10,boxShadow:isLive?"0 0 16px rgba(46,204,113,.12)":"none"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
-        <span style={{fontSize:16,color:"#64748b"}}>🕐 {match.time} · {match.field} · {match.group}조 · {halfDur}분</span>
+        <span style={{fontSize:15,color:"#64748b"}}>🕐 {match.time} · {match.field} · {match.group}조 · {halfDur}분</span>
         <div style={{display:"flex",alignItems:"center",gap:5}}>
           {isRunning&&<span style={{width:6,height:6,borderRadius:"50%",background:"#2ecc71",display:"inline-block",animation:"blink 1s infinite"}}/>}
-          <span style={{fontSize:16,fontWeight:700,padding:"3px 9px",borderRadius:20,background:st.bg,color:st.text,fontVariantNumeric:"tabular-nums"}}>{liveStr}</span>
+          <span style={{fontSize:15,fontWeight:700,padding:"3px 9px",borderRadius:20,background:st.bg,color:st.text,fontVariantNumeric:"tabular-nums"}}>{liveStr}</span>
         </div>
       </div>
       <div onClick={onTap} style={{display:"flex",alignItems:"center",justifyContent:"space-between",cursor:"pointer"}}>
         <div style={{flex:1,display:"flex",alignItems:"center",gap:8}}>
-          <span style={{fontSize:16}}>{match.home.emoji}</span>
+          <span style={{fontSize:15}}>{match.home.emoji}</span>
           <div>
-            <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{match.home.name}</div>
-            {match.events?.filter(e=>e.type==="goal"&&e.team==="home").map(e=><div key={e.id} style={{fontSize:16,color:"#64748b"}}>{e.player} {e.min}'</div>)}
+            <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{match.home.name}</div>
+            {match.events?.filter(e=>e.type==="goal"&&e.team==="home").map(e=><div key={e.id} style={{fontSize:15,color:"#64748b"}}>{e.player} {e.min}'</div>)}
           </div>
         </div>
         <div style={{textAlign:"center",padding:"0 10px"}}>
-          {match.hs!==null?<div style={{fontSize:16,fontWeight:900,color:isRunning?"#2ecc71":"#e2e8f0"}}>{match.hs??0} : {match.as??0}</div>:<div style={{fontSize:16,color:"#64748b"}}>VS</div>}
+          {match.hs!==null?<div style={{fontSize:15,fontWeight:900,color:isRunning?"#2ecc71":"#e2e8f0"}}>{match.hs??0} : {match.as??0}</div>:<div style={{fontSize:15,color:"#64748b"}}>VS</div>}
         </div>
         <div style={{flex:1,display:"flex",alignItems:"center",gap:8,justifyContent:"flex-end",textAlign:"right"}}>
           <div>
-            <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{match.away.name}</div>
-            {match.events?.filter(e=>e.type==="goal"&&e.team==="away").map(e=><div key={e.id} style={{fontSize:16,color:"#64748b"}}>{e.player} {e.min}'</div>)}
+            <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{match.away.name}</div>
+            {match.events?.filter(e=>e.type==="goal"&&e.team==="away").map(e=><div key={e.id} style={{fontSize:15,color:"#64748b"}}>{e.player} {e.min}'</div>)}
           </div>
-          <span style={{fontSize:16}}>{match.away.emoji}</span>
+          <span style={{fontSize:15}}>{match.away.emoji}</span>
         </div>
       </div>
       <div style={{marginTop:10,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-        <span onClick={onTap} style={{fontSize:16,color:"#2ecc71",fontWeight:600,cursor:"pointer"}}>탭하여 상세 보기 →</span>
+        <span onClick={onTap} style={{fontSize:15,color:"#2ecc71",fontWeight:600,cursor:"pointer"}}>탭하여 상세 보기 →</span>
         {canManage&&<div style={{display:"flex",gap:6}}>
-          <button onClick={e=>{e.stopPropagation();onEdit();}} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"4px 10px",color:"#60a5fa",fontSize:16,fontWeight:700,cursor:"pointer"}}>수정</button>
-          <button onClick={e=>{e.stopPropagation();onDelete();}} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"4px 10px",color:"#ff4757",fontSize:16,fontWeight:700,cursor:"pointer"}}>삭제</button>
+          <button onClick={e=>{e.stopPropagation();onEdit();}} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"4px 10px",color:"#60a5fa",fontSize:15,fontWeight:700,cursor:"pointer"}}>수정</button>
+          <button onClick={e=>{e.stopPropagation();onDelete();}} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"4px 10px",color:"#ff4757",fontSize:15,fontWeight:700,cursor:"pointer"}}>삭제</button>
         </div>}
       </div>
     </div>
@@ -1442,11 +1442,11 @@ function RankingTab({ matches }) {
 
   return (
     <div style={{padding:"16px 16px 80px"}}>
-      <div style={{fontSize:16,fontWeight:800,marginBottom:14}}>순위 · 결과</div>
+      <div style={{fontSize:15,fontWeight:800,marginBottom:14}}>순위 · 결과</div>
       {/* 내부 탭 */}
       <div style={{display:"flex",gap:6,marginBottom:16}}>
         {tabs.map(t=>(
-          <button key={t.id} onClick={()=>setInnerTab(t.id)} style={{flex:1,background:innerTab===t.id?"rgba(46,204,113,.15)":"#0f1d35",border:`1px solid ${innerTab===t.id?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"9px 0",color:innerTab===t.id?"#2ecc71":"#64748b",fontWeight:innerTab===t.id?700:400,fontSize:16,cursor:"pointer"}}>{t.label}</button>
+          <button key={t.id} onClick={()=>setInnerTab(t.id)} style={{flex:1,background:innerTab===t.id?"rgba(46,204,113,.15)":"#0f1d35",border:`1px solid ${innerTab===t.id?"#2ecc71":"#1e3060"}`,borderRadius:9,padding:"9px 0",color:innerTab===t.id?"#2ecc71":"#64748b",fontWeight:innerTab===t.id?700:400,fontSize:15,cursor:"pointer"}}>{t.label}</button>
         ))}
       </div>
 
@@ -1455,24 +1455,24 @@ function RankingTab({ matches }) {
         const teams=calcGroup(grp); const gi=groupInfo[grp];
         return (
           <div key={grp} style={{marginBottom:16}}>
-            <div style={{fontSize:16,fontWeight:700,color:gi.color,marginBottom:8,letterSpacing:1}}>{gi.label}</div>
+            <div style={{fontSize:15,fontWeight:700,color:gi.color,marginBottom:8,letterSpacing:1}}>{gi.label}</div>
             <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden"}}>
-              <div style={{display:"grid",gridTemplateColumns:"20px 1fr 28px 28px 28px 28px 28px 36px",padding:"7px 12px",background:"#0a1428",fontSize:16,color:"#475569",fontWeight:700,gap:3}}>
+              <div style={{display:"grid",gridTemplateColumns:"20px 1fr 28px 28px 28px 28px 28px 36px",padding:"7px 12px",background:"#0a1428",fontSize:15,color:"#475569",fontWeight:700,gap:3}}>
                 {["","팀","경","승","무","패","득실","승점"].map(h=><div key={h}>{h}</div>)}
               </div>
               {teams.length===0
-                ?<div style={{padding:"12px",textAlign:"center",fontSize:16,color:"#334155"}}>경기 대기중</div>
+                ?<div style={{padding:"12px",textAlign:"center",fontSize:15,color:"#334155"}}>경기 대기중</div>
                 :teams.map((t,i)=>{
                   const pts=t.w*3+t.d;
                   return <div key={t.name} style={{display:"grid",gridTemplateColumns:"20px 1fr 28px 28px 28px 28px 28px 36px",padding:"9px 12px",borderTop:"1px solid #1e3060",alignItems:"center",gap:3}}>
-                    <div style={{textAlign:"center",fontSize:16}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":<span style={{color:"#334155",fontSize:16}}>{i+1}</span>}</div>
-                    <div style={{display:"flex",alignItems:"center",gap:5}}><span style={{fontSize:16}}>{t.emoji}</span><span style={{fontSize:16,fontWeight:i<2?700:500,color:i<2?"#e2e8f0":"#94a3b8"}}>{t.name}</span></div>
-                    <div style={{textAlign:"center",fontSize:16,color:"#64748b"}}>{t.p}</div>
-                    <div style={{textAlign:"center",fontSize:16,color:"#2ecc71",fontWeight:700}}>{t.w}</div>
-                    <div style={{textAlign:"center",fontSize:16,color:"#94a3b8"}}>{t.d}</div>
-                    <div style={{textAlign:"center",fontSize:16,color:"#ff4757",fontWeight:700}}>{t.l}</div>
-                    <div style={{textAlign:"center",fontSize:16,color:"#e2e8f0"}}>{t.gf-t.ga>0?"+":""}{t.gf-t.ga}</div>
-                    <div style={{textAlign:"center",fontSize:16,fontWeight:900,color:i===0?"#f1c40f":"#e2e8f0"}}>{pts}</div>
+                    <div style={{textAlign:"center",fontSize:15}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":<span style={{color:"#334155",fontSize:15}}>{i+1}</span>}</div>
+                    <div style={{display:"flex",alignItems:"center",gap:5}}><span style={{fontSize:15}}>{t.emoji}</span><span style={{fontSize:15,fontWeight:i<2?700:500,color:i<2?"#e2e8f0":"#94a3b8"}}>{t.name}</span></div>
+                    <div style={{textAlign:"center",fontSize:15,color:"#64748b"}}>{t.p}</div>
+                    <div style={{textAlign:"center",fontSize:15,color:"#2ecc71",fontWeight:700}}>{t.w}</div>
+                    <div style={{textAlign:"center",fontSize:15,color:"#94a3b8"}}>{t.d}</div>
+                    <div style={{textAlign:"center",fontSize:15,color:"#ff4757",fontWeight:700}}>{t.l}</div>
+                    <div style={{textAlign:"center",fontSize:15,color:"#e2e8f0"}}>{t.gf-t.ga>0?"+":""}{t.gf-t.ga}</div>
+                    <div style={{textAlign:"center",fontSize:15,fontWeight:900,color:i===0?"#f1c40f":"#e2e8f0"}}>{pts}</div>
                   </div>;
                 })
               }
@@ -1485,17 +1485,17 @@ function RankingTab({ matches }) {
       {innerTab==="scorer"&&(
         <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden"}}>
           {scorers.length===0
-            ?<div style={{padding:"24px",textAlign:"center",fontSize:16,color:"#334155"}}>아직 기록된 득점이 없습니다</div>
+            ?<div style={{padding:"24px",textAlign:"center",fontSize:15,color:"#334155"}}>아직 기록된 득점이 없습니다</div>
             :scorers.slice(0,20).map((p,i)=>(
               <div key={p.name} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",borderBottom:"1px solid #1e3060"}}>
-                <span style={{fontSize:16,fontWeight:800,color:i===0?"#f1c40f":i===1?"#94a3b8":i===2?"#cd7f32":"#334155",minWidth:20,textAlign:"center"}}>{i+1}</span>
+                <span style={{fontSize:15,fontWeight:800,color:i===0?"#f1c40f":i===1?"#94a3b8":i===2?"#cd7f32":"#334155",minWidth:20,textAlign:"center"}}>{i+1}</span>
                 <div style={{flex:1}}>
-                  <div style={{fontSize:16,fontWeight:600,color:"#e2e8f0"}}>{p.name}</div>
-                  <div style={{fontSize:16,color:"#475569"}}>{p.team} · {p.grp}조</div>
+                  <div style={{fontSize:15,fontWeight:600,color:"#e2e8f0"}}>{p.name}</div>
+                  <div style={{fontSize:15,color:"#475569"}}>{p.team} · {p.grp}조</div>
                 </div>
                 <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                  <div style={{textAlign:"center"}}><div style={{fontSize:16,fontWeight:900,color:"#2ecc71"}}>{p.goals}</div><div style={{fontSize:16,color:"#475569"}}>골</div></div>
-                  <div style={{textAlign:"center"}}><div style={{fontSize:16,fontWeight:700,color:"#3498db"}}>{p.assists}</div><div style={{fontSize:16,color:"#475569"}}>도움</div></div>
+                  <div style={{textAlign:"center"}}><div style={{fontSize:15,fontWeight:900,color:"#2ecc71"}}>{p.goals}</div><div style={{fontSize:15,color:"#475569"}}>골</div></div>
+                  <div style={{textAlign:"center"}}><div style={{fontSize:15,fontWeight:700,color:"#3498db"}}>{p.assists}</div><div style={{fontSize:15,color:"#475569"}}>도움</div></div>
                 </div>
               </div>
             ))
@@ -1508,38 +1508,38 @@ function RankingTab({ matches }) {
         <div>
           {finished.length===0
             ?<div style={{textAlign:"center",padding:"40px 0",color:"#334155"}}>
-              <div style={{fontSize:20,marginBottom:10}}>🏆</div>
-              <div style={{fontSize:16}}>아직 완료된 경기가 없습니다</div>
+              <div style={{fontSize:19,marginBottom:10}}>🏆</div>
+              <div style={{fontSize:15}}>아직 완료된 경기가 없습니다</div>
             </div>
             :finished.sort((a,b)=>a.id-b.id).map(m=>(
               <div key={m.id} style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,padding:14,marginBottom:8}}>
                 <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:8}}>
-                  <span style={{fontSize:16,fontWeight:700,background:`${groupInfo[m.group]?.color}20`,color:groupInfo[m.group]?.color,padding:"2px 7px",borderRadius:10}}>{m.group}조</span>
-                  <span style={{fontSize:16,color:"#475569"}}>{m.date} {m.time} · {m.field}</span>
-                  <span style={{marginLeft:"auto",fontSize:16,background:"#1e293b",color:"#94a3b8",padding:"2px 8px",borderRadius:10}}>종료</span>
+                  <span style={{fontSize:15,fontWeight:700,background:`${groupInfo[m.group]?.color}20`,color:groupInfo[m.group]?.color,padding:"2px 7px",borderRadius:10}}>{m.group}조</span>
+                  <span style={{fontSize:15,color:"#475569"}}>{m.date} {m.time} · {m.field}</span>
+                  <span style={{marginLeft:"auto",fontSize:15,background:"#1e293b",color:"#94a3b8",padding:"2px 8px",borderRadius:10}}>종료</span>
                 </div>
                 <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                   <div style={{flex:1,textAlign:"center"}}>
-                    <div style={{fontSize:16}}>{m.home.emoji}</div>
-                    <div style={{fontSize:16,fontWeight:700,color:(m.hs||0)>(m.as||0)?m.home.color:"#94a3b8",marginTop:4}}>{m.home.name}</div>
+                    <div style={{fontSize:15}}>{m.home.emoji}</div>
+                    <div style={{fontSize:15,fontWeight:700,color:(m.hs||0)>(m.as||0)?m.home.color:"#94a3b8",marginTop:4}}>{m.home.name}</div>
                   </div>
                   <div style={{textAlign:"center",padding:"0 12px"}}>
-                    <div style={{fontSize:20,fontWeight:900,letterSpacing:4}}>
+                    <div style={{fontSize:19,fontWeight:900,letterSpacing:4}}>
                       <span style={{color:(m.hs||0)>(m.as||0)?"#e2e8f0":"#64748b"}}>{m.hs||0}</span>
-                      <span style={{color:"#334155",fontSize:16,margin:"0 4px"}}>:</span>
+                      <span style={{color:"#334155",fontSize:15,margin:"0 4px"}}>:</span>
                       <span style={{color:(m.as||0)>(m.hs||0)?"#e2e8f0":"#64748b"}}>{m.as||0}</span>
                     </div>
-                    <div style={{fontSize:16,color:"#475569",marginTop:2}}>FT</div>
+                    <div style={{fontSize:15,color:"#475569",marginTop:2}}>FT</div>
                   </div>
                   <div style={{flex:1,textAlign:"center"}}>
-                    <div style={{fontSize:16}}>{m.away.emoji}</div>
-                    <div style={{fontSize:16,fontWeight:700,color:(m.as||0)>(m.hs||0)?m.away.color:"#94a3b8",marginTop:4}}>{m.away.name}</div>
+                    <div style={{fontSize:15}}>{m.away.emoji}</div>
+                    <div style={{fontSize:15,fontWeight:700,color:(m.as||0)>(m.hs||0)?m.away.color:"#94a3b8",marginTop:4}}>{m.away.name}</div>
                   </div>
                 </div>
                 {m.events?.filter(e=>e.type==="goal").length>0&&(
                   <div style={{marginTop:10,paddingTop:8,borderTop:"1px solid #1e3060"}}>
                     {m.events.filter(e=>e.type==="goal").map(e=>(
-                      <div key={e.id} style={{fontSize:16,color:"#64748b",marginBottom:3}}>
+                      <div key={e.id} style={{fontSize:15,color:"#64748b",marginBottom:3}}>
                         ⚽ {e.player}{e.assist?` 🤝${e.assist}`:""} {e.min}' · {e.team==="home"?m.home.name:m.away.name}
                       </div>
                     ))}
@@ -1599,28 +1599,28 @@ function CheerGloryInput({ user, targetMatchId, targetMatch, onSent, isGlory }) 
           <div style={{display:"grid",gridTemplateColumns:"repeat(10,1fr)",gap:4}}>
             {GLORY_EMOJIS.map(e=>(
               <button key={e} onClick={()=>{setText(t=>t+e); setShowEmoji(false);}}
-                style={{background:"transparent",border:"none",borderRadius:6,padding:"4px 0",fontSize:21,cursor:"pointer",textAlign:"center"}}>
+                style={{background:"transparent",border:"none",borderRadius:6,padding:"4px 0",fontSize:20,cursor:"pointer",textAlign:"center"}}>
                 {e}
               </button>
             ))}
           </div>
         </div>
       )}
-      {err&&<div style={{fontSize:15,color:"#ff4757",marginBottom:5}}>⚠ {err}</div>}
+      {err&&<div style={{fontSize:14,color:"#ff4757",marginBottom:5}}>⚠ {err}</div>}
       <div style={{display:"flex",gap:6,alignItems:"flex-end"}}>
         <div style={{flex:1}}>
           <textarea value={text} onChange={e=>setText(e.target.value)}
             onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submit();}}}
             placeholder="하나님께 영광 돌리는 메시지를 남겨주세요 🙏"
-            style={{width:"100%",background:"#0f172a",border:"1px solid #f1c40f40",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:48,lineHeight:1.5}}/>
+            style={{width:"100%",background:"#0f172a",border:"1px solid #f1c40f40",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:48,lineHeight:1.5}}/>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:4,flexShrink:0}}>
           <button onClick={()=>setShowEmoji(v=>!v)}
-            style={{width:34,height:20,borderRadius:6,background:showEmoji?"rgba(241,196,15,.2)":"#1e293b",border:`1px solid ${showEmoji?"#f1c40f":"#334155"}`,color:showEmoji?"#f1c40f":"#64748b",fontSize:18,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            style={{width:34,height:20,borderRadius:6,background:showEmoji?"rgba(241,196,15,.2)":"#1e293b",border:`1px solid ${showEmoji?"#f1c40f":"#334155"}`,color:showEmoji?"#f1c40f":"#64748b",fontSize:17,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
             🙏
           </button>
           <button onClick={submit} disabled={!text.trim()||sending}
-            style={{width:34,height:26,borderRadius:6,background:text.trim()?"linear-gradient(135deg,#f1c40f,#d4ac0d)":"#1e293b",border:"none",color:text.trim()?"#000":"#334155",fontSize:17,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
+            style={{width:34,height:26,borderRadius:6,background:text.trim()?"linear-gradient(135deg,#f1c40f,#d4ac0d)":"#1e293b",border:"none",color:text.trim()?"#000":"#334155",fontSize:16,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
             {sending?"⏳":"↑"}
           </button>
         </div>
@@ -1729,17 +1729,17 @@ function CheerTab({ matches, user }) {
     const m = matches.find(m=>m.id===c.matchId);
     return (
       <div style={{padding:"10px 14px",borderBottom:"1px solid #0f172a",display:"flex",gap:8}}>
-        <div style={{width:28,height:28,borderRadius:7,background:`${c.color||"#3498db"}20`,border:`1px solid ${c.color||"#3498db"}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>
+        <div style={{width:28,height:28,borderRadius:7,background:`${c.color||"#3498db"}20`,border:`1px solid ${c.color||"#3498db"}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>
           {c.role==="감독/코치"?"🎽":c.role==="선수"?"⚽":c.role==="학부모"?"👨‍👩‍👧":c.role==="심판"?"🟨":"💬"}
         </div>
         <div style={{flex:1,minWidth:0}}>
           <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:3,flexWrap:"wrap"}}>
-            <span style={{fontSize:16,fontWeight:700,color:c.color||"#60a5fa"}}>{c.author}</span>
-            <span style={{fontSize:14,color:"#334155",background:`${c.color||"#3498db"}15`,padding:"1px 5px",borderRadius:8}}>{c.role}</span>
-            {m&&<span style={{fontSize:14,color:"#475569",background:"#0f172a",padding:"1px 6px",borderRadius:8}}>{c.homeEmoji}{c.awayEmoji} {c.matchHome}vs{c.matchAway}</span>}
-            <span style={{fontSize:14,color:"#334155",marginLeft:"auto"}}>{c.displayTime}</span>
+            <span style={{fontSize:15,fontWeight:700,color:c.color||"#60a5fa"}}>{c.author}</span>
+            <span style={{fontSize:13,color:"#334155",background:`${c.color||"#3498db"}15`,padding:"1px 5px",borderRadius:8}}>{c.role}</span>
+            {m&&<span style={{fontSize:13,color:"#475569",background:"#0f172a",padding:"1px 6px",borderRadius:8}}>{c.homeEmoji}{c.awayEmoji} {c.matchHome}vs{c.matchAway}</span>}
+            <span style={{fontSize:13,color:"#334155",marginLeft:"auto"}}>{c.displayTime}</span>
           </div>
-          {c.text&&<div style={{fontSize:16,color:"#cbd5e1",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
+          {c.text&&<div style={{fontSize:15,color:"#cbd5e1",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
           {c.imgUrl&&<img src={c.imgUrl} alt="사진" onError={e=>{e.target.style.display="none";}} style={{marginTop:6,maxWidth:"100%",maxHeight:220,borderRadius:8,objectFit:"cover",display:"block"}}/>}
         </div>
       </div>
@@ -1751,12 +1751,12 @@ function CheerTab({ matches, user }) {
       {/* 탭 헤더 */}
       <div style={{position:"sticky",top:60,zIndex:10,background:"#0a0e1a",padding:"12px 16px 0",borderBottom:"1px solid #1e3060"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
-          <div style={{fontSize:17,fontWeight:800}}>🙏 영광 · 포토</div>
+          <div style={{fontSize:16,fontWeight:800}}>🙏 영광 · 포토</div>
           <div style={{display:"flex",background:"#0f1d35",borderRadius:20,padding:2,border:"1px solid #1e3060"}}>
-            <button onClick={()=>setInnerTab("glory")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="glory"?"#f1c40f":"transparent",color:innerTab==="glory"?"#000":"#64748b",fontSize:15,fontWeight:700,cursor:"pointer"}}>
+            <button onClick={()=>setInnerTab("glory")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="glory"?"#f1c40f":"transparent",color:innerTab==="glory"?"#000":"#64748b",fontSize:14,fontWeight:700,cursor:"pointer"}}>
               🙏 영광{innerTab==="glory"?` (${gloryList.length})`:""}
             </button>
-            <button onClick={()=>setInnerTab("photo")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:15,fontWeight:700,cursor:"pointer"}}>
+            <button onClick={()=>setInnerTab("photo")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:14,fontWeight:700,cursor:"pointer"}}>
               📷 포토{innerTab==="photo"?` (${photoList.length})`:""}
             </button>
           </div>
@@ -1764,12 +1764,12 @@ function CheerTab({ matches, user }) {
 
         {/* 경기 필터 */}
         <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:10,scrollbarWidth:"none"}}>
-          <button onClick={()=>setSelMatch("all")} style={{flexShrink:0,background:selMatch==="all"?"rgba(46,204,113,.15)":"transparent",border:`1px solid ${selMatch==="all"?"#2ecc71":"#1e3060"}`,borderRadius:20,padding:"4px 12px",color:selMatch==="all"?"#2ecc71":"#64748b",fontSize:15,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>
+          <button onClick={()=>setSelMatch("all")} style={{flexShrink:0,background:selMatch==="all"?"rgba(46,204,113,.15)":"transparent",border:`1px solid ${selMatch==="all"?"#2ecc71":"#1e3060"}`,borderRadius:20,padding:"4px 12px",color:selMatch==="all"?"#2ecc71":"#64748b",fontSize:14,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>
             전체
           </button>
           {matches.map(m=>(
-            <button key={m.id} onClick={()=>setSelMatch(String(m.id))} style={{flexShrink:0,background:selMatch===String(m.id)?`${m.home.color}20`:"transparent",border:`1px solid ${selMatch===String(m.id)?m.home.color:"#1e3060"}`,borderRadius:20,padding:"4px 11px",color:selMatch===String(m.id)?m.home.color:"#64748b",fontSize:15,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>
-              {m.home.emoji}{m.away.emoji} <span style={{fontSize:14}}>{m.group}조</span>
+            <button key={m.id} onClick={()=>setSelMatch(String(m.id))} style={{flexShrink:0,background:selMatch===String(m.id)?`${m.home.color}20`:"transparent",border:`1px solid ${selMatch===String(m.id)?m.home.color:"#1e3060"}`,borderRadius:20,padding:"4px 11px",color:selMatch===String(m.id)?m.home.color:"#64748b",fontSize:14,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>
+              {m.home.emoji}{m.away.emoji} <span style={{fontSize:13}}>{m.group}조</span>
             </button>
           ))}
         </div>
@@ -1779,7 +1779,7 @@ function CheerTab({ matches, user }) {
       <div style={{padding:"12px 16px",background:"#0d1425",borderBottom:"1px solid #1e3060"}}>
         {/* 대상 경기 표시 */}
         {targetMatch&&(
-          <div style={{fontSize:15,color:"#475569",marginBottom:8,display:"flex",alignItems:"center",gap:4}}>
+          <div style={{fontSize:14,color:"#475569",marginBottom:8,display:"flex",alignItems:"center",gap:4}}>
             <span>→</span>
             <span style={{color:"#94a3b8"}}>{targetMatch.home.emoji}{targetMatch.away.emoji} {targetMatch.home.name} vs {targetMatch.away.name} {selMatch==="all"?"(현재 경기)":""}</span>
           </div>
@@ -1788,7 +1788,7 @@ function CheerTab({ matches, user }) {
         {/* 영광 탭 입력 */}
         {innerTab==="glory"&&(
           <div>
-            <div style={{fontSize:15,color:"#f1c40f80",marginBottom:8,textAlign:"center"}}>🙏 하나님께 영광 돌리는 메시지를 남겨주세요</div>
+            <div style={{fontSize:14,color:"#f1c40f80",marginBottom:8,textAlign:"center"}}>🙏 하나님께 영광 돌리는 메시지를 남겨주세요</div>
             <CheerGloryInput user={user} targetMatchId={targetMatchId} targetMatch={targetMatch} onSent={(newC)=>setAllComments(prev=>[...prev,newC])} isGlory={true}/>
           </div>
         )}
@@ -1796,13 +1796,13 @@ function CheerTab({ matches, user }) {
         {/* 포토 탭 입력 */}
         {innerTab==="photo"&&(
           <>
-            {uploadErr&&<div style={{fontSize:15,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
+            {uploadErr&&<div style={{fontSize:14,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
             <div style={{display:"flex",gap:6,alignItems:"center"}}>
               <input value={photoCaption} onChange={e=>setPhotoCaption(e.target.value)} placeholder="사진 설명 (선택)"
-                style={{flex:1,background:"#0f172a",border:"1px solid #1e3060",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:16,outline:"none",fontFamily:"inherit"}}/>
+                style={{flex:1,background:"#0f172a",border:"1px solid #1e3060",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:15,outline:"none",fontFamily:"inherit"}}/>
               <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} style={{display:"none"}}/>
               <button onClick={()=>fileRef.current?.click()} disabled={uploading}
-                style={{padding:"8px 14px",background:uploading?"rgba(241,196,15,.15)":"rgba(52,152,219,.2)",border:"1px solid #3498db50",borderRadius:8,color:uploading?"#f1c40f":"#3498db",fontSize:15,fontWeight:700,cursor:uploading?"wait":"pointer",whiteSpace:"nowrap",flexShrink:0}}>
+                style={{padding:"8px 14px",background:uploading?"rgba(241,196,15,.15)":"rgba(52,152,219,.2)",border:"1px solid #3498db50",borderRadius:8,color:uploading?"#f1c40f":"#3498db",fontSize:14,fontWeight:700,cursor:uploading?"wait":"pointer",whiteSpace:"nowrap",flexShrink:0}}>
                 {uploading?"⏳ 올리는 중...":"📷 사진 추가"}
               </button>
             </div>
@@ -1813,11 +1813,11 @@ function CheerTab({ matches, user }) {
       {/* 목록 */}
       <div style={{padding:"0 16px"}}>
         {loading
-          ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569",fontSize:16}}>⏳ 불러오는 중...</div>
+          ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569",fontSize:15}}>⏳ 불러오는 중...</div>
           :displayList.length===0
             ?<div style={{textAlign:"center",padding:"32px 0",color:"#334155"}}>
-              <div style={{fontSize:32,marginBottom:8}}>{innerTab==="glory"?"🙏":"📷"}</div>
-              <div style={{fontSize:16}}>{innerTab==="glory"?"첫 번째 영광의 메시지를 남겨주세요!":"첫 사진을 공유해보세요!"}</div>
+              <div style={{fontSize:31,marginBottom:8}}>{innerTab==="glory"?"🙏":"📷"}</div>
+              <div style={{fontSize:15}}>{innerTab==="glory"?"첫 번째 영광의 메시지를 남겨주세요!":"첫 사진을 공유해보세요!"}</div>
             </div>
             :innerTab==="photo"
               ?<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,paddingTop:12}}>
@@ -1825,9 +1825,9 @@ function CheerTab({ matches, user }) {
                   <div key={c.fbId||c.id} style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:10,overflow:"hidden"}}>
                     <img src={c.imgUrl} alt="사진" onError={e=>{e.target.style.display="none";}} style={{width:"100%",aspectRatio:"1",objectFit:"cover",display:"block"}}/>
                     <div style={{padding:"6px 8px"}}>
-                      <div style={{fontSize:14,fontWeight:700,color:c.color||"#60a5fa"}}>{c.author}</div>
-                      {c.text&&<div style={{fontSize:14,color:"#94a3b8",marginTop:2,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{c.text}</div>}
-                      <div style={{fontSize:13,color:"#334155",marginTop:2}}>{c.displayTime}</div>
+                      <div style={{fontSize:13,fontWeight:700,color:c.color||"#60a5fa"}}>{c.author}</div>
+                      {c.text&&<div style={{fontSize:13,color:"#94a3b8",marginTop:2,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{c.text}</div>}
+                      <div style={{fontSize:12,color:"#334155",marginTop:2}}>{c.displayTime}</div>
                     </div>
                   </div>
                 ))}
@@ -1838,14 +1838,14 @@ function CheerTab({ matches, user }) {
                     <div key={c.fbId||c.id} style={{background:"linear-gradient(135deg,#0f172a,#0a1428)",border:"1px solid #f1c40f30",borderRadius:14,padding:"14px 16px",position:"relative",overflow:"hidden"}}>
                       <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:"linear-gradient(90deg,#f1c40f,#e67e22,#f1c40f)",opacity:0.6}}/>
                       <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
-                        <div style={{width:28,height:28,borderRadius:"50%",background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🙏</div>
+                        <div style={{width:28,height:28,borderRadius:"50%",background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",display:"flex",alignItems:"center",justifyContent:"center",fontSize:17}}>🙏</div>
                         <div>
-                          <span style={{fontSize:16,fontWeight:700,color:"#f1c40f"}}>{c.author}</span>
-                          <span style={{fontSize:14,color:"#64748b",marginLeft:6}}>{c.role}</span>
+                          <span style={{fontSize:15,fontWeight:700,color:"#f1c40f"}}>{c.author}</span>
+                          <span style={{fontSize:13,color:"#64748b",marginLeft:6}}>{c.role}</span>
                         </div>
-                        <span style={{fontSize:14,color:"#334155",marginLeft:"auto"}}>{c.displayTime}</span>
+                        <span style={{fontSize:13,color:"#334155",marginLeft:"auto"}}>{c.displayTime}</span>
                       </div>
-                      <div style={{fontSize:17,color:"#e2e8f0",lineHeight:1.7,wordBreak:"break-word",paddingLeft:36}}>{c.text}</div>
+                      <div style={{fontSize:16,color:"#e2e8f0",lineHeight:1.7,wordBreak:"break-word",paddingLeft:36}}>{c.text}</div>
                     </div>
                   ))}
                 </div>
@@ -1874,27 +1874,27 @@ function LoginScreen({ onLogin }) {
   return (
     <div style={{fontFamily:"'Noto Sans KR',sans-serif",background:"#0a0e1a",minHeight:"100vh",color:"#e8eaf0",maxWidth:430,margin:"0 auto",display:"flex",flexDirection:"column"}}>
       <div style={{background:"linear-gradient(135deg,#0d1b3e,#1a2a5e)",padding:"32px 20px 24px",textAlign:"center"}}>
-        <div style={{width:64,height:64,borderRadius:18,margin:"0 auto 14px",background:"linear-gradient(135deg,#2ecc71,#27ae60)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,boxShadow:"0 8px 24px rgba(46,204,113,.3)"}}>⚽</div>
-        <div style={{fontSize:16,fontWeight:900}}>26년 상반기 은하수대회</div>
-        <div style={{fontSize:16,color:"#7b9bc8",marginTop:4}}>2026 · 5월 30일 · U9/U11/U13</div>
+        <div style={{width:64,height:64,borderRadius:18,margin:"0 auto 14px",background:"linear-gradient(135deg,#2ecc71,#27ae60)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,boxShadow:"0 8px 24px rgba(46,204,113,.3)"}}>⚽</div>
+        <div style={{fontSize:15,fontWeight:900}}>26년 상반기 은하수대회</div>
+        <div style={{fontSize:15,color:"#7b9bc8",marginTop:4}}>2026 · 5월 30일 · U9/U11/U13</div>
       </div>
       <div style={{padding:"24px 20px",flex:1}}>
-        <div style={{fontSize:16,fontWeight:700,color:"#7b9bc8",marginBottom:12,letterSpacing:1}}>역할 선택</div>
+        <div style={{fontSize:15,fontWeight:700,color:"#7b9bc8",marginBottom:12,letterSpacing:1}}>역할 선택</div>
         <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18}}>
           {ROLES.map(r=>(
             <button key={r.id} onClick={()=>{setSel(r);setErr("");}} style={{display:"flex",alignItems:"center",gap:12,background:sel?.id===r.id?`${r.color}12`:"#0f1d35",border:`1px solid ${sel?.id===r.id?r.color:"#1e3060"}`,borderRadius:12,padding:"11px 14px",cursor:"pointer",textAlign:"left"}}>
-              <div style={{width:36,height:36,borderRadius:9,background:sel?.id===r.id?`${r.color}20`:"#1a2a4a",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{r.icon}</div>
-              <div style={{flex:1}}><div style={{fontSize:16,fontWeight:700,color:sel?.id===r.id?r.color:"#e2e8f0"}}>{r.label}</div><div style={{fontSize:16,color:"#64748b",marginTop:1}}>{r.desc}</div></div>
-              {sel?.id===r.id&&<div style={{width:20,height:20,borderRadius:"50%",background:r.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,color:"#000",fontWeight:900}}>✓</div>}
+              <div style={{width:36,height:36,borderRadius:9,background:sel?.id===r.id?`${r.color}20`:"#1a2a4a",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,flexShrink:0}}>{r.icon}</div>
+              <div style={{flex:1}}><div style={{fontSize:15,fontWeight:700,color:sel?.id===r.id?r.color:"#e2e8f0"}}>{r.label}</div><div style={{fontSize:15,color:"#64748b",marginTop:1}}>{r.desc}</div></div>
+              {sel?.id===r.id&&<div style={{width:20,height:20,borderRadius:"50%",background:r.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,color:"#000",fontWeight:900}}>✓</div>}
             </button>
           ))}
         </div>
         <div style={{marginBottom:16}}>
-          <div style={{fontSize:16,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>이름 *</div>
+          <div style={{fontSize:15,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>이름 *</div>
           <Inp value={name} onChange={v=>{setName(v);setErr("");}} placeholder="이름을 입력하세요"/>
         </div>
-        {err&&<div style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:10,padding:"10px 14px",marginBottom:12,fontSize:16,color:"#ff4757"}}>⚠ {err}</div>}
-        <button onClick={handle} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"15px 0",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer",boxShadow:"0 4px 16px rgba(46,204,113,.3)"}}>
+        {err&&<div style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:10,padding:"10px 14px",marginBottom:12,fontSize:15,color:"#ff4757"}}>⚠ {err}</div>}
+        <button onClick={handle} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"15px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(46,204,113,.3)"}}>
           입장하기 →
         </button>
       </div>
@@ -1990,15 +1990,15 @@ function StatsTab({ matches, teams }) {
   // ── 공용 UI ────────────────────────────────────────────────────────────────
   const KpiCard = ({icon,label,value,sub,color="#2ecc71"}) => (
     <div style={{background:"#0a1428",border:"1px solid #1e3060",borderRadius:12,padding:12,textAlign:"center"}}>
-      <div style={{fontSize:16,marginBottom:3}}>{icon}</div>
-      <div style={{fontSize:16,fontWeight:900,color}}>{value}</div>
-      <div style={{fontSize:16,fontWeight:700,color:"#94a3b8",marginTop:2}}>{label}</div>
-      {sub&&<div style={{fontSize:16,color:"#475569",marginTop:1}}>{sub}</div>}
+      <div style={{fontSize:15,marginBottom:3}}>{icon}</div>
+      <div style={{fontSize:15,fontWeight:900,color}}>{value}</div>
+      <div style={{fontSize:15,fontWeight:700,color:"#94a3b8",marginTop:2}}>{label}</div>
+      {sub&&<div style={{fontSize:15,color:"#475569",marginTop:1}}>{sub}</div>}
     </div>
   );
 
   const RankMedal = ({i}) => (
-    <div style={{fontSize:16,fontWeight:800,
+    <div style={{fontSize:15,fontWeight:800,
       color:i===0?"#f1c40f":i===1?"#94a3b8":i===2?"#cd7f32":"#475569",
       textAlign:"center",minWidth:20}}>{i+1}</div>
   );
@@ -2014,8 +2014,8 @@ function StatsTab({ matches, teams }) {
       {/* 상단 헤더 */}
       <div style={{padding:"16px 16px 0"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-          <div style={{fontSize:16,fontWeight:800}}>📊 기록 통계</div>
-          <div style={{background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",borderRadius:20,padding:"2px 9px",fontSize:16,fontWeight:800,color:"#f1c40f"}}>기록 담당자 전용</div>
+          <div style={{fontSize:15,fontWeight:800}}>📊 기록 통계</div>
+          <div style={{background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",borderRadius:20,padding:"2px 9px",fontSize:15,fontWeight:800,color:"#f1c40f"}}>기록 담당자 전용</div>
         </div>
         {/* 내부 탭 */}
         <div style={{display:"flex",background:"#0f1d35",borderRadius:12,padding:3,gap:3,marginBottom:16}}>
@@ -2024,7 +2024,7 @@ function StatsTab({ matches, teams }) {
               flex:1, border:"none", borderRadius:9, padding:"8px 4px",
               background:innerTab===t.id?"#1e3060":"transparent",
               color:innerTab===t.id?"#2ecc71":"#64748b",
-              fontWeight:innerTab===t.id?800:500, fontSize:16, cursor:"pointer",
+              fontWeight:innerTab===t.id?800:500, fontSize:15, cursor:"pointer",
             }}>{t.icon} {t.label}</button>
           ))}
         </div>
@@ -2037,9 +2037,9 @@ function StatsTab({ matches, teams }) {
           <div>
             {groups.length===0 && (
               <div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}>
-                <div style={{fontSize:16,marginBottom:12}}>🏆</div>
+                <div style={{fontSize:15,marginBottom:12}}>🏆</div>
                 <div>조별 경기 데이터가 없습니다</div>
-                <div style={{fontSize:16,marginTop:6,color:"#334155"}}>경기 개설 시 조(group) 정보를 입력해주세요</div>
+                <div style={{fontSize:15,marginTop:6,color:"#334155"}}>경기 개설 시 조(group) 정보를 입력해주세요</div>
               </div>
             )}
             {groups.map(grp=>{
@@ -2047,13 +2047,13 @@ function StatsTab({ matches, teams }) {
               return (
                 <div key={grp} style={{marginBottom:20}}>
                   <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
-                    <div style={{width:26,height:26,borderRadius:7,background:"rgba(46,204,113,.2)",border:"1px solid #2ecc7140",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,fontWeight:800,color:"#2ecc71"}}>{grp}</div>
-                    <div style={{fontSize:16,fontWeight:800,color:"#2ecc71",letterSpacing:1}}>조</div>
-                    <div style={{fontSize:16,color:"#475569",marginLeft:4}}>{gt.length}팀</div>
+                    <div style={{width:26,height:26,borderRadius:7,background:"rgba(46,204,113,.2)",border:"1px solid #2ecc7140",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,fontWeight:800,color:"#2ecc71"}}>{grp}</div>
+                    <div style={{fontSize:15,fontWeight:800,color:"#2ecc71",letterSpacing:1}}>조</div>
+                    <div style={{fontSize:15,color:"#475569",marginLeft:4}}>{gt.length}팀</div>
                   </div>
                   <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden"}}>
                     {/* 헤더 */}
-                    <div style={{display:"grid",gridTemplateColumns:"20px 1fr 28px 28px 28px 28px 28px 28px 32px",padding:"8px 12px",background:"#0a1428",fontSize:16,color:"#475569",fontWeight:700,gap:3}}>
+                    <div style={{display:"grid",gridTemplateColumns:"20px 1fr 28px 28px 28px 28px 28px 28px 32px",padding:"8px 12px",background:"#0a1428",fontSize:15,color:"#475569",fontWeight:700,gap:3}}>
                       {["","팀","경","승","무","패","득","실","승점"].map((h,i)=>(
                         <div key={i} style={{textAlign:i===1?"left":"center"}}>{h}</div>
                       ))}
@@ -2066,34 +2066,34 @@ function StatsTab({ matches, teams }) {
                       }}>
                         {/* 순위 */}
                         <div style={{textAlign:"center"}}>
-                          {i===0?<span style={{fontSize:16}}>🥇</span>
-                          :i===1?<span style={{fontSize:16}}>🥈</span>
-                          :i===2?<span style={{fontSize:16}}>🥉</span>
-                          :<span style={{fontSize:16,color:"#475569"}}>{i+1}</span>}
+                          {i===0?<span style={{fontSize:15}}>🥇</span>
+                          :i===1?<span style={{fontSize:15}}>🥈</span>
+                          :i===2?<span style={{fontSize:15}}>🥉</span>
+                          :<span style={{fontSize:15,color:"#475569"}}>{i+1}</span>}
                         </div>
                         {/* 팀명 */}
                         <div style={{display:"flex",alignItems:"center",gap:5}}>
-                          <span style={{fontSize:16}}>{t.emoji}</span>
+                          <span style={{fontSize:15}}>{t.emoji}</span>
                           <div>
-                            <div style={{fontSize:16,fontWeight:i<2?800:600,color:i<2?"#e2e8f0":"#94a3b8"}}>{t.name}</div>
+                            <div style={{fontSize:15,fontWeight:i<2?800:600,color:i<2?"#e2e8f0":"#94a3b8"}}>{t.name}</div>
                             {i<2&&<div style={{fontSize:8,color:"#2ecc71"}}>조 통과권</div>}
                           </div>
                         </div>
-                        <div style={{fontSize:16,textAlign:"center",color:"#64748b"}}>{t.played}</div>
-                        <div style={{fontSize:16,textAlign:"center",color:"#2ecc71",fontWeight:700}}>{t.wins}</div>
-                        <div style={{fontSize:16,textAlign:"center",color:"#94a3b8"}}>{t.draws}</div>
-                        <div style={{fontSize:16,textAlign:"center",color:"#ff4757",fontWeight:700}}>{t.losses}</div>
-                        <div style={{fontSize:16,textAlign:"center",color:"#e2e8f0"}}>{t.gf}</div>
-                        <div style={{fontSize:16,textAlign:"center",color:"#e2e8f0"}}>{t.ga}</div>
-                        <div style={{fontSize:16,textAlign:"center",fontWeight:900,color:i===0?"#f1c40f":"#e2e8f0"}}>{pts(t)}</div>
+                        <div style={{fontSize:15,textAlign:"center",color:"#64748b"}}>{t.played}</div>
+                        <div style={{fontSize:15,textAlign:"center",color:"#2ecc71",fontWeight:700}}>{t.wins}</div>
+                        <div style={{fontSize:15,textAlign:"center",color:"#94a3b8"}}>{t.draws}</div>
+                        <div style={{fontSize:15,textAlign:"center",color:"#ff4757",fontWeight:700}}>{t.losses}</div>
+                        <div style={{fontSize:15,textAlign:"center",color:"#e2e8f0"}}>{t.gf}</div>
+                        <div style={{fontSize:15,textAlign:"center",color:"#e2e8f0"}}>{t.ga}</div>
+                        <div style={{fontSize:15,textAlign:"center",fontWeight:900,color:i===0?"#f1c40f":"#e2e8f0"}}>{pts(t)}</div>
                       </div>
                     ))}
                     {/* 득실차 범례 */}
                     <div style={{padding:"6px 12px",background:"#0a1428",display:"flex",gap:12}}>
-                      <span style={{fontSize:16,color:"#475569"}}>경=경기 수</span>
-                      <span style={{fontSize:16,color:"#475569"}}>득=득점</span>
-                      <span style={{fontSize:16,color:"#475569"}}>실=실점</span>
-                      <span style={{fontSize:16,color:"#475569"}}>승점 = 승×3 + 무×1</span>
+                      <span style={{fontSize:15,color:"#475569"}}>경=경기 수</span>
+                      <span style={{fontSize:15,color:"#475569"}}>득=득점</span>
+                      <span style={{fontSize:15,color:"#475569"}}>실=실점</span>
+                      <span style={{fontSize:15,color:"#475569"}}>승점 = 승×3 + 무×1</span>
                     </div>
                   </div>
                 </div>
@@ -2106,27 +2106,27 @@ function StatsTab({ matches, teams }) {
         {innerTab==="player" && (
           <div>
             {/* 득점 순위 */}
-            <div style={{fontSize:16,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>⚽ 득점 순위</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>⚽ 득점 순위</div>
             <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden",marginBottom:18}}>
-              <div style={{display:"grid",gridTemplateColumns:"24px 1fr 44px 44px",padding:"8px 12px",background:"#0a1428",fontSize:16,color:"#475569",fontWeight:700,gap:4}}>
+              <div style={{display:"grid",gridTemplateColumns:"24px 1fr 44px 44px",padding:"8px 12px",background:"#0a1428",fontSize:15,color:"#475569",fontWeight:700,gap:4}}>
                 {["#","선수 / 팀·조","⚽골","🤝도움"].map(h=><div key={h} style={{textAlign:h==="선수 / 팀·조"?"left":"center"}}>{h}</div>)}
               </div>
               {scorers.length===0
-                ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:16}}>득점 기록 없음</div>
+                ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:15}}>득점 기록 없음</div>
                 :scorers.map((p,i)=>(
                   <div key={p.name} style={{display:"grid",gridTemplateColumns:"24px 1fr 44px 44px",padding:"10px 12px",borderTop:"1px solid #1e3060",alignItems:"center",gap:4}}>
                     <RankMedal i={i}/>
                     <div>
-                      <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
-                      <div style={{fontSize:16,color:"#475569"}}>{p.team} · {p.group}조</div>
+                      <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
+                      <div style={{fontSize:15,color:"#475569"}}>{p.team} · {p.group}조</div>
                     </div>
                     <div style={{textAlign:"center"}}>
-                      <span style={{fontSize:16,fontWeight:900,color:"#2ecc71"}}>{p.goals}</span>
-                      <span style={{fontSize:16,color:"#475569",marginLeft:2}}>골</span>
+                      <span style={{fontSize:15,fontWeight:900,color:"#2ecc71"}}>{p.goals}</span>
+                      <span style={{fontSize:15,color:"#475569",marginLeft:2}}>골</span>
                     </div>
                     <div style={{textAlign:"center"}}>
-                      <span style={{fontSize:16,fontWeight:900,color:"#3498db"}}>{p.assists}</span>
-                      <span style={{fontSize:16,color:"#475569",marginLeft:2}}>도</span>
+                      <span style={{fontSize:15,fontWeight:900,color:"#3498db"}}>{p.assists}</span>
+                      <span style={{fontSize:15,color:"#475569",marginLeft:2}}>도</span>
                     </div>
                   </div>
                 ))
@@ -2134,27 +2134,27 @@ function StatsTab({ matches, teams }) {
             </div>
 
             {/* 어시스트 순위 */}
-            <div style={{fontSize:16,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>🤝 어시스트 순위</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>🤝 어시스트 순위</div>
             <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden",marginBottom:18}}>
-              <div style={{display:"grid",gridTemplateColumns:"24px 1fr 44px 44px",padding:"8px 12px",background:"#0a1428",fontSize:16,color:"#475569",fontWeight:700,gap:4}}>
+              <div style={{display:"grid",gridTemplateColumns:"24px 1fr 44px 44px",padding:"8px 12px",background:"#0a1428",fontSize:15,color:"#475569",fontWeight:700,gap:4}}>
                 {["#","선수 / 팀·조","🤝도움","⚽골"].map(h=><div key={h} style={{textAlign:h==="선수 / 팀·조"?"left":"center"}}>{h}</div>)}
               </div>
               {assisters.length===0
-                ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:16}}>어시스트 기록 없음</div>
+                ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:15}}>어시스트 기록 없음</div>
                 :assisters.map((p,i)=>(
                   <div key={p.name} style={{display:"grid",gridTemplateColumns:"24px 1fr 44px 44px",padding:"10px 12px",borderTop:"1px solid #1e3060",alignItems:"center",gap:4}}>
                     <RankMedal i={i}/>
                     <div>
-                      <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
-                      <div style={{fontSize:16,color:"#475569"}}>{p.team} · {p.group}조</div>
+                      <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
+                      <div style={{fontSize:15,color:"#475569"}}>{p.team} · {p.group}조</div>
                     </div>
                     <div style={{textAlign:"center"}}>
-                      <span style={{fontSize:16,fontWeight:900,color:"#3498db"}}>{p.assists}</span>
-                      <span style={{fontSize:16,color:"#475569",marginLeft:2}}>도</span>
+                      <span style={{fontSize:15,fontWeight:900,color:"#3498db"}}>{p.assists}</span>
+                      <span style={{fontSize:15,color:"#475569",marginLeft:2}}>도</span>
                     </div>
                     <div style={{textAlign:"center"}}>
-                      <span style={{fontSize:16,fontWeight:900,color:"#2ecc71"}}>{p.goals}</span>
-                      <span style={{fontSize:16,color:"#475569",marginLeft:2}}>골</span>
+                      <span style={{fontSize:15,fontWeight:900,color:"#2ecc71"}}>{p.goals}</span>
+                      <span style={{fontSize:15,color:"#475569",marginLeft:2}}>골</span>
                     </div>
                   </div>
                 ))
@@ -2162,25 +2162,25 @@ function StatsTab({ matches, teams }) {
             </div>
 
             {/* 경고 순위 */}
-            <div style={{fontSize:16,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>🟨 경고·퇴장 순위</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>🟨 경고·퇴장 순위</div>
             <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden"}}>
-              <div style={{display:"grid",gridTemplateColumns:"24px 1fr 40px 40px",padding:"8px 12px",background:"#0a1428",fontSize:16,color:"#475569",fontWeight:700,gap:4}}>
+              <div style={{display:"grid",gridTemplateColumns:"24px 1fr 40px 40px",padding:"8px 12px",background:"#0a1428",fontSize:15,color:"#475569",fontWeight:700,gap:4}}>
                 {["#","선수 / 팀·조","🟨옐로","🟥레드"].map(h=><div key={h} style={{textAlign:h==="선수 / 팀·조"?"left":"center"}}>{h}</div>)}
               </div>
               {bookers.length===0
-                ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:16}}>카드 기록 없음</div>
+                ?<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:15}}>카드 기록 없음</div>
                 :bookers.map((p,i)=>(
                   <div key={p.name} style={{display:"grid",gridTemplateColumns:"24px 1fr 40px 40px",padding:"10px 12px",borderTop:"1px solid #1e3060",alignItems:"center",gap:4}}>
-                    <div style={{fontSize:16,color:"#475569",textAlign:"center"}}>{i+1}</div>
+                    <div style={{fontSize:15,color:"#475569",textAlign:"center"}}>{i+1}</div>
                     <div>
-                      <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
-                      <div style={{fontSize:16,color:"#475569"}}>{p.team} · {p.group}조</div>
+                      <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{p.name}</div>
+                      <div style={{fontSize:15,color:"#475569"}}>{p.team} · {p.group}조</div>
                     </div>
                     <div style={{textAlign:"center"}}>
-                      <span style={{fontSize:16,fontWeight:900,color:"#f1c40f"}}>{p.yellows}</span>
+                      <span style={{fontSize:15,fontWeight:900,color:"#f1c40f"}}>{p.yellows}</span>
                     </div>
                     <div style={{textAlign:"center"}}>
-                      <span style={{fontSize:16,fontWeight:900,color:"#e74c3c"}}>{p.reds}</span>
+                      <span style={{fontSize:15,fontWeight:900,color:"#e74c3c"}}>{p.reds}</span>
                     </div>
                   </div>
                 ))
@@ -2201,30 +2201,30 @@ function StatsTab({ matches, teams }) {
             </div>
 
             {/* 조별 팀 통계 */}
-            <div style={{fontSize:16,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>팀별 공격 기록</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#64748b",marginBottom:8,letterSpacing:1}}>팀별 공격 기록</div>
             <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden",marginBottom:18}}>
-              <div style={{display:"grid",gridTemplateColumns:"20px 1fr 36px 36px 36px 36px",padding:"8px 12px",background:"#0a1428",fontSize:16,color:"#475569",fontWeight:700,gap:4}}>
+              <div style={{display:"grid",gridTemplateColumns:"20px 1fr 36px 36px 36px 36px",padding:"8px 12px",background:"#0a1428",fontSize:15,color:"#475569",fontWeight:700,gap:4}}>
                 {["조","팀","승점","⚽","🤝","🟨"].map(h=><div key={h} style={{textAlign:h==="팀"?"left":"center"}}>{h}</div>)}
               </div>
               {groups.map(grp=>
                 sortTeams(allTeams.filter(t=>t.group===grp)).map((t,i)=>(
                   <div key={t.name} style={{display:"grid",gridTemplateColumns:"20px 1fr 36px 36px 36px 36px",padding:"9px 12px",borderTop:"1px solid #1e3060",alignItems:"center",gap:4}}>
-                    <div style={{fontSize:16,fontWeight:800,color:"#2ecc71",textAlign:"center"}}>{grp}</div>
+                    <div style={{fontSize:15,fontWeight:800,color:"#2ecc71",textAlign:"center"}}>{grp}</div>
                     <div style={{display:"flex",alignItems:"center",gap:5}}>
-                      <span style={{fontSize:16}}>{t.emoji}</span>
+                      <span style={{fontSize:15}}>{t.emoji}</span>
                       <div>
-                        <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0"}}>{t.name}</div>
-                        <div style={{fontSize:16,color:"#475569"}}>득실차 {gd(t)>0?"+":""}{gd(t)}</div>
+                        <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0"}}>{t.name}</div>
+                        <div style={{fontSize:15,color:"#475569"}}>득실차 {gd(t)>0?"+":""}{gd(t)}</div>
                       </div>
                     </div>
-                    <div style={{fontSize:16,fontWeight:900,textAlign:"center",color:i===0?"#f1c40f":"#e2e8f0"}}>{pts(t)}</div>
-                    <div style={{fontSize:16,textAlign:"center",color:"#2ecc71",fontWeight:700}}>{t.goals}</div>
-                    <div style={{fontSize:16,textAlign:"center",color:"#3498db",fontWeight:700}}>{t.assists}</div>
-                    <div style={{fontSize:16,textAlign:"center",color:"#f1c40f",fontWeight:700}}>{t.yellows}</div>
+                    <div style={{fontSize:15,fontWeight:900,textAlign:"center",color:i===0?"#f1c40f":"#e2e8f0"}}>{pts(t)}</div>
+                    <div style={{fontSize:15,textAlign:"center",color:"#2ecc71",fontWeight:700}}>{t.goals}</div>
+                    <div style={{fontSize:15,textAlign:"center",color:"#3498db",fontWeight:700}}>{t.assists}</div>
+                    <div style={{fontSize:15,textAlign:"center",color:"#f1c40f",fontWeight:700}}>{t.yellows}</div>
                   </div>
                 ))
               )}
-              {allTeams.length===0&&<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:16}}>데이터 없음</div>}
+              {allTeams.length===0&&<div style={{textAlign:"center",padding:"20px 0",color:"#475569",fontSize:15}}>데이터 없음</div>}
             </div>
           </div>
         )}
@@ -2303,14 +2303,14 @@ function NoticeTab({ notices, setNotices, canNotice, userName, userObj, showNoti
     <div style={{padding:16}}>
       <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} style={{display:"none"}}/>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
-        <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:16,cursor:"pointer"}}>←</button>
-        <div style={{fontSize:16,fontWeight:800}}>{editN?"공지 수정":"공지 작성"}</div>
+        <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:15,cursor:"pointer"}}>←</button>
+        <div style={{fontSize:15,fontWeight:800}}>{editN?"공지 수정":"공지 작성"}</div>
       </div>
       <div style={{marginBottom:12}}><SectionLabel>제목 *</SectionLabel><Inp value={form.title} onChange={v=>setForm(f=>({...f,title:v}))} placeholder="공지 제목을 입력하세요"/></div>
       <div style={{marginBottom:14}}>
         <SectionLabel>내용 *</SectionLabel>
         <textarea value={form.body} onChange={e=>setForm(f=>({...f,body:e.target.value}))} placeholder="공지 내용을 입력하세요..."
-          style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:10,padding:"11px 14px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:140}}/>
+          style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:10,padding:"11px 14px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:140}}/>
       </div>
       {/* 사진 첨부 */}
       <div style={{marginBottom:14}}>
@@ -2318,21 +2318,21 @@ function NoticeTab({ notices, setNotices, canNotice, userName, userObj, showNoti
         {form.imgUrl
           ?<div style={{position:"relative",display:"inline-block",marginBottom:8}}>
             <img src={form.imgUrl} alt="미리보기" style={{maxHeight:160,maxWidth:"100%",borderRadius:10,display:"block"}}/>
-            <button onClick={()=>setForm(f=>({...f,imgUrl:""}))} style={{position:"absolute",top:6,right:6,background:"rgba(0,0,0,.65)",border:"none",borderRadius:50,width:24,height:24,color:"#fff",fontSize:16,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
+            <button onClick={()=>setForm(f=>({...f,imgUrl:""}))} style={{position:"absolute",top:6,right:6,background:"rgba(0,0,0,.65)",border:"none",borderRadius:50,width:24,height:24,color:"#fff",fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
           </div>
-          :<button onClick={()=>fileRef.current?.click()} disabled={uploading} style={{display:"flex",alignItems:"center",gap:8,background:"#0f172a",border:"1px dashed #1e3060",borderRadius:10,padding:"12px 16px",color:uploading?"#f1c40f":"#64748b",fontSize:16,cursor:uploading?"wait":"pointer",width:"100%"}}>
-            <span style={{fontSize:16}}>{uploading?"⏳":"📷"}</span>
+          :<button onClick={()=>fileRef.current?.click()} disabled={uploading} style={{display:"flex",alignItems:"center",gap:8,background:"#0f172a",border:"1px dashed #1e3060",borderRadius:10,padding:"12px 16px",color:uploading?"#f1c40f":"#64748b",fontSize:15,cursor:uploading?"wait":"pointer",width:"100%"}}>
+            <span style={{fontSize:15}}>{uploading?"⏳":"📷"}</span>
             {uploading?"업로드 중...":"사진 선택 (JPG·PNG·GIF, 최대 10MB)"}
           </button>
         }
-        {uploadErr&&<div style={{fontSize:16,color:"#ff4757",marginTop:5}}>⚠ {uploadErr}</div>}
+        {uploadErr&&<div style={{fontSize:15,color:"#ff4757",marginTop:5}}>⚠ {uploadErr}</div>}
       </div>
       <div style={{marginBottom:20}}>
-        <button onClick={()=>setForm(f=>({...f,pinned:!f.pinned}))} style={{background:form.pinned?"rgba(241,196,15,.2)":"#0f1d35",border:`1px solid ${form.pinned?"#f1c40f":"#1e3060"}`,borderRadius:8,padding:"9px 14px",color:form.pinned?"#f1c40f":"#64748b",fontWeight:700,fontSize:16,cursor:"pointer"}}>
+        <button onClick={()=>setForm(f=>({...f,pinned:!f.pinned}))} style={{background:form.pinned?"rgba(241,196,15,.2)":"#0f1d35",border:`1px solid ${form.pinned?"#f1c40f":"#1e3060"}`,borderRadius:8,padding:"9px 14px",color:form.pinned?"#f1c40f":"#64748b",fontWeight:700,fontSize:15,cursor:"pointer"}}>
           📌 {form.pinned?"상단 고정 중 (해제하려면 탭)":"상단 고정"}
         </button>
       </div>
-      <button onClick={saveNotice} style={{width:"100%",background:(form.title.trim()&&form.body.trim())?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:(form.title.trim()&&form.body.trim())?"#000":"#475569",fontWeight:800,fontSize:16,cursor:"pointer"}}>
+      <button onClick={saveNotice} style={{width:"100%",background:(form.title.trim()&&form.body.trim())?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",borderRadius:12,padding:"14px 0",color:(form.title.trim()&&form.body.trim())?"#000":"#475569",fontWeight:800,fontSize:15,cursor:"pointer"}}>
         {editN?"수정 완료":"공지 등록"}
       </button>
     </div>
@@ -2344,19 +2344,19 @@ function NoticeTab({ notices, setNotices, canNotice, userName, userObj, showNoti
       <div style={{padding:16}}>
         {delN&&<DeleteConfirmSheet title="공지사항을 삭제하시겠습니까?" body={n.title} onConfirm={()=>delNotice(n.id)} onClose={()=>setDelN(null)}/>}
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-          <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:16,cursor:"pointer"}}>←</button>
+          <button onClick={()=>setView("list")} style={{background:"rgba(255,255,255,.08)",border:"none",borderRadius:10,width:34,height:34,color:"#e2e8f0",fontSize:15,cursor:"pointer"}}>←</button>
           <div style={{flex:1}}/>
           {canNotice&&<div style={{display:"flex",gap:6}}>
-            <button onClick={()=>openEdit(n)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:16,fontWeight:700,cursor:"pointer"}}>수정</button>
-            <button onClick={()=>setDelN(n)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:16,fontWeight:700,cursor:"pointer"}}>삭제</button>
+            <button onClick={()=>openEdit(n)} style={{background:"rgba(59,130,246,.15)",border:"1px solid #3b82f640",borderRadius:8,padding:"5px 10px",color:"#60a5fa",fontSize:15,fontWeight:700,cursor:"pointer"}}>수정</button>
+            <button onClick={()=>setDelN(n)} style={{background:"rgba(255,71,87,.1)",border:"1px solid #ff475740",borderRadius:8,padding:"5px 10px",color:"#ff4757",fontSize:15,fontWeight:700,cursor:"pointer"}}>삭제</button>
           </div>}
         </div>
         <div style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:14,padding:18,marginBottom:4}}>
-          {n.pinned&&<div style={{fontSize:16,color:"#f1c40f",fontWeight:700,marginBottom:8}}>📌 상단 고정</div>}
-          <div style={{fontSize:16,fontWeight:800,color:"#e2e8f0",marginBottom:12,lineHeight:1.4}}>{n.title}</div>
-          <div style={{fontSize:16,color:"#475569",marginBottom:16}}>📝 {n.author} · {n.createdAt}</div>
+          {n.pinned&&<div style={{fontSize:15,color:"#f1c40f",fontWeight:700,marginBottom:8}}>📌 상단 고정</div>}
+          <div style={{fontSize:15,fontWeight:800,color:"#e2e8f0",marginBottom:12,lineHeight:1.4}}>{n.title}</div>
+          <div style={{fontSize:15,color:"#475569",marginBottom:16}}>📝 {n.author} · {n.createdAt}</div>
           <div style={{height:1,background:"#1e3060",marginBottom:16}}/>
-          <div style={{fontSize:16,color:"#cbd5e1",lineHeight:1.8,whiteSpace:"pre-wrap",marginBottom:n.imgUrl?16:0}}>{n.body}</div>
+          <div style={{fontSize:15,color:"#cbd5e1",lineHeight:1.8,whiteSpace:"pre-wrap",marginBottom:n.imgUrl?16:0}}>{n.body}</div>
           {n.imgUrl&&<img src={n.imgUrl} alt="첨부 이미지" style={{width:"100%",maxHeight:300,borderRadius:10,objectFit:"cover",display:"block"}} onError={e=>{e.target.style.display="none";}}/>}
         </div>
         {/* 공지 댓글 */}
@@ -2371,23 +2371,23 @@ function NoticeTab({ notices, setNotices, canNotice, userName, userObj, showNoti
     <div style={{padding:16}}>
       {delN&&<DeleteConfirmSheet title="공지사항을 삭제하시겠습니까?" body={delN.title} onConfirm={()=>delNotice(delN.id)} onClose={()=>setDelN(null)}/>}
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-        <div><div style={{fontSize:16,fontWeight:800}}>공지사항</div><div style={{fontSize:16,color:"#64748b",marginTop:2}}>총 {notices.length}개</div></div>
-        {canNotice&&<button onClick={openNew} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>📢 공지 작성</button>}
+        <div><div style={{fontSize:15,fontWeight:800}}>공지사항</div><div style={{fontSize:15,color:"#64748b",marginTop:2}}>총 {notices.length}개</div></div>
+        {canNotice&&<button onClick={openNew} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>📢 공지 작성</button>}
       </div>
       {sorted.length===0
-        ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}><div style={{fontSize:16,marginBottom:12}}>📢</div><div>등록된 공지사항이 없습니다</div></div>
+        ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}><div style={{fontSize:15,marginBottom:12}}>📢</div><div>등록된 공지사항이 없습니다</div></div>
         :sorted.map(n=>(
           <div key={n.id} onClick={()=>openDet(n)} style={{background:"#0f1d35",border:`1px solid ${n.pinned?"#f1c40f40":"#1e3060"}`,borderRadius:14,padding:14,marginBottom:10,cursor:"pointer"}}>
             <div style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:8}}>
-              {n.pinned&&<span style={{fontSize:16,background:"rgba(241,196,15,.15)",color:"#f1c40f",fontWeight:700,padding:"2px 7px",borderRadius:20,flexShrink:0,marginTop:2}}>📌 고정</span>}
-              <div style={{fontSize:16,fontWeight:700,color:"#e2e8f0",lineHeight:1.4,flex:1}}>{n.title}</div>
+              {n.pinned&&<span style={{fontSize:15,background:"rgba(241,196,15,.15)",color:"#f1c40f",fontWeight:700,padding:"2px 7px",borderRadius:20,flexShrink:0,marginTop:2}}>📌 고정</span>}
+              <div style={{fontSize:15,fontWeight:700,color:"#e2e8f0",lineHeight:1.4,flex:1}}>{n.title}</div>
             </div>
-            <div style={{fontSize:16,color:"#94a3b8",overflow:"hidden",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",marginBottom:8}}>{n.body}</div>
+            <div style={{fontSize:15,color:"#94a3b8",overflow:"hidden",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",marginBottom:8}}>{n.body}</div>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div style={{fontSize:16,color:"#475569"}}>📝 {n.author} · {n.createdAt}</div>
+              <div style={{fontSize:15,color:"#475569"}}>📝 {n.author} · {n.createdAt}</div>
               {canNotice&&<div style={{display:"flex",gap:5}} onClick={e=>e.stopPropagation()}>
-                <button onClick={()=>openEdit(n)} style={{background:"rgba(59,130,246,.1)",border:"none",borderRadius:7,padding:"4px 8px",color:"#60a5fa",fontSize:16,cursor:"pointer"}}>수정</button>
-                <button onClick={()=>setDelN(n)} style={{background:"rgba(255,71,87,.08)",border:"none",borderRadius:7,padding:"4px 8px",color:"#ff4757",fontSize:16,cursor:"pointer"}}>🗑</button>
+                <button onClick={()=>openEdit(n)} style={{background:"rgba(59,130,246,.1)",border:"none",borderRadius:7,padding:"4px 8px",color:"#60a5fa",fontSize:15,cursor:"pointer"}}>수정</button>
+                <button onClick={()=>setDelN(n)} style={{background:"rgba(255,71,87,.08)",border:"none",borderRadius:7,padding:"4px 8px",color:"#ff4757",fontSize:15,cursor:"pointer"}}>🗑</button>
               </div>}
             </div>
           </div>
@@ -2449,34 +2449,34 @@ function CommentSection({ storageKey, user }) {
   return (
     <div style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:14,overflow:"hidden",marginTop:12}}>
       <div style={{padding:"10px 14px",borderBottom:"1px solid #1e293b",display:"flex",alignItems:"center",gap:6}}>
-        <span style={{fontSize:16}}>💬</span>
-        <span style={{fontSize:16,fontWeight:700,color:"#94a3b8"}}>응원 댓글</span>
-        <span style={{fontSize:15,color:"#334155",marginLeft:4}}>{list.length}개</span>
+        <span style={{fontSize:15}}>💬</span>
+        <span style={{fontSize:15,fontWeight:700,color:"#94a3b8"}}>응원 댓글</span>
+        <span style={{fontSize:14,color:"#334155",marginLeft:4}}>{list.length}개</span>
       </div>
 
       {/* 댓글 목록 */}
       {list.length===0
-        ?<div style={{padding:"18px 14px",textAlign:"center",color:"#334155",fontSize:15}}>첫 번째 댓글을 남겨보세요!</div>
+        ?<div style={{padding:"18px 14px",textAlign:"center",color:"#334155",fontSize:14}}>첫 번째 댓글을 남겨보세요!</div>
         :list.map(c=>(
           <div key={c.fbId||c.id} style={{padding:"10px 14px",borderBottom:"1px solid #0f172a",display:"flex",gap:8}}>
-            <div style={{width:28,height:28,borderRadius:7,background:`${c.color}20`,border:`1px solid ${c.color}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>
+            <div style={{width:28,height:28,borderRadius:7,background:`${c.color}20`,border:`1px solid ${c.color}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>
               {c.role==="감독/코치"?"🎽":c.role==="선수"?"⚽":c.role==="학부모"?"👨‍👩‍👧":c.role==="심판"?"🟨":"💬"}
             </div>
             <div style={{flex:1,minWidth:0}}>
               <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:3}}>
-                <span style={{fontSize:16,fontWeight:700,color:c.color}}>{c.author}</span>
-                <span style={{fontSize:14,color:"#334155",background:`${c.color}15`,padding:"1px 6px",borderRadius:10}}>{c.role}</span>
-                <span style={{fontSize:14,color:"#334155",marginLeft:"auto"}}>{c.displayTime||c.createdAt}</span>
+                <span style={{fontSize:15,fontWeight:700,color:c.color}}>{c.author}</span>
+                <span style={{fontSize:13,color:"#334155",background:`${c.color}15`,padding:"1px 6px",borderRadius:10}}>{c.role}</span>
+                <span style={{fontSize:13,color:"#334155",marginLeft:"auto"}}>{c.displayTime||c.createdAt}</span>
               </div>
-              {c.text&&<div style={{fontSize:17,color:"#cbd5e1",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
+              {c.text&&<div style={{fontSize:16,color:"#cbd5e1",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
             </div>
             {c.author===user.name&&(
               delTarget===(c.fbId||c.id)
                 ?<div style={{display:"flex",flexDirection:"column",gap:3,flexShrink:0}}>
-                  <button onClick={()=>doDelete(c.fbId||c.id)} style={{background:"#ff4757",border:"none",borderRadius:5,padding:"3px 7px",color:"#fff",fontSize:15,fontWeight:700,cursor:"pointer"}}>삭제</button>
-                  <button onClick={()=>setDelTarget(null)} style={{background:"#1e293b",border:"none",borderRadius:5,padding:"3px 7px",color:"#94a3b8",fontSize:15,cursor:"pointer"}}>취소</button>
+                  <button onClick={()=>doDelete(c.fbId||c.id)} style={{background:"#ff4757",border:"none",borderRadius:5,padding:"3px 7px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer"}}>삭제</button>
+                  <button onClick={()=>setDelTarget(null)} style={{background:"#1e293b",border:"none",borderRadius:5,padding:"3px 7px",color:"#94a3b8",fontSize:14,cursor:"pointer"}}>취소</button>
                 </div>
-                :<button onClick={()=>setDelTarget(c.fbId||c.id)} style={{background:"rgba(255,71,87,.08)",border:"none",borderRadius:5,padding:"3px 6px",color:"#475569",fontSize:15,cursor:"pointer",flexShrink:0}}>🗑</button>
+                :<button onClick={()=>setDelTarget(c.fbId||c.id)} style={{background:"rgba(255,71,87,.08)",border:"none",borderRadius:5,padding:"3px 6px",color:"#475569",fontSize:14,cursor:"pointer",flexShrink:0}}>🗑</button>
             )}
           </div>
         ))
@@ -2487,7 +2487,7 @@ function CommentSection({ storageKey, user }) {
         <div style={{padding:"8px 12px",background:"#0d1425",borderTop:"1px solid #1e293b",display:"flex",flexWrap:"wrap",gap:6}}>
           {EMOJIS.map(e=>(
             <button key={e} onClick={()=>addEmoji(e)}
-              style={{background:"#1e293b",border:"1px solid #334155",borderRadius:8,width:36,height:36,fontSize:22,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+              style={{background:"#1e293b",border:"1px solid #334155",borderRadius:8,width:36,height:36,fontSize:21,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
               {e}
             </button>
           ))}
@@ -2496,21 +2496,21 @@ function CommentSection({ storageKey, user }) {
 
       {/* 입력 영역 */}
       <div style={{padding:"10px 12px",background:"#0d1425"}}>
-        {uploadErr&&<div style={{fontSize:15,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
+        {uploadErr&&<div style={{fontSize:14,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
         <div style={{display:"flex",gap:6,alignItems:"flex-end"}}>
           <div style={{flex:1}}>
             <textarea value={text} onChange={e=>setText(e.target.value)}
               onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submit();}}}
               placeholder={`${user.name}님, 응원 메시지 (Enter 전송)`}
-              style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:52,lineHeight:1.5}}/>
+              style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:52,lineHeight:1.5}}/>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:4,flexShrink:0}}>
             <button onClick={()=>setShowEmoji(v=>!v)} title="이모티콘"
-              style={{width:34,height:34,borderRadius:7,background:showEmoji?"rgba(241,196,15,.2)":"#1e293b",border:`1px solid ${showEmoji?"#f1c40f":"#334155"}`,color:showEmoji?"#f1c40f":"#64748b",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+              style={{width:34,height:34,borderRadius:7,background:showEmoji?"rgba(241,196,15,.2)":"#1e293b",border:`1px solid ${showEmoji?"#f1c40f":"#334155"}`,color:showEmoji?"#f1c40f":"#64748b",fontSize:19,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
               😊
             </button>
             <button onClick={submit} disabled={!text.trim()}
-              style={{width:34,height:34,borderRadius:7,background:text.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",color:text.trim()?"#000":"#334155",fontSize:18,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
+              style={{width:34,height:34,borderRadius:7,background:text.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",color:text.trim()?"#000":"#334155",fontSize:17,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
               ↑
             </button>
           </div>
@@ -2554,9 +2554,9 @@ function PhotoSection({ storageKey, user }) {
   return (
     <div style={{background:"#0a0f1e",border:"1px solid #1e3060",borderRadius:14,overflow:"hidden",marginTop:8}}>
       <div style={{padding:"10px 14px",borderBottom:"1px solid #1e293b",display:"flex",alignItems:"center",gap:6}}>
-        <span style={{fontSize:16}}>📷</span>
-        <span style={{fontSize:16,fontWeight:700,color:"#94a3b8"}}>경기 포토</span>
-        <span style={{fontSize:15,color:"#334155",marginLeft:4}}>{list.length}장</span>
+        <span style={{fontSize:15}}>📷</span>
+        <span style={{fontSize:15,fontWeight:700,color:"#94a3b8"}}>경기 포토</span>
+        <span style={{fontSize:14,color:"#334155",marginLeft:4}}>{list.length}장</span>
       </div>
 
       {/* 사진 그리드 */}
@@ -2567,24 +2567,24 @@ function PhotoSection({ storageKey, user }) {
               <img src={c.imgUrl} alt="사진" onError={e=>{e.target.style.display="none";}}
                 style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
               <div style={{position:"absolute",bottom:0,left:0,right:0,background:"rgba(0,0,0,.6)",padding:"3px 5px"}}>
-                <div style={{fontSize:13,color:c.color||"#60a5fa",fontWeight:700}}>{c.author}</div>
-                {c.text&&<div style={{fontSize:13,color:"#94a3b8",overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{c.text}</div>}
+                <div style={{fontSize:12,color:c.color||"#60a5fa",fontWeight:700}}>{c.author}</div>
+                {c.text&&<div style={{fontSize:12,color:"#94a3b8",overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{c.text}</div>}
               </div>
             </div>
           ))}
         </div>
       )}
-      {list.length===0&&<div style={{padding:"16px",textAlign:"center",fontSize:15,color:"#334155"}}>아직 사진이 없어요</div>}
+      {list.length===0&&<div style={{padding:"16px",textAlign:"center",fontSize:14,color:"#334155"}}>아직 사진이 없어요</div>}
 
       {/* 업로드 */}
       <div style={{padding:"10px 12px",background:"#0d1425",borderTop:"1px solid #1e293b"}}>
-        {uploadErr&&<div style={{fontSize:15,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
+        {uploadErr&&<div style={{fontSize:14,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
         <div style={{display:"flex",gap:6,alignItems:"center"}}>
           <input value={caption} onChange={e=>setCaption(e.target.value)} placeholder="사진 설명 (선택)"
-            style={{flex:1,background:"#0f172a",border:"1px solid #1e3060",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:15,outline:"none",fontFamily:"inherit"}}/>
+            style={{flex:1,background:"#0f172a",border:"1px solid #1e3060",borderRadius:7,padding:"7px 10px",color:"#e2e8f0",fontSize:14,outline:"none",fontFamily:"inherit"}}/>
           <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} style={{display:"none"}}/>
           <button onClick={()=>fileRef.current?.click()} disabled={uploading||sending}
-            style={{padding:"7px 14px",background:uploading?"rgba(241,196,15,.15)":"rgba(52,152,219,.15)",border:"1px solid #3498db40",borderRadius:7,color:uploading?"#f1c40f":"#3498db",fontSize:15,fontWeight:700,cursor:uploading?"wait":"pointer",whiteSpace:"nowrap"}}>
+            style={{padding:"7px 14px",background:uploading?"rgba(241,196,15,.15)":"rgba(52,152,219,.15)",border:"1px solid #3498db40",borderRadius:7,color:uploading?"#f1c40f":"#3498db",fontSize:14,fontWeight:700,cursor:uploading?"wait":"pointer",whiteSpace:"nowrap"}}>
             {uploading?"⏳ 업로드 중...":"📷 사진 추가"}
           </button>
         </div>
@@ -2598,15 +2598,15 @@ function LogoutConfirmModal({ user, onConfirm, onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div style={{textAlign:"center",padding:"8px 0 20px"}}>
-        <div style={{fontSize:16,marginBottom:12}}>{user.icon}</div>
-        <div style={{fontSize:16,fontWeight:800,color:"#e2e8f0",marginBottom:6}}>로그아웃 하시겠습니까?</div>
-        <div style={{fontSize:16,color:"#64748b",marginBottom:20}}>
+        <div style={{fontSize:15,marginBottom:12}}>{user.icon}</div>
+        <div style={{fontSize:15,fontWeight:800,color:"#e2e8f0",marginBottom:6}}>로그아웃 하시겠습니까?</div>
+        <div style={{fontSize:15,color:"#64748b",marginBottom:20}}>
           <strong style={{color:user.color}}>{user.name}</strong> ({user.label})<br/>
           로그아웃 후 다시 로그인이 필요합니다
         </div>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-          <button onClick={onClose} style={{background:"#1e293b",border:"1px solid #334155",borderRadius:10,padding:"12px 0",color:"#94a3b8",fontWeight:700,fontSize:16,cursor:"pointer"}}>취소</button>
-          <button onClick={onConfirm} style={{background:"linear-gradient(135deg,#ff4757,#c0392b)",border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:16,cursor:"pointer"}}>로그아웃</button>
+          <button onClick={onClose} style={{background:"#1e293b",border:"1px solid #334155",borderRadius:10,padding:"12px 0",color:"#94a3b8",fontWeight:700,fontSize:15,cursor:"pointer"}}>취소</button>
+          <button onClick={onConfirm} style={{background:"linear-gradient(135deg,#ff4757,#c0392b)",border:"none",borderRadius:10,padding:"12px 0",color:"#fff",fontWeight:800,fontSize:15,cursor:"pointer"}}>로그아웃</button>
         </div>
       </div>
     </BottomSheet>
@@ -2640,64 +2640,64 @@ function ScheduleTab({ matches, fields, user, setMatchForm, setDetailId, setDelM
       {editM&&(
         <BottomSheet onClose={()=>setEditM(null)}>
           <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}>
-            <div style={{fontSize:16,fontWeight:800,color:"#60a5fa"}}>📅 경기 일정 수정</div>
-            <button onClick={()=>setEditM(null)} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:16,cursor:"pointer"}}>✕</button>
+            <div style={{fontSize:15,fontWeight:800,color:"#60a5fa"}}>📅 경기 일정 수정</div>
+            <button onClick={()=>setEditM(null)} style={{marginLeft:"auto",background:"rgba(255,255,255,.08)",border:"none",borderRadius:8,width:30,height:30,color:"#94a3b8",fontSize:15,cursor:"pointer"}}>✕</button>
           </div>
-          <div style={{fontSize:16,color:"#64748b",marginBottom:14}}>{editM.home.name} vs {editM.away.name} · {editM.group}조</div>
+          <div style={{fontSize:15,color:"#64748b",marginBottom:14}}>{editM.home.name} vs {editM.away.name} · {editM.group}조</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
             <div>
-              <div style={{fontSize:16,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>날짜</div>
+              <div style={{fontSize:15,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>날짜</div>
               <input value={editTime.date} onChange={e=>setEditTime(p=>({...p,date:e.target.value}))} placeholder="05/30"
-                style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"10px 12px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
+                style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"10px 12px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
             </div>
             <div>
-              <div style={{fontSize:16,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>시작 시간</div>
+              <div style={{fontSize:15,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>시작 시간</div>
               <input value={editTime.time} onChange={e=>setEditTime(p=>({...p,time:e.target.value}))} placeholder="11:00"
-                style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"10px 12px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
+                style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"10px 12px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
             </div>
           </div>
           <div style={{marginBottom:16}}>
-            <div style={{fontSize:16,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>경기장</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#7b9bc8",marginBottom:6}}>경기장</div>
             <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:8}}>
               {fields.map(f=>(
-                <button key={f.id} onClick={()=>setEditTime(p=>({...p,field:f.name}))} style={{background:editTime.field===f.name?"rgba(46,204,113,.2)":"#0f172a",border:`1px solid ${editTime.field===f.name?"#2ecc71":"#1e3060"}`,borderRadius:7,padding:"7px 14px",color:editTime.field===f.name?"#2ecc71":"#64748b",fontWeight:editTime.field===f.name?700:500,fontSize:16,cursor:"pointer"}}>{f.name}</button>
+                <button key={f.id} onClick={()=>setEditTime(p=>({...p,field:f.name}))} style={{background:editTime.field===f.name?"rgba(46,204,113,.2)":"#0f172a",border:`1px solid ${editTime.field===f.name?"#2ecc71":"#1e3060"}`,borderRadius:7,padding:"7px 14px",color:editTime.field===f.name?"#2ecc71":"#64748b",fontWeight:editTime.field===f.name?700:500,fontSize:15,cursor:"pointer"}}>{f.name}</button>
               ))}
             </div>
             <input value={editTime.field} onChange={e=>setEditTime(p=>({...p,field:e.target.value}))} placeholder="직접 입력"
-              style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"10px 12px",color:"#e2e8f0",fontSize:16,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
+              style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"10px 12px",color:"#e2e8f0",fontSize:15,boxSizing:"border-box",outline:"none",fontFamily:"inherit"}}/>
           </div>
-          <button onClick={saveTime} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"14px 0",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>저장</button>
+          <button onClick={saveTime} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"14px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>저장</button>
         </BottomSheet>
       )}
 
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
-        <div><div style={{fontSize:16,fontWeight:800}}>경기 일정</div><div style={{fontSize:16,color:"#64748b",marginTop:2}}>총 {filtered.length}경기 표시</div></div>
-        {user.canManage&&<button onClick={()=>setMatchForm("new")} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:16,cursor:"pointer"}}>➕ 경기 개설</button>}
+        <div><div style={{fontSize:15,fontWeight:800}}>경기 일정</div><div style={{fontSize:15,color:"#64748b",marginTop:2}}>총 {filtered.length}경기 표시</div></div>
+        {user.canManage&&<button onClick={()=>setMatchForm("new")} style={{background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:10,padding:"9px 14px",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer"}}>➕ 경기 개설</button>}
       </div>
 
       {/* 구장 필터 */}
       <div style={{display:"flex",gap:6,marginBottom:7,overflowX:"auto",paddingBottom:2}}>
         {allFields.map(f=>(
-          <button key={f} onClick={()=>setFieldFilter(f)} style={{flexShrink:0,background:fieldFilter===f?"rgba(59,130,246,.2)":"#0f1d35",border:`1px solid ${fieldFilter===f?"#3b82f6":"#1e3060"}`,borderRadius:20,padding:"5px 12px",color:fieldFilter===f?"#60a5fa":"#64748b",fontWeight:fieldFilter===f?700:500,fontSize:16,cursor:"pointer",whiteSpace:"nowrap"}}>{f}</button>
+          <button key={f} onClick={()=>setFieldFilter(f)} style={{flexShrink:0,background:fieldFilter===f?"rgba(59,130,246,.2)":"#0f1d35",border:`1px solid ${fieldFilter===f?"#3b82f6":"#1e3060"}`,borderRadius:20,padding:"5px 12px",color:fieldFilter===f?"#60a5fa":"#64748b",fontWeight:fieldFilter===f?700:500,fontSize:15,cursor:"pointer",whiteSpace:"nowrap"}}>{f}</button>
         ))}
       </div>
 
       {/* 조 필터 */}
       <div style={{display:"flex",gap:6,marginBottom:14,overflowX:"auto",paddingBottom:2}}>
         {allGroups.map(g=>(
-          <button key={g} onClick={()=>setGroupFilter(g)} style={{flexShrink:0,background:groupFilter===g?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${groupFilter===g?"#2ecc71":"#1e3060"}`,borderRadius:20,padding:"5px 12px",color:groupFilter===g?"#2ecc71":"#64748b",fontWeight:groupFilter===g?700:500,fontSize:16,cursor:"pointer",whiteSpace:"nowrap"}}>{g==="전체"?g:`${g}조`}</button>
+          <button key={g} onClick={()=>setGroupFilter(g)} style={{flexShrink:0,background:groupFilter===g?"rgba(46,204,113,.2)":"#0f1d35",border:`1px solid ${groupFilter===g?"#2ecc71":"#1e3060"}`,borderRadius:20,padding:"5px 12px",color:groupFilter===g?"#2ecc71":"#64748b",fontWeight:groupFilter===g?700:500,fontSize:15,cursor:"pointer",whiteSpace:"nowrap"}}>{g==="전체"?g:`${g}조`}</button>
         ))}
       </div>
 
       {/* 경기 목록 */}
       {filtered.length===0
-        ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}><div style={{fontSize:16,marginBottom:12}}>📋</div><div>해당하는 경기가 없습니다</div></div>
+        ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569"}}><div style={{fontSize:15,marginBottom:12}}>📋</div><div>해당하는 경기가 없습니다</div></div>
         :filtered.map(m=>(
           <div key={m.id}>
             <MatchCard match={m} onTap={()=>setDetailId(m.id)} onEdit={()=>setMatchForm(m)} onDelete={()=>setDelMatch(m)} canManage={user.canManage}/>
             {user.canManage && m.phase==="pre" && (
               <div style={{marginTop:-6,marginBottom:10,paddingLeft:4}}>
-                <button onClick={()=>openEdit(m)} style={{background:"rgba(59,130,246,.1)",border:"1px solid #3b82f630",borderRadius:7,padding:"4px 12px",color:"#60a5fa",fontSize:16,fontWeight:600,cursor:"pointer"}}>
+                <button onClick={()=>openEdit(m)} style={{background:"rgba(59,130,246,.1)",border:"1px solid #3b82f630",borderRadius:7,padding:"4px 12px",color:"#60a5fa",fontSize:15,fontWeight:600,cursor:"pointer"}}>
                   📅 일정 수정
                 </button>
               </div>
@@ -2811,14 +2811,14 @@ function App() {
       {/* 헤더 */}
       <div style={{background:"linear-gradient(135deg,#0d1b3e,#1a2a5e)",padding:"14px 16px 12px",borderBottom:"1px solid #1e3060",position:"sticky",top:0,zIndex:20}}>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
-          <div style={{width:34,height:34,borderRadius:10,background:"linear-gradient(135deg,#2ecc71,#27ae60)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>⚽</div>
-          <div><div style={{fontSize:16,fontWeight:800}}>26년 상반기 은하수대회</div><div style={{fontSize:16,color:"#7b9bc8",marginTop:1}}>2026 · 5월 30일 · U9/U11/U13</div></div>
+          <div style={{width:34,height:34,borderRadius:10,background:"linear-gradient(135deg,#2ecc71,#27ae60)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15}}>⚽</div>
+          <div><div style={{fontSize:15,fontWeight:800}}>26년 상반기 은하수대회</div><div style={{fontSize:15,color:"#7b9bc8",marginTop:1}}>2026 · 5월 30일 · U9/U11/U13</div></div>
           <div style={{marginLeft:"auto",display:"flex",alignItems:"center",gap:7}}>
-            {liveCount>0&&<div style={{background:"#ff4757",color:"#fff",fontSize:16,fontWeight:800,padding:"2px 7px",borderRadius:20,animation:"blink 1.5s infinite"}}>LIVE {liveCount}</div>}
+            {liveCount>0&&<div style={{background:"#ff4757",color:"#fff",fontSize:15,fontWeight:800,padding:"2px 7px",borderRadius:20,animation:"blink 1.5s infinite"}}>LIVE {liveCount}</div>}
             {/* 로그아웃: 반드시 확인 모달 거침 */}
             <button onClick={()=>setShowLogout(true)} style={{background:`${user.color}20`,border:`1px solid ${user.color}40`,borderRadius:20,padding:"4px 10px",display:"flex",alignItems:"center",gap:4,cursor:"pointer"}}>
-              <span style={{fontSize:16}}>{user.icon}</span>
-              <span style={{fontSize:16,fontWeight:700,color:user.color}}>{user.name}</span>
+              <span style={{fontSize:15}}>{user.icon}</span>
+              <span style={{fontSize:15,fontWeight:700,color:user.color}}>{user.name}</span>
             </button>
           </div>
         </div>
@@ -2829,22 +2829,22 @@ function App() {
         {tab==="home"&&(
           <div style={{padding:16}}>
             <div style={{background:"#0f1d35",border:`1px solid ${user.color}40`,borderRadius:14,padding:14,marginBottom:14,display:"flex",alignItems:"center",gap:10}}>
-              <div style={{fontSize:16}}>{user.icon}</div>
+              <div style={{fontSize:15}}>{user.icon}</div>
               <div>
-                <div style={{fontSize:16,fontWeight:700,color:user.color}}>{user.label}</div>
-                <div style={{fontSize:16,color:"#e2e8f0"}}>{user.name}님, 환영합니다 👋</div>
-                <div style={{fontSize:16,color:"#64748b",marginTop:1}}>"경기·팀·공지 조회 가능"</div>
+                <div style={{fontSize:15,fontWeight:700,color:user.color}}>{user.label}</div>
+                <div style={{fontSize:15,color:"#e2e8f0"}}>{user.name}님, 환영합니다 👋</div>
+                <div style={{fontSize:15,color:"#64748b",marginTop:1}}>"경기·팀·공지 조회 가능"</div>
               </div>
             </div>
             {/* 최신 공지 배너 */}
             {latestNotice&&(
               <div onClick={()=>setTab("notice")} style={{background:latestNotice.pinned?"rgba(241,196,15,.08)":"rgba(255,255,255,.04)",border:`1px solid ${latestNotice.pinned?"#f1c40f30":"#1e3060"}`,borderRadius:12,padding:"10px 14px",marginBottom:14,cursor:"pointer",display:"flex",alignItems:"center",gap:8}}>
-                <span style={{fontSize:16}}>📢</span>
+                <span style={{fontSize:15}}>📢</span>
                 <div style={{flex:1,overflow:"hidden"}}>
-                  <div style={{fontSize:16,color:"#f1c40f",fontWeight:700,marginBottom:2}}>최신 공지</div>
-                  <div style={{fontSize:16,color:"#e2e8f0",fontWeight:600,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{latestNotice.title}</div>
+                  <div style={{fontSize:15,color:"#f1c40f",fontWeight:700,marginBottom:2}}>최신 공지</div>
+                  <div style={{fontSize:15,color:"#e2e8f0",fontWeight:600,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{latestNotice.title}</div>
                 </div>
-                <span style={{fontSize:16,color:"#64748b",flexShrink:0}}>›</span>
+                <span style={{fontSize:15,color:"#64748b",flexShrink:0}}>›</span>
               </div>
             )}
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:16}}>
@@ -2854,13 +2854,13 @@ function App() {
                 {label:"완료",value:matches.filter(m=>m.phase==="finished").length,icon:"✅",color:"#2ecc71"},
               ].map(s=>(
                 <div key={s.label} style={{background:"#0f1d35",border:"1px solid #1e3060",borderRadius:12,padding:"12px 10px",textAlign:"center"}}>
-                  <div style={{fontSize:16}}>{s.icon}</div>
-                  <div style={{fontSize:16,fontWeight:900,color:s.color,marginTop:4}}>{s.value}</div>
-                  <div style={{fontSize:16,color:"#64748b",marginTop:2}}>{s.label}</div>
+                  <div style={{fontSize:15}}>{s.icon}</div>
+                  <div style={{fontSize:15,fontWeight:900,color:s.color,marginTop:4}}>{s.value}</div>
+                  <div style={{fontSize:15,color:"#64748b",marginTop:2}}>{s.label}</div>
                 </div>
               ))}
             </div>
-            <div style={{fontSize:16,fontWeight:700,color:"#64748b",marginBottom:10,letterSpacing:1}}>최근 경기</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#64748b",marginBottom:10,letterSpacing:1}}>최근 경기</div>
             {matches.slice(0,3).map(m=><MatchCard key={m.id} match={m} onTap={()=>setDetailId(m.id)} onEdit={()=>setMatchForm(m)} onDelete={()=>setDelMatch(m)} canManage={user.canManage}/>)}
           </div>
         )}
@@ -2885,8 +2885,8 @@ function App() {
       <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"#0a0e1a",borderTop:"1px solid #1e3060",display:"flex",padding:"8px 0 12px"}}>
         {navTabs.map(t=>(
           <button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,background:"none",border:"none",display:"flex",flexDirection:"column",alignItems:"center",gap:2,cursor:"pointer",padding:"4px 0"}}>
-            <span style={{fontSize:16}}>{t.icon}</span>
-            <span style={{fontSize:16,fontWeight:tab===t.id?700:400,color:tab===t.id?"#2ecc71":"#4a6080"}}>{t.label}</span>
+            <span style={{fontSize:15}}>{t.icon}</span>
+            <span style={{fontSize:15,fontWeight:tab===t.id?700:400,color:tab===t.id?"#2ecc71":"#4a6080"}}>{t.label}</span>
             {tab===t.id&&<div style={{width:4,height:4,borderRadius:"50%",background:"#2ecc71"}}/>}
           </button>
         ))}
