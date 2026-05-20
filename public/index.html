@@ -99,8 +99,12 @@ const FB = {
     fbReady.then(d=>{
       unsub = d.collection("kickoff_comments")
         .where("storageKey","==",storageKey)
-        .orderBy("createdAt","asc")
-        .onSnapshot(snap=>cb(snap.docs.map(doc=>({fbId:doc.id,...doc.data()}))));
+        .onSnapshot(snap=>{
+          const items = snap.docs.map(doc=>({fbId:doc.id,...doc.data()}));
+          // 클라이언트에서 시간순 정렬 (displayTime 기준)
+          items.sort((a,b)=>(a.displayTime||"").localeCompare(b.displayTime||""));
+          cb(items);
+        });
     });
     return ()=>unsub();
   },
@@ -1963,10 +1967,17 @@ function CommentSection({ storageKey, user }) {
     setSending(true);
     const now = new Date();
     const ts  = `${now.getMonth()+1}/${now.getDate()} ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+    const newComment = { fbId:"temp_"+Date.now(), storageKey, author:user.name, role:user.label||"사용자", color:user.color||"#60a5fa", text:text.trim(), imgUrl, displayTime:ts };
+    // 낙관적 업데이트: 서버 응답 전에 UI에 즉시 표시
+    setList(prev=>[...prev, newComment]);
+    setText(""); setImgUrl(""); setUploadErr("");
     try {
-      await FB.addComment({ storageKey, author:user.name, role:user.label||"사용자", color:user.color||"#60a5fa", text:text.trim(), imgUrl, displayTime:ts });
-      setText(""); setImgUrl(""); setUploadErr("");
-    } catch(e) { setUploadErr("전송 실패. 잠시 후 다시 시도해주세요."); }
+      await FB.addComment({ storageKey, author:user.name, role:user.label||"사용자", color:user.color||"#60a5fa", text:newComment.text, imgUrl:newComment.imgUrl, displayTime:ts });
+    } catch(e) {
+      // 실패 시 낙관적 업데이트 롤백
+      setList(prev=>prev.filter(c=>c.fbId!==newComment.fbId));
+      setUploadErr("전송 실패. 잠시 후 다시 시도해주세요.");
+    }
     finally { setSending(false); }
   };
 
@@ -1979,8 +1990,8 @@ function CommentSection({ storageKey, user }) {
     <div style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:14,overflow:"hidden",marginTop:12}}>
       <div style={{padding:"12px 14px",borderBottom:"1px solid #1e293b",display:"flex",alignItems:"center",gap:6}}>
         <span style={{fontSize:14}}>💬</span>
-        <span style={{fontSize:12,fontWeight:700,color:"#94a3b8"}}>응원 댓글</span>
-        <span style={{fontSize:11,color:"#334155",marginLeft:4}}>{list.length}개</span>
+        <span style={{fontSize:14,fontWeight:700,color:"#94a3b8"}}>응원 댓글</span>
+        <span style={{fontSize:13,color:"#334155",marginLeft:4}}>{list.length}개</span>
       </div>
 
       {/* 댓글 목록 */}
@@ -1993,11 +2004,11 @@ function CommentSection({ storageKey, user }) {
             </div>
             <div style={{flex:1,minWidth:0}}>
               <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
-                <span style={{fontSize:12,fontWeight:700,color:c.color}}>{c.author}</span>
-                <span style={{fontSize:9,color:"#334155",background:`${c.color}15`,padding:"1px 6px",borderRadius:10}}>{c.role}</span>
-                <span style={{fontSize:10,color:"#334155",marginLeft:"auto"}}>{c.displayTime||c.createdAt}</span>
+                <span style={{fontSize:14,fontWeight:700,color:c.color}}>{c.author}</span>
+                <span style={{fontSize:11,color:"#334155",background:`${c.color}15`,padding:"2px 7px",borderRadius:10}}>{c.role}</span>
+                <span style={{fontSize:12,color:"#334155",marginLeft:"auto"}}>{c.displayTime||c.createdAt}</span>
               </div>
-              {c.text&&<div style={{fontSize:13,color:"#cbd5e1",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
+              {c.text&&<div style={{fontSize:15,color:"#cbd5e1",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
               {c.imgUrl&&<img src={c.imgUrl} alt="첨부" onError={e=>{e.target.style.display="none";}} style={{marginTop:8,maxWidth:"100%",maxHeight:200,borderRadius:8,objectFit:"cover",display:"block"}}/>}
             </div>
             {c.author===user.name&&(
@@ -2025,8 +2036,8 @@ function CommentSection({ storageKey, user }) {
           <div style={{flex:1}}>
             <textarea value={text} onChange={e=>setText(e.target.value)}
               onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submit();}}}
-              placeholder={`${user.name}님, 응원 메시지를 남겨주세요 (Enter로 전송)`}
-              style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"9px 12px",color:"#e2e8f0",fontSize:12,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:56,lineHeight:1.5}}/>
+              placeholder={`응원 메시지를 남겨주세요 (Enter)`}
+              style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:9,padding:"10px 12px",color:"#e2e8f0",fontSize:14,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:60,lineHeight:1.5}}/>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:5,flexShrink:0}}>
             <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} style={{display:"none"}}/>
