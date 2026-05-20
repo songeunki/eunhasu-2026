@@ -2538,12 +2538,12 @@ function PhotoViewer({ post, allPosts, initialIndex, onClose, user }) {
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           {total>1&&<div style={{fontSize:12,color:"#64748b",background:"#e2e8f0",padding:"3px 10px",borderRadius:20}}>{slideIdx+1}/{total}</div>}
           {/* 좋아요 */}
-          <button onClick={handleLike} style={{background:liked?"#fee2e2":"#f1f5f9",border:`1px solid ${liked?"#fca5a5":"#e2e8f0"}`,borderRadius:"50%",width:36,height:36,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:2,fontSize:16}}>
-            {liked?"❤️":"🤍"}{likes.length>0&&<span style={{fontSize:11,color:liked?"#ef4444":"#94a3b8",fontWeight:700}}>{likes.length}</span>}
+          <button onClick={handleLike} style={{background:liked?"#fee2e2":"#f1f5f9",border:`1px solid ${liked?"#fca5a5":"#e2e8f0"}`,borderRadius:20,padding:"6px 12px",height:36,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:4}}>
+            <span style={{fontSize:12,fontWeight:700}}>{liked?"❤️ 좋아요":"🤍 좋아요"}</span>{likes.length>0&&<span style={{fontSize:11,color:liked?"#ef4444":"#94a3b8",fontWeight:700,marginLeft:2}}>{likes.length}</span>}
           </button>
           {/* 다운로드 */}
-          <button onClick={handleDownload} style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:"50%",width:36,height:36,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:17}}>
-            ⬇️
+          <button onClick={handleDownload} style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:20,padding:"6px 12px",height:36,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,color:"#2563eb",whiteSpace:"nowrap"}}>
+            ⬇ 저장
           </button>
           <button onClick={onClose} style={{background:"#e2e8f0",border:"none",borderRadius:"50%",width:36,height:36,color:"#475569",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
         </div>
@@ -2672,9 +2672,8 @@ function CommentSection({ storageKey, user }) {
               {/* 좋아요 버튼 */}
               <div style={{marginTop:6,display:"flex",alignItems:"center",gap:4}}>
                 <button onClick={()=>toggleLike(fbId)}
-                  style={{background:"transparent",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:3,padding:"2px 6px",borderRadius:20,background:liked?"#fee2e2":"transparent"}}>
-                  <span style={{fontSize:15}}>{liked?"❤️":"🤍"}</span>
-                  {likes.length>0&&<span style={{fontSize:12,color:liked?"#ef4444":"#94a3b8",fontWeight:liked?700:400}}>{likes.length}</span>}
+                  style={{background:liked?"#fee2e2":"transparent",border:liked?"1px solid #fca5a5":"none",cursor:"pointer",display:"flex",alignItems:"center",gap:3,padding:"3px 8px",borderRadius:20}}>
+                  <span style={{fontSize:13,fontWeight:700,color:liked?"#ef4444":"#94a3b8"}}>{liked?"❤️ 좋아요":"🤍 좋아요"}{likes.length>0?" "+likes.length:""}</span>
                 </button>
               </div>
             </div>
@@ -2812,8 +2811,7 @@ function PhotoSection({ storageKey, user }) {
                 </div>
                 <button onClick={e=>{e.stopPropagation();FB.toggleLike(c.fbId||c.id,user.name).then(updated=>setList(prev=>prev.map(x=>(x.fbId||x.id)===(c.fbId||c.id)?{...x,likes:updated}:x))).catch(()=>{});}}
                   style={{background:"transparent",border:"none",cursor:"pointer",padding:"0 2px",display:"flex",alignItems:"center",gap:2,flexShrink:0}}>
-                  <span style={{fontSize:13}}>{liked?"❤️":"🤍"}</span>
-                  {likes.length>0&&<span style={{fontSize:10,color:"#fff",fontWeight:700}}>{likes.length}</span>}
+                  <span style={{fontSize:11,color:"#fff",fontWeight:700}}>{liked?"❤️":"🤍"}{likes.length>0?" "+likes.length:""}</span>
                 </button>
               </div>
             </div>
