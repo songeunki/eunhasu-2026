@@ -1732,9 +1732,37 @@ function CheerTab({ matches, user }) {
     finally{ setUploading(false); e.target.value=""; }
   };
 
+  // 포토 다중 업로드
+  const [pendingImgs,  setPendingImgs]  = useState([]);
+
+  const handlePhotoSelect = async (e) => {
+    const files = Array.from(e.target.files||[]);
+    if(!files.length) return;
+    if(pendingImgs.length + files.length > 10){ setUploadErr("최대 10장까지 선택 가능합니다"); return; }
+    setUploading(true); setUploadErr("");
+    try {
+      const urls = await Promise.all(files.map(f=>uploadImage(f)));
+      setPendingImgs(prev=>[...prev,...urls]);
+    } catch(err){ setUploadErr(err.message||"업로드 실패"); }
+    finally{ setUploading(false); e.target.value=""; }
+  };
+
+  const handlePhotoPost = async () => {
+    if(!pendingImgs.length||!targetMatchId) return;
+    setUploading(true);
+    try {
+      const now = new Date();
+      const ts = `${now.getMonth()+1}/${now.getDate()} ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+      const key = `match_${targetMatchId}`;
+      await FB.addComment({storageKey:key, author:user.name, role:user.label||"사용자", color:user.color||"#2563eb", text:photoCaption, imgUrl:pendingImgs[0], imgUrls:pendingImgs, displayTime:ts});
+      setPendingImgs([]); setPhotoCaption(""); setUploadErr("");
+    } catch(err){ setUploadErr(err.message||"등록 실패"); }
+    finally{ setUploading(false); }
+  };
+
   const byMatch = selMatch==="all" ? allComments : allComments.filter(c=>c.matchId===Number(selMatch));
-  const cheerList = byMatch.filter(c=>!c.imgUrl);
-  const photoList = byMatch.filter(c=>!!c.imgUrl);
+  const cheerList = byMatch.filter(c=>!c.imgUrl&&!c.imgUrls?.length);
+  const photoList = byMatch.filter(c=>!!(c.imgUrl||c.imgUrls?.length));
   const gloryList   = byMatch.filter(c=>c.isGlory);
   const displayList = innerTab==="glory" ? gloryList : photoList;
   const matchesWithComments = matches.filter(m=>allComments.some(c=>c.matchId===m.id));
@@ -1812,15 +1840,37 @@ function CheerTab({ matches, user }) {
         {/* 포토 탭 입력 */}
         {innerTab==="photo"&&(
           <>
-            {uploadErr&&<div style={{fontSize:14,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
+            {uploadErr&&<div style={{fontSize:13,color:"#ff4757",marginBottom:6}}>⚠ {uploadErr}</div>}
+            {pendingImgs.length>0&&(
+              <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:8,marginBottom:8}}>
+                {pendingImgs.map((url,i)=>(
+                  <div key={i} style={{position:"relative",flexShrink:0,width:56,height:56,borderRadius:8,overflow:"hidden",border:"2px solid #3498db"}}>
+                    <img src={url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                    <button onClick={()=>setPendingImgs(prev=>prev.filter((_,j)=>j!==i))}
+                      style={{position:"absolute",top:1,right:1,background:"rgba(0,0,0,.6)",border:"none",borderRadius:"50%",width:15,height:15,color:"#fff",fontSize:9,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
+                    {i===0&&<div style={{position:"absolute",bottom:1,left:2,fontSize:8,color:"rgba(255,255,255,.8)"}}>대표</div>}
+                  </div>
+                ))}
+                {pendingImgs.length<10&&(
+                  <button onClick={()=>fileRef.current?.click()} disabled={uploading}
+                    style={{flexShrink:0,width:56,height:56,borderRadius:8,background:"#e2e8f0",border:"2px dashed #94a3b8",color:"#64748b",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>+</button>
+                )}
+              </div>
+            )}
             <div style={{display:"flex",gap:6,alignItems:"center"}}>
               <input value={photoCaption} onChange={e=>setPhotoCaption(e.target.value)} placeholder="사진 설명 (선택)"
                 style={{flex:1,background:"#f8fafc",border:"1px solid #e2e8f0",borderRadius:8,padding:"9px 11px",color:"#1e293b",fontSize:15,outline:"none",fontFamily:"inherit"}}/>
-              <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} style={{display:"none"}}/>
-              <button onClick={()=>fileRef.current?.click()} disabled={uploading}
-                style={{padding:"8px 14px",background:uploading?"rgba(241,196,15,.15)":"rgba(52,152,219,.2)",border:"1px solid #3498db50",borderRadius:8,color:uploading?"#f1c40f":"#3498db",fontSize:14,fontWeight:700,cursor:uploading?"wait":"pointer",whiteSpace:"nowrap",flexShrink:0}}>
-                {uploading?"⏳ 올리는 중...":"📷 사진 추가"}
-              </button>
+              <input ref={fileRef} type="file" accept="image/*" multiple onChange={handlePhotoSelect} style={{display:"none"}}/>
+              {pendingImgs.length===0
+                ?<button onClick={()=>fileRef.current?.click()} disabled={uploading}
+                   style={{padding:"8px 12px",background:"rgba(52,152,219,.2)",border:"1px solid #3498db50",borderRadius:8,color:"#3498db",fontSize:14,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",flexShrink:0}}>
+                   {uploading?"⏳":"📷 사진 선택"}
+                 </button>
+                :<button onClick={handlePhotoPost} disabled={uploading}
+                   style={{padding:"8px 12px",background:uploading?"rgba(241,196,15,.15)":"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:8,color:uploading?"#f1c40f":"#fff",fontSize:13,fontWeight:700,cursor:uploading?"wait":"pointer",whiteSpace:"nowrap",flexShrink:0}}>
+                   {uploading?`⏳`:`📤 올리기 (${pendingImgs.length}장)`}
+                 </button>
+              }
             </div>
           </>
         )}
@@ -2420,7 +2470,6 @@ function NoticeTab({ notices, setNotices, canNotice, userName, userObj, showNoti
 
 // ── 사진 전체화면 슬라이더 뷰어 ──────────────────────────────────────────────
 function PhotoViewer({ post, allPosts, initialIndex, onClose }) {
-  // post: 단일 게시물 (imgUrls 배열), allPosts: 전체 게시물 목록
   const [postIdx,  setPostIdx]  = useState(initialIndex ?? 0);
   const [slideIdx, setSlideIdx] = useState(0);
   const touchStartX = useRef(null);
@@ -2446,50 +2495,49 @@ function PhotoViewer({ post, allPosts, initialIndex, onClose }) {
   };
 
   return (
-    <div onClick={onClose} style={{position:"fixed",inset:0,zIndex:500,background:"rgba(0,0,0,.95)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+    <div onClick={onClose} style={{position:"fixed",inset:0,zIndex:500,background:"rgba(241,245,249,.97)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
       {/* 상단 정보 */}
-      <div style={{position:"absolute",top:0,left:0,right:0,padding:"14px 16px",display:"flex",alignItems:"center",justifyContent:"space-between",background:"linear-gradient(to bottom,rgba(0,0,0,.6),transparent)"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,padding:"14px 16px",display:"flex",alignItems:"center",justifyContent:"space-between",background:"linear-gradient(to bottom,rgba(255,255,255,.95),transparent)",borderBottom:"1px solid #e2e8f0"}}>
         <div>
-          {curPost?.author&&<div style={{fontSize:14,fontWeight:700,color:"#fff"}}>{curPost.author}</div>}
-          {curPost?.text&&<div style={{fontSize:12,color:"rgba(255,255,255,.75)",marginTop:2}}>{curPost.text}</div>}
+          {curPost?.author&&<div style={{fontSize:14,fontWeight:700,color:"#1e293b"}}>{curPost.author}</div>}
+          {curPost?.text&&<div style={{fontSize:12,color:"#64748b",marginTop:2}}>{curPost.text}</div>}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
-          {total>1&&<div style={{fontSize:12,color:"rgba(255,255,255,.8)",background:"rgba(0,0,0,.4)",padding:"3px 10px",borderRadius:20}}>{slideIdx+1}/{total}</div>}
-          <button onClick={onClose} style={{background:"rgba(255,255,255,.15)",border:"none",borderRadius:"50%",width:36,height:36,color:"#fff",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
+          {total>1&&<div style={{fontSize:12,color:"#64748b",background:"#e2e8f0",padding:"3px 10px",borderRadius:20}}>{slideIdx+1}/{total}</div>}
+          <button onClick={onClose} style={{background:"#e2e8f0",border:"none",borderRadius:"50%",width:36,height:36,color:"#475569",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
         </div>
       </div>
 
       {/* 메인 이미지 + 스와이프 */}
       <div onClick={e=>e.stopPropagation()} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
-        style={{position:"relative",width:"100%",maxWidth:520,display:"flex",alignItems:"center",justifyContent:"center"}}>
-        {/* 좌우 슬라이드 버튼 */}
+        style={{position:"relative",width:"100%",maxWidth:520,display:"flex",alignItems:"center",justifyContent:"center",padding:"0 8px"}}>
         {total>1&&slideIdx>0&&(
-          <button onClick={prevSlide} style={{position:"absolute",left:8,zIndex:1,background:"rgba(0,0,0,.4)",border:"none",borderRadius:"50%",width:36,height:36,color:"#fff",fontSize:18,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>‹</button>
+          <button onClick={prevSlide} style={{position:"absolute",left:12,zIndex:1,background:"rgba(255,255,255,.9)",border:"1px solid #e2e8f0",borderRadius:"50%",width:36,height:36,color:"#475569",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 2px 8px rgba(0,0,0,.1)"}}>‹</button>
         )}
-        <img src={curImg} alt="사진" style={{maxWidth:"100%",maxHeight:"72vh",objectFit:"contain",borderRadius:4,display:"block",userSelect:"none"}}/>
+        <img src={curImg} alt="사진" style={{maxWidth:"100%",maxHeight:"70vh",objectFit:"contain",borderRadius:12,display:"block",userSelect:"none",boxShadow:"0 4px 20px rgba(0,0,0,.12)"}}/>
         {total>1&&slideIdx<total-1&&(
-          <button onClick={nextSlide} style={{position:"absolute",right:8,zIndex:1,background:"rgba(0,0,0,.4)",border:"none",borderRadius:"50%",width:36,height:36,color:"#fff",fontSize:18,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>›</button>
+          <button onClick={nextSlide} style={{position:"absolute",right:12,zIndex:1,background:"rgba(255,255,255,.9)",border:"1px solid #e2e8f0",borderRadius:"50%",width:36,height:36,color:"#475569",fontSize:20,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 2px 8px rgba(0,0,0,.1)"}}>›</button>
         )}
       </div>
 
       {/* 슬라이드 인디케이터 */}
       {total>1&&(
-        <div style={{display:"flex",gap:5,marginTop:10}}>
+        <div style={{display:"flex",gap:6,marginTop:14}}>
           {imgUrls.map((_,i)=>(
-            <div key={i} onClick={e=>{e.stopPropagation();setSlideIdx(i);}} style={{width:slideIdx===i?20:6,height:6,borderRadius:3,background:slideIdx===i?"#fff":"rgba(255,255,255,.4)",cursor:"pointer",transition:"all .2s"}}/>
+            <div key={i} onClick={e=>{e.stopPropagation();setSlideIdx(i);}} style={{width:slideIdx===i?20:6,height:6,borderRadius:3,background:slideIdx===i?"#2563eb":"#cbd5e1",cursor:"pointer",transition:"all .2s"}}/>
           ))}
         </div>
       )}
 
-      {/* 게시물 이동 (이전/다음 게시물) */}
+      {/* 게시물 이동 */}
       {postTotal>1&&(
-        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"12px 16px",display:"flex",justifyContent:"space-between",background:"linear-gradient(to top,rgba(0,0,0,.6),transparent)"}}>
-          <button onClick={prevPost} disabled={postIdx===0} style={{background:"rgba(255,255,255,.15)",border:"none",borderRadius:20,padding:"6px 14px",color:postIdx===0?"rgba(255,255,255,.3)":"#fff",fontSize:13,cursor:postIdx===0?"not-allowed":"pointer",fontWeight:600}}>
-            ← 이전 게시물
+        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"12px 16px",display:"flex",justifyContent:"space-between",background:"linear-gradient(to top,rgba(255,255,255,.95),transparent)"}}>
+          <button onClick={prevPost} disabled={postIdx===0} style={{background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:20,padding:"6px 14px",color:postIdx===0?"#cbd5e1":"#475569",fontSize:13,cursor:postIdx===0?"not-allowed":"pointer",fontWeight:600}}>
+            ← 이전
           </button>
-          <span style={{color:"rgba(255,255,255,.6)",fontSize:12,alignSelf:"center"}}>{postIdx+1} / {postTotal}</span>
-          <button onClick={nextPost} disabled={postIdx===postTotal-1} style={{background:"rgba(255,255,255,.15)",border:"none",borderRadius:20,padding:"6px 14px",color:postIdx===postTotal-1?"rgba(255,255,255,.3)":"#fff",fontSize:13,cursor:postIdx===postTotal-1?"not-allowed":"pointer",fontWeight:600}}>
-            다음 게시물 →
+          <span style={{color:"#94a3b8",fontSize:12,alignSelf:"center"}}>{postIdx+1} / {postTotal}</span>
+          <button onClick={nextPost} disabled={postIdx===postTotal-1} style={{background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:20,padding:"6px 14px",color:postIdx===postTotal-1?"#cbd5e1":"#475569",fontSize:13,cursor:postIdx===postTotal-1?"not-allowed":"pointer",fontWeight:600}}>
+            다음 →
           </button>
         </div>
       )}
