@@ -930,7 +930,7 @@ function RegisterTab({ user, teams }) {
       <button onClick={()=>{ if(rForm.name&&rForm.team&&role) setDone(true); }} style={{width:"100%",background:"linear-gradient(135deg,#2ecc71,#27ae60)",border:"none",borderRadius:12,padding:"14px 0",color:"#000",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(46,204,113,.25)",marginTop:4}}>📋 등록 신청하기</button>
 
       <div style={{marginTop:12,background:"rgba(46,204,113,.05)",border:"1px solid #2ecc7120",borderRadius:10,padding:"9px 14px"}}>
-        <div style={{fontSize:15,color:"#475569"}}>현재 로그인: <strong style={{color:user.color}}>{user.icon} {user.label}</strong> · {user.name}</div>
+        <div style={{fontSize:15,color:"#475569"}}>현재 로그인: <strong style={{color:"#ffffff"}}>{user.icon} {user.label}</strong> · {user.name}</div>
       </div>
     </div>
   );
@@ -1182,7 +1182,7 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
             </div>}
             {isHalf&&<div style={{background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",borderRadius:20,padding:"3px 9px",fontSize:15,fontWeight:800,color:"#f1c40f"}}>HT</div>}
             {isFinished&&<div style={{background:"rgba(148,163,184,.1)",border:"1px solid #33415540",borderRadius:20,padding:"3px 9px",fontSize:15,fontWeight:800,color:"#64748b"}}>FT</div>}
-            <div style={{background:`${user.color}20`,border:`1px solid ${user.color}50`,borderRadius:20,padding:"3px 8px",fontSize:15,fontWeight:700,color:user.color}}>{user.icon}</div>
+            <div style={{background:`${user.color}20`,border:`1px solid ${user.color}50`,borderRadius:20,padding:"3px 8px",fontSize:15,fontWeight:700,color:"#ffffff"}}>{user.icon}</div>
           </div>
         </div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 20px 12px"}}>
@@ -1874,17 +1874,17 @@ function LoginScreen({ onLogin }) {
 
   return (
     <div style={{fontFamily:"'Noto Sans KR',sans-serif",background:"#f1f5f9",minHeight:"100vh",color:"#1e293b",maxWidth:430,margin:"0 auto",display:"flex",flexDirection:"column"}}>
-      <div style={{background:"linear-gradient(135deg,#0d1b3e,#1a2a5e)",padding:"32px 20px 24px",textAlign:"center"}}>
+      <div style={{background:"linear-gradient(135deg,#1e3a5f,#2563eb)",padding:"32px 20px 24px",textAlign:"center"}}>
         <div style={{width:64,height:64,borderRadius:18,margin:"0 auto 14px",background:"linear-gradient(135deg,#2ecc71,#27ae60)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,boxShadow:"0 8px 24px rgba(46,204,113,.3)"}}>⚽</div>
-        <div style={{fontSize:15,fontWeight:900}}>26년 상반기 은하수대회</div>
-        <div style={{fontSize:15,color:"#475569",marginTop:4}}>2026 · 5월 30일 · U9/U11/U13</div>
+        <div style={{fontSize:15,fontWeight:900,color:"#ffffff"}}>26년 상반기 은하수대회</div>
+        <div style={{fontSize:15,color:"rgba(255,255,255,.8)",marginTop:4}}>2026 · 5월 30일 · U9/U11/U13</div>
       </div>
       <div style={{padding:"24px 20px",flex:1}}>
         <div style={{fontSize:15,fontWeight:700,color:"#475569",marginBottom:12,letterSpacing:1}}>역할 선택</div>
         <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18}}>
           {ROLES.map(r=>(
-            <button key={r.id} onClick={()=>{setSel(r);setErr("");}} style={{display:"flex",alignItems:"center",gap:12,background:sel?.id===r.id?`${r.color}12`:"#ffffff",border:`1px solid ${sel?.id===r.id?r.color:"#1e293b"}`,borderRadius:12,padding:"11px 14px",cursor:"pointer",textAlign:"left"}}>
-              <div style={{width:36,height:36,borderRadius:9,background:sel?.id===r.id?`${r.color}20`:"#f1f5f9",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,flexShrink:0}}>{r.icon}</div>
+            <button key={r.id} onClick={()=>{setSel(r);setErr("");}} style={{display:"flex",alignItems:"center",gap:12,background:sel?.id===r.id?`${r.color}12`:"#ffffff",border:`1px solid ${sel?.id===r.id?r.color:"#e2e8f0"}`,borderRadius:12,padding:"11px 14px",cursor:"pointer",textAlign:"left"}}>
+              <div style={{width:36,height:36,borderRadius:9,background:sel?.id===r.id?`${r.color}20`:"#f8fafc",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,flexShrink:0}}>{r.icon}</div>
               <div style={{flex:1}}><div style={{fontSize:15,fontWeight:700,color:sel?.id===r.id?r.color:"#1e293b"}}>{r.label}</div><div style={{fontSize:15,color:"#64748b",marginTop:1}}>{r.desc}</div></div>
               {sel?.id===r.id&&<div style={{width:20,height:20,borderRadius:"50%",background:r.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,color:"#000",fontWeight:900}}>✓</div>}
             </button>
@@ -2810,10 +2810,10 @@ function App() {
       {/* 경기 개설/삭제는 기록 담당자 앱에서만 */}
 
       {/* 헤더 */}
-      <div style={{background:"linear-gradient(135deg,#0d1b3e,#1a2a5e)",padding:"14px 16px 12px",borderBottom:"1px solid #1e3060",position:"sticky",top:0,zIndex:20}}>
+      <div style={{background:"linear-gradient(135deg,#1e3a5f,#2563eb)",padding:"14px 16px 12px",borderBottom:"none",boxShadow:"0 2px 8px rgba(0,0,0,.1)",position:"sticky",top:0,zIndex:20}}>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
           <div style={{width:34,height:34,borderRadius:10,background:"linear-gradient(135deg,#2ecc71,#27ae60)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15}}>⚽</div>
-          <div><div style={{fontSize:15,fontWeight:800}}>26년 상반기 은하수대회</div><div style={{fontSize:15,color:"#475569",marginTop:1}}>2026 · 5월 30일 · U9/U11/U13</div></div>
+          <div><div style={{fontSize:15,fontWeight:800,color:"#ffffff"}}>26년 상반기 은하수대회</div><div style={{fontSize:15,color:"rgba(255,255,255,.75)",marginTop:1}}>2026 · 5월 30일 · U9/U11/U13</div></div>
           <div style={{marginLeft:"auto",display:"flex",alignItems:"center",gap:7}}>
             {liveCount>0&&<div style={{background:"#ff4757",color:"#fff",fontSize:15,fontWeight:800,padding:"2px 7px",borderRadius:20,animation:"blink 1.5s infinite"}}>LIVE {liveCount}</div>}
             {/* 로그아웃: 반드시 확인 모달 거침 */}
