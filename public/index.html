@@ -1556,11 +1556,85 @@ function RankingTab({ matches }) {
 }
 
 // ── 응원 탭 (전체 경기 댓글 통합 + 직접 입력) ────────────────────────────────
+// ── 영광/응원 공통 입력 컴포넌트 ──────────────────────────────────────────────
+function CheerGloryInput({ user, targetMatchId, targetMatch, onSent, isGlory }) {
+  const [text,      setText]      = useState("");
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [sending,   setSending]   = useState(false);
+  const [err,       setErr]       = useState("");
+  const pad2 = n=>String(n).padStart(2,"0");
+
+  const GLORY_EMOJIS = [
+    "🙏","✝️","☦️","🕊️","⭐","🌟","💫","✨","🌈","☀️",
+    "❤️","💛","🤍","💙","💚","💜","🧡","❤️‍🔥","🫶","🙌",
+    "🎵","🎶","📖","🕯️","🌸","🌺","🌻","🌹","🍃","🌿",
+  ];
+
+  const submit = async () => {
+    if(!text.trim()||sending) return;
+    if(!targetMatchId){ setErr("경기를 선택해주세요."); return; }
+    setSending(true); setErr("");
+    const now = new Date();
+    const ts = `${now.getMonth()+1}/${now.getDate()} ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+    const key = `match_${targetMatchId}`;
+    const newC = {
+      fbId:"tmp_"+Date.now(), storageKey:key,
+      author:user.name, role:user.label||"사용자", color:user.color||"#f1c40f",
+      text:text.trim(), imgUrl:"", displayTime:ts, isGlory:true,
+      matchId:targetMatchId,
+      matchHome:targetMatch?.home.name||"", matchAway:targetMatch?.away.name||"",
+      homeEmoji:targetMatch?.home.emoji||"", awayEmoji:targetMatch?.away.emoji||""
+    };
+    onSent(newC);
+    setText(""); setShowEmoji(false);
+    try {
+      await FB.addComment({storageKey:key, author:user.name, role:user.label||"사용자", color:user.color||"#f1c40f", text:newC.text, imgUrl:"", displayTime:ts, isGlory:true});
+    } catch(e) { setErr("전송 실패. 다시 시도해주세요."); }
+    finally { setSending(false); }
+  };
+
+  return (
+    <div>
+      {showEmoji&&(
+        <div style={{marginBottom:8,background:"#0f172a",borderRadius:10,padding:"8px 10px",border:"1px solid #f1c40f30"}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(10,1fr)",gap:4}}>
+            {GLORY_EMOJIS.map(e=>(
+              <button key={e} onClick={()=>{setText(t=>t+e); setShowEmoji(false);}}
+                style={{background:"transparent",border:"none",borderRadius:6,padding:"4px 0",fontSize:17,cursor:"pointer",textAlign:"center"}}>
+                {e}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+      {err&&<div style={{fontSize:11,color:"#ff4757",marginBottom:5}}>⚠ {err}</div>}
+      <div style={{display:"flex",gap:6,alignItems:"flex-end"}}>
+        <div style={{flex:1}}>
+          <textarea value={text} onChange={e=>setText(e.target.value)}
+            onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submit();}}}
+            placeholder="하나님께 영광 돌리는 메시지를 남겨주세요 🙏"
+            style={{width:"100%",background:"#0f172a",border:"1px solid #f1c40f40",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:12,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:48,lineHeight:1.5}}/>
+        </div>
+        <div style={{display:"flex",flexDirection:"column",gap:4,flexShrink:0}}>
+          <button onClick={()=>setShowEmoji(v=>!v)}
+            style={{width:34,height:20,borderRadius:6,background:showEmoji?"rgba(241,196,15,.2)":"#1e293b",border:`1px solid ${showEmoji?"#f1c40f":"#334155"}`,color:showEmoji?"#f1c40f":"#64748b",fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            🙏
+          </button>
+          <button onClick={submit} disabled={!text.trim()||sending}
+            style={{width:34,height:26,borderRadius:6,background:text.trim()?"linear-gradient(135deg,#f1c40f,#d4ac0d)":"#1e293b",border:"none",color:text.trim()?"#000":"#334155",fontSize:13,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
+            {sending?"⏳":"↑"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CheerTab({ matches, user }) {
   const [allComments, setAllComments] = useState([]);
   const [loading,     setLoading]     = useState(true);
   const [selMatch,    setSelMatch]    = useState("all");
-  const [innerTab,    setInnerTab]    = useState("cheer");
+  const [innerTab,    setInnerTab]    = useState("glory"); // "glory" | "cheer" | "photo"
 
   // 응원 입력 상태
   const [cheerText,    setCheerText]    = useState("");
@@ -1648,7 +1722,8 @@ function CheerTab({ matches, user }) {
   const byMatch = selMatch==="all" ? allComments : allComments.filter(c=>c.matchId===Number(selMatch));
   const cheerList = byMatch.filter(c=>!c.imgUrl);
   const photoList = byMatch.filter(c=>!!c.imgUrl);
-  const displayList = innerTab==="cheer" ? cheerList : photoList;
+  const gloryList   = byMatch.filter(c=>c.isGlory);
+  const displayList = innerTab==="glory" ? gloryList : innerTab==="cheer" ? cheerList : photoList;
   const matchesWithComments = matches.filter(m=>allComments.some(c=>c.matchId===m.id));
 
   const CommentItem = ({c}) => {
@@ -1708,6 +1783,14 @@ function CheerTab({ matches, user }) {
           <div style={{fontSize:11,color:"#475569",marginBottom:8,display:"flex",alignItems:"center",gap:4}}>
             <span>→</span>
             <span style={{color:"#94a3b8"}}>{targetMatch.home.emoji}{targetMatch.away.emoji} {targetMatch.home.name} vs {targetMatch.away.name} {selMatch==="all"?"(현재 경기)":""}</span>
+          </div>
+        )}
+
+        {/* 영광 탭 입력 */}
+        {innerTab==="glory"&&(
+          <div>
+            <div style={{fontSize:11,color:"#f1c40f80",marginBottom:8,textAlign:"center"}}>🙏 하나님께 영광 돌리는 메시지를 남겨주세요</div>
+            <CheerGloryInput user={user} targetMatchId={targetMatchId} targetMatch={targetMatch} onSent={(newC)=>setAllComments(prev=>[...prev,newC])} isGlory={true}/>
           </div>
         )}
 
@@ -1771,8 +1854,8 @@ function CheerTab({ matches, user }) {
           ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569",fontSize:12}}>⏳ 불러오는 중...</div>
           :displayList.length===0
             ?<div style={{textAlign:"center",padding:"32px 0",color:"#334155"}}>
-              <div style={{fontSize:28,marginBottom:8}}>{innerTab==="cheer"?"📣":"📷"}</div>
-              <div style={{fontSize:12}}>{innerTab==="cheer"?"첫 응원을 남겨보세요!":"첫 사진을 공유해보세요!"}</div>
+              <div style={{fontSize:28,marginBottom:8}}>{innerTab==="glory"?"🙏":innerTab==="cheer"?"📣":"📷"}</div>
+              <div style={{fontSize:12}}>{innerTab==="glory"?"첫 번째 영광의 메시지를 남겨주세요!":innerTab==="cheer"?"첫 응원을 남겨보세요!":"첫 사진을 공유해보세요!"}</div>
             </div>
             :innerTab==="photo"
               ?<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,paddingTop:12}}>
@@ -1787,9 +1870,26 @@ function CheerTab({ matches, user }) {
                   </div>
                 ))}
               </div>
-              :<div style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:14,overflow:"hidden",marginTop:12}}>
-                {displayList.map(c=><CommentItem key={c.fbId||c.id} c={c}/>)}
-              </div>
+              :innerTab==="glory"
+                ?<div style={{paddingTop:12,display:"flex",flexDirection:"column",gap:8}}>
+                  {displayList.map(c=>(
+                    <div key={c.fbId||c.id} style={{background:"linear-gradient(135deg,#0f172a,#0a1428)",border:"1px solid #f1c40f30",borderRadius:14,padding:"14px 16px",position:"relative",overflow:"hidden"}}>
+                      <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:"linear-gradient(90deg,#f1c40f,#e67e22,#f1c40f)",opacity:0.6}}/>
+                      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                        <div style={{width:28,height:28,borderRadius:"50%",background:"rgba(241,196,15,.15)",border:"1px solid #f1c40f40",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14}}>🙏</div>
+                        <div>
+                          <span style={{fontSize:12,fontWeight:700,color:"#f1c40f"}}>{c.author}</span>
+                          <span style={{fontSize:10,color:"#64748b",marginLeft:6}}>{c.role}</span>
+                        </div>
+                        <span style={{fontSize:10,color:"#334155",marginLeft:"auto"}}>{c.displayTime}</span>
+                      </div>
+                      <div style={{fontSize:13,color:"#e2e8f0",lineHeight:1.7,wordBreak:"break-word",paddingLeft:36}}>{c.text}</div>
+                    </div>
+                  ))}
+                </div>
+                :<div style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:14,overflow:"hidden",marginTop:12}}>
+                  {displayList.map(c=><CommentItem key={c.fbId||c.id} c={c}/>)}
+                </div>
         }
       </div>
     </div>
