@@ -1555,12 +1555,36 @@ function RankingTab({ matches }) {
   );
 }
 
-// ── 응원 탭 (전체 경기 댓글 통합) ────────────────────────────────────────────
+// ── 응원 탭 (전체 경기 댓글 통합 + 직접 입력) ────────────────────────────────
 function CheerTab({ matches, user }) {
   const [allComments, setAllComments] = useState([]);
   const [loading,     setLoading]     = useState(true);
   const [selMatch,    setSelMatch]    = useState("all");
-  const [innerTab,    setInnerTab]    = useState("cheer"); // "cheer" | "photo"
+  const [innerTab,    setInnerTab]    = useState("cheer");
+
+  // 응원 입력 상태
+  const [cheerText,    setCheerText]    = useState("");
+  const [showEmoji,    setShowEmoji]    = useState(false);
+  const [sending,      setSending]      = useState(false);
+  const [sendErr,      setSendErr]      = useState("");
+  // 포토 입력 상태
+  const [photoCaption, setPhotoCaption] = useState("");
+  const [uploading,    setUploading]    = useState(false);
+  const [uploadErr,    setUploadErr]    = useState("");
+  const fileRef = useRef(null);
+  const pad2 = n=>String(n).padStart(2,"0");
+
+  const CHEER_EMOJIS = [
+    // 축구
+    "⚽","🥅","🏃","🧤","🥇","🏆","🎯","📣","🎉","🎊",
+    // 응원
+    "🔥","💪","👏","🙌","🤜","🤛","✊","👊","🫶","❤️",
+    // 표정
+    "😍","🤩","😎","🥹","😭","😱","🤯","🥳","😤","💪",
+    // 기타
+    "⭐","🌟","💫","✨","💥","👑","🦅","🐼","💚","💛",
+    "🩵","❤️‍🔥","🫡","🙏","👍","🫰","💯","🆒","🔝","📸",
+  ];
 
   useEffect(()=>{
     const unsubs = [];
@@ -1583,14 +1607,48 @@ function CheerTab({ matches, user }) {
     return ()=>unsubs.forEach(u=>u());
   },[matches.length]);
 
-  // 필터: 경기 + 탭
+  // 응원 대상 경기 (선택된 경기 or 가장 최근 경기)
+  const targetMatchId = selMatch==="all"
+    ? (matches.find(m=>m.phase==="first_half"||m.phase==="second_half")?.id || matches[0]?.id)
+    : Number(selMatch);
+  const targetMatch = matches.find(m=>m.id===targetMatchId);
+
+  // 응원 댓글 전송
+  const submitCheer = async () => {
+    if(!cheerText.trim()||sending) return;
+    if(!targetMatchId){ setSendErr("경기를 선택해주세요."); return; }
+    setSending(true); setSendErr("");
+    const now = new Date();
+    const ts = `${now.getMonth()+1}/${now.getDate()} ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+    const key = `match_${targetMatchId}`;
+    const newC = {fbId:"tmp_"+Date.now(), storageKey:key, author:user.name, role:user.label||"사용자", color:user.color||"#60a5fa", text:cheerText.trim(), imgUrl:"", displayTime:ts, matchId:targetMatchId, matchHome:targetMatch?.home.name||"", matchAway:targetMatch?.away.name||"", homeEmoji:targetMatch?.home.emoji||"", awayEmoji:targetMatch?.away.emoji||""};
+    setAllComments(prev=>[...prev,newC]);
+    setCheerText(""); setShowEmoji(false);
+    try { await FB.addComment({storageKey:key, author:user.name, role:user.label||"사용자", color:user.color||"#60a5fa", text:newC.text, imgUrl:"", displayTime:ts}); }
+    catch(e){ setAllComments(prev=>prev.filter(c=>c.fbId!==newC.fbId)); setSendErr("전송 실패. 다시 시도해주세요."); }
+    finally{ setSending(false); }
+  };
+
+  // 포토 업로드
+  const handlePhoto = async (e) => {
+    const file = e.target.files?.[0]; if(!file) return;
+    if(!targetMatchId){ setUploadErr("경기를 먼저 선택해주세요."); return; }
+    setUploading(true); setUploadErr("");
+    try {
+      const url = await uploadImage(file);
+      const now = new Date();
+      const ts = `${now.getMonth()+1}/${now.getDate()} ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+      const key = `match_${targetMatchId}`;
+      await FB.addComment({storageKey:key, author:user.name, role:user.label||"사용자", color:user.color||"#60a5fa", text:photoCaption, imgUrl:url, displayTime:ts});
+      setPhotoCaption("");
+    } catch(err){ setUploadErr(err.message||"업로드 실패"); }
+    finally{ setUploading(false); e.target.value=""; }
+  };
+
   const byMatch = selMatch==="all" ? allComments : allComments.filter(c=>c.matchId===Number(selMatch));
-  const cheerList = byMatch.filter(c=>!c.imgUrl); // 텍스트 댓글
-  const photoList = byMatch.filter(c=>!!c.imgUrl); // 사진 있는 댓글
-
+  const cheerList = byMatch.filter(c=>!c.imgUrl);
+  const photoList = byMatch.filter(c=>!!c.imgUrl);
   const displayList = innerTab==="cheer" ? cheerList : photoList;
-
-  // 사진 있는 경기만 필터 버튼 표시
   const matchesWithComments = matches.filter(m=>allComments.some(c=>c.matchId===m.id));
 
   const CommentItem = ({c}) => {
@@ -1608,52 +1666,116 @@ function CheerTab({ matches, user }) {
             <span style={{fontSize:10,color:"#334155",marginLeft:"auto"}}>{c.displayTime}</span>
           </div>
           {c.text&&<div style={{fontSize:12,color:"#cbd5e1",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
-          {c.imgUrl&&<img src={c.imgUrl} alt="첨부" onError={e=>{e.target.style.display="none";}} style={{marginTop:6,maxWidth:"100%",maxHeight:220,borderRadius:8,objectFit:"cover",display:"block"}}/>}
+          {c.imgUrl&&<img src={c.imgUrl} alt="사진" onError={e=>{e.target.style.display="none";}} style={{marginTop:6,maxWidth:"100%",maxHeight:220,borderRadius:8,objectFit:"cover",display:"block"}}/>}
         </div>
       </div>
     );
   };
 
   return (
-    <div style={{padding:"16px 16px 80px"}}>
-      {/* 헤더 + 응원/포토 탭 */}
-      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14}}>
-        <div style={{fontSize:13,fontWeight:800}}>📣 응원 모아보기</div>
-        <div style={{display:"flex",background:"#0f1d35",borderRadius:20,padding:2,border:"1px solid #1e3060"}}>
-          <button onClick={()=>setInnerTab("cheer")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="cheer"?"#2ecc71":"transparent",color:innerTab==="cheer"?"#000":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer"}}>
-            💬 응원 {innerTab==="cheer"?`(${cheerList.length})`:""}
+    <div style={{paddingBottom:80}}>
+      {/* 탭 헤더 */}
+      <div style={{position:"sticky",top:60,zIndex:10,background:"#0a0e1a",padding:"12px 16px 0",borderBottom:"1px solid #1e3060"}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
+          <div style={{fontSize:13,fontWeight:800}}>📣 응원 모아보기</div>
+          <div style={{display:"flex",background:"#0f1d35",borderRadius:20,padding:2,border:"1px solid #1e3060"}}>
+            <button onClick={()=>setInnerTab("cheer")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="cheer"?"#2ecc71":"transparent",color:innerTab==="cheer"?"#000":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer",transition:"all .2s"}}>
+              💬 응원{innerTab==="cheer"?` (${cheerList.length})`:""}
+            </button>
+            <button onClick={()=>setInnerTab("photo")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer",transition:"all .2s"}}>
+              📷 포토{innerTab==="photo"?` (${photoList.length})`:""}
+            </button>
+          </div>
+        </div>
+
+        {/* 경기 필터 */}
+        <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:10,scrollbarWidth:"none"}}>
+          <button onClick={()=>setSelMatch("all")} style={{flexShrink:0,background:selMatch==="all"?"rgba(46,204,113,.15)":"transparent",border:`1px solid ${selMatch==="all"?"#2ecc71":"#1e3060"}`,borderRadius:20,padding:"4px 12px",color:selMatch==="all"?"#2ecc71":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>
+            전체
           </button>
-          <button onClick={()=>setInnerTab("photo")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:11,fontWeight:700,cursor:"pointer"}}>
-            📷 포토 {innerTab==="photo"?`(${photoList.length})`:""}
-          </button>
+          {matches.map(m=>(
+            <button key={m.id} onClick={()=>setSelMatch(String(m.id))} style={{flexShrink:0,background:selMatch===String(m.id)?`${m.home.color}20`:"transparent",border:`1px solid ${selMatch===String(m.id)?m.home.color:"#1e3060"}`,borderRadius:20,padding:"4px 11px",color:selMatch===String(m.id)?m.home.color:"#64748b",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>
+              {m.home.emoji}{m.away.emoji} <span style={{fontSize:10}}>{m.group}조</span>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* 경기 필터 */}
-      <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:8,marginBottom:14,scrollbarWidth:"none"}}>
-        <button onClick={()=>setSelMatch("all")} style={{flexShrink:0,background:selMatch==="all"?"rgba(46,204,113,.15)":"#0f1d35",border:`1px solid ${selMatch==="all"?"#2ecc71":"#1e3060"}`,borderRadius:20,padding:"5px 12px",color:selMatch==="all"?"#2ecc71":"#64748b",fontSize:11,fontWeight:selMatch==="all"?700:400,cursor:"pointer",whiteSpace:"nowrap"}}>
-          전체
-        </button>
-        {matchesWithComments.map(m=>(
-          <button key={m.id} onClick={()=>setSelMatch(String(m.id))} style={{flexShrink:0,background:selMatch===String(m.id)?`${m.home.color}20`:"#0f1d35",border:`1px solid ${selMatch===String(m.id)?m.home.color:"#1e3060"}`,borderRadius:20,padding:"5px 12px",color:selMatch===String(m.id)?m.home.color:"#64748b",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>
-            {m.home.emoji}{m.away.emoji}
-          </button>
-        ))}
+      {/* 입력 영역 */}
+      <div style={{padding:"12px 16px",background:"#0d1425",borderBottom:"1px solid #1e3060"}}>
+        {/* 대상 경기 표시 */}
+        {targetMatch&&(
+          <div style={{fontSize:11,color:"#475569",marginBottom:8,display:"flex",alignItems:"center",gap:4}}>
+            <span>→</span>
+            <span style={{color:"#94a3b8"}}>{targetMatch.home.emoji}{targetMatch.away.emoji} {targetMatch.home.name} vs {targetMatch.away.name} {selMatch==="all"?"(현재 경기)":""}</span>
+          </div>
+        )}
+
+        {/* 응원 탭 입력 */}
+        {innerTab==="cheer"&&(
+          <>
+            {showEmoji&&(
+              <div style={{marginBottom:8,background:"#0f172a",borderRadius:10,padding:"8px 10px",border:"1px solid #1e3060"}}>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(10,1fr)",gap:4}}>
+                  {CHEER_EMOJIS.map(e=>(
+                    <button key={e} onClick={()=>{setCheerText(t=>t+e); setShowEmoji(false);}}
+                      style={{background:"transparent",border:"none",borderRadius:6,padding:"4px 0",fontSize:18,cursor:"pointer",textAlign:"center",lineHeight:1}}>
+                      {e}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {sendErr&&<div style={{fontSize:11,color:"#ff4757",marginBottom:5}}>⚠ {sendErr}</div>}
+            <div style={{display:"flex",gap:6,alignItems:"flex-end"}}>
+              <div style={{flex:1}}>
+                <textarea value={cheerText} onChange={e=>setCheerText(e.target.value)}
+                  onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submitCheer();}}}
+                  placeholder="이 경기에 응원 메시지를 남겨요 ⚽"
+                  style={{width:"100%",background:"#0f172a",border:"1px solid #1e3060",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:12,boxSizing:"border-box",outline:"none",fontFamily:"inherit",resize:"none",height:48,lineHeight:1.5}}/>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",gap:4,flexShrink:0}}>
+                <button onClick={()=>setShowEmoji(v=>!v)}
+                  style={{width:34,height:20,borderRadius:6,background:showEmoji?"rgba(241,196,15,.2)":"#1e293b",border:`1px solid ${showEmoji?"#f1c40f":"#334155"}`,color:showEmoji?"#f1c40f":"#64748b",fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  😊
+                </button>
+                <button onClick={submitCheer} disabled={!cheerText.trim()||sending}
+                  style={{width:34,height:26,borderRadius:6,background:cheerText.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#1e293b",border:"none",color:cheerText.trim()?"#000":"#334155",fontSize:13,cursor:cheerText.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
+                  {sending?"⏳":"↑"}
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* 포토 탭 입력 */}
+        {innerTab==="photo"&&(
+          <>
+            {uploadErr&&<div style={{fontSize:11,color:"#ff4757",marginBottom:5}}>⚠ {uploadErr}</div>}
+            <div style={{display:"flex",gap:6,alignItems:"center"}}>
+              <input value={photoCaption} onChange={e=>setPhotoCaption(e.target.value)} placeholder="사진 설명 (선택)"
+                style={{flex:1,background:"#0f172a",border:"1px solid #1e3060",borderRadius:8,padding:"9px 11px",color:"#e2e8f0",fontSize:12,outline:"none",fontFamily:"inherit"}}/>
+              <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} style={{display:"none"}}/>
+              <button onClick={()=>fileRef.current?.click()} disabled={uploading}
+                style={{padding:"8px 14px",background:uploading?"rgba(241,196,15,.15)":"rgba(52,152,219,.2)",border:"1px solid #3498db50",borderRadius:8,color:uploading?"#f1c40f":"#3498db",fontSize:11,fontWeight:700,cursor:uploading?"wait":"pointer",whiteSpace:"nowrap",flexShrink:0}}>
+                {uploading?"⏳ 올리는 중...":"📷 사진 추가"}
+              </button>
+            </div>
+          </>
+        )}
       </div>
 
-      {/* 내용 */}
-      {loading
-        ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569",fontSize:12}}>⏳ 불러오는 중...</div>
-        :displayList.length===0
-          ?<div style={{textAlign:"center",padding:"40px 0",color:"#334155"}}>
-            <div style={{fontSize:28,marginBottom:10}}>{innerTab==="cheer"?"📣":"📷"}</div>
-            <div style={{fontSize:12}}>{innerTab==="cheer"?"아직 응원 댓글이 없어요":"아직 업로드된 사진이 없어요"}</div>
-            <div style={{fontSize:11,color:"#334155",marginTop:6}}>경기 상세 화면에서 {innerTab==="cheer"?"응원 메시지를 남겨보세요":"사진을 공유해보세요"}</div>
-          </div>
-          :<>
-            {/* 포토 탭: 그리드 레이아웃 */}
-            {innerTab==="photo"
-              ?<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
+      {/* 목록 */}
+      <div style={{padding:"0 16px"}}>
+        {loading
+          ?<div style={{textAlign:"center",padding:"40px 0",color:"#475569",fontSize:12}}>⏳ 불러오는 중...</div>
+          :displayList.length===0
+            ?<div style={{textAlign:"center",padding:"32px 0",color:"#334155"}}>
+              <div style={{fontSize:28,marginBottom:8}}>{innerTab==="cheer"?"📣":"📷"}</div>
+              <div style={{fontSize:12}}>{innerTab==="cheer"?"첫 응원을 남겨보세요!":"첫 사진을 공유해보세요!"}</div>
+            </div>
+            :innerTab==="photo"
+              ?<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,paddingTop:12}}>
                 {displayList.map(c=>(
                   <div key={c.fbId||c.id} style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:10,overflow:"hidden"}}>
                     <img src={c.imgUrl} alt="사진" onError={e=>{e.target.style.display="none";}} style={{width:"100%",aspectRatio:"1",objectFit:"cover",display:"block"}}/>
@@ -1665,15 +1787,10 @@ function CheerTab({ matches, user }) {
                   </div>
                 ))}
               </div>
-              :<div style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:14,overflow:"hidden"}}>
+              :<div style={{background:"#0a0f1e",border:"1px solid #1e293b",borderRadius:14,overflow:"hidden",marginTop:12}}>
                 {displayList.map(c=><CommentItem key={c.fbId||c.id} c={c}/>)}
               </div>
-            }
-          </>
-      }
-
-      <div style={{marginTop:12,padding:"10px 14px",background:"rgba(46,204,113,.05)",border:"1px solid #2ecc7120",borderRadius:10,fontSize:11,color:"#475569",textAlign:"center"}}>
-        💬 경기 상세 화면 하단에서 응원 댓글과 사진을 올릴 수 있어요
+        }
       </div>
     </div>
   );
@@ -2235,7 +2352,13 @@ function CommentSection({ storageKey, user }) {
   const [showEmoji, setShowEmoji] = useState(false);
   const pad2 = n=>String(n).padStart(2,"0");
 
-  const EMOJIS = ["⚽","🔥","👏","💪","🥅","🎯","🏆","😊","😢","😱","❤️","👍","🙏","🎉","⭐","🐼","🦅","💛","📣","🤩"];
+  const EMOJIS = [
+    "⚽","🥅","🏃","🧤","🥇","🏆","🎯","📣","🎉","🎊",
+    "🔥","💪","👏","🙌","🤜","🤛","✊","👊","🫶","❤️",
+    "😍","🤩","😎","🥹","😭","😱","🤯","🥳","😤","🤝",
+    "⭐","🌟","💫","✨","💥","👑","🦅","🐼","💚","💛",
+    "🩵","❤️‍🔥","🫡","🙏","👍","💯","🔝","📸","🏅","🎖",
+  ];
 
   // Firebase 실시간 댓글 구독
   useEffect(()=>{
