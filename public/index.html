@@ -2981,24 +2981,69 @@ function App() {
   const [teams,     setTeams]     = useState(INIT_TEAMS);
   const [fields,    setFields]    = useState(INIT_FIELDS);
   const [notices,   setNotices]   = useState(INIT_NOTICES);
-  const [fbReady,   setFbReady]   = useState(false); // Firebase 첫 로드 완료 여부
+  const [fbReady,   setFbReady]   = useState(false);
   const [detailId,  setDetailId]  = useState(null);
   const [matchForm, setMatchForm] = useState(null);
   const [delMatch,  setDelMatch]  = useState(null);
   const [notif,     setNotif]     = useState(null);
   const [showLogout,setShowLogout]= useState(false);
+  const [noticeBanner, setNoticeBanner] = useState(null); // 새 공지 배너
+  const knownNoticeIds = useRef(null); // 첫 로드 시 기존 ID 저장
+
+  // 브라우저 알림 권한 요청
+  const requestNotifPerm = useCallback(async () => {
+    if(!("Notification" in window)) return;
+    if(Notification.permission === "default") {
+      await Notification.requestPermission();
+    }
+  }, []);
+
+  // 새 공지 알림 발송
+  const fireNotice = useCallback((notice) => {
+    // 인앱 배너
+    setNoticeBanner(notice);
+    setTimeout(() => setNoticeBanner(null), 5000);
+    // 브라우저 Push 알림
+    if("Notification" in window && Notification.permission === "granted") {
+      try {
+        new Notification("📢 새 공지사항", {
+          body: notice.title,
+          icon: "/favicon.ico",
+          tag: "notice_" + notice.id,
+        });
+      } catch(e) {}
+    }
+  }, []);
 
   // Firebase 실시간 리스너 (마운트 시 1회 등록)
   useEffect(()=>{
-    // 경기 데이터 — Firebase 없으면 초기 데이터 업로드
+    // 경기 데이터
     const unsubM = FB.watchMatches(list=>{
       setMatches(list.length>0 ? list : INIT_MATCHES);
       setFbReady(true);
     });
-    // 공지 데이터
+    // 공지 데이터 — 새 공지 감지
     const unsubN = FB.watchNotices(list=>{
-      if(list.length>0) setNotices(list);
+      if(list.length>0) {
+        setNotices(prev => {
+          if(knownNoticeIds.current === null) {
+            // 첫 로드: 기존 ID만 기억, 알림 없음
+            knownNoticeIds.current = new Set(list.map(n=>n.id));
+          } else {
+            // 이후 업데이트: 새 ID 감지
+            list.forEach(n => {
+              if(!knownNoticeIds.current.has(n.id)) {
+                knownNoticeIds.current.add(n.id);
+                fireNotice(n);
+              }
+            });
+          }
+          return list;
+        });
+      }
     });
+    // 알림 권한 요청 (3초 후)
+    setTimeout(requestNotifPerm, 3000);
     return ()=>{ unsubM(); unsubN(); };
   },[]);
 
@@ -3068,6 +3113,23 @@ function App() {
     <div style={{fontFamily:"'Noto Sans KR','Apple SD Gothic Neo',sans-serif",background:"#f1f5f9",minHeight:"100vh",color:"#1e293b",maxWidth:430,margin:"0 auto"}}>
       <Notif notif={notif}/>
       {showLogout&&<LogoutConfirmModal user={user} onConfirm={handleLogout} onClose={()=>setShowLogout(false)}/>}
+
+      {/* 새 공지 인앱 배너 */}
+      {noticeBanner&&(
+        <div onClick={()=>{setTab("notice");setNoticeBanner(null);}}
+          style={{position:"fixed",top:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,zIndex:999,cursor:"pointer",animation:"slideDown .35s ease"}}>
+          <div style={{margin:"8px 12px",background:"linear-gradient(135deg,#1e3a5f,#2563eb)",borderRadius:14,padding:"12px 16px",display:"flex",alignItems:"center",gap:10,boxShadow:"0 6px 24px rgba(37,99,235,.35)"}}>
+            <div style={{width:36,height:36,borderRadius:10,background:"rgba(255,255,255,.15)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>📢</div>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontSize:12,color:"rgba(255,255,255,.75)",fontWeight:600,marginBottom:2}}>새 공지사항</div>
+              <div style={{fontSize:14,color:"#ffffff",fontWeight:700,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{noticeBanner.title}</div>
+            </div>
+            <button onClick={e=>{e.stopPropagation();setNoticeBanner(null);}}
+              style={{background:"rgba(255,255,255,.15)",border:"none",borderRadius:"50%",width:28,height:28,color:"#fff",fontSize:16,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>✕</button>
+          </div>
+          <style>{`@keyframes slideDown{from{opacity:0;transform:translateX(-50%) translateY(-60px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}`}</style>
+        </div>
+      )}
       {/* 경기 개설/삭제는 기록 담당자 앱에서만 */}
 
       {/* 헤더 */}
