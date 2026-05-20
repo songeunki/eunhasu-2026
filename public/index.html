@@ -1779,7 +1779,16 @@ function CheerTab({ matches, user }) {
   const matchesWithComments = matches.filter(m=>allComments.some(c=>c.matchId===m.id));
 
   const CommentItem = ({c}) => {
-    const m = matches.find(m=>m.id===c.matchId);
+    const likes = c.likes||[];
+    const liked = likes.includes(user.name);
+    const fbId  = c.fbId||c.id;
+    const handleLike = async () => {
+      if(fbId?.startsWith("tmp_")) return;
+      try {
+        const updated = await FB.toggleLike(fbId, user.name);
+        setAllComments(prev=>prev.map(x=>(x.fbId||x.id)===fbId?{...x,likes:updated}:x));
+      } catch(e){}
+    };
     return (
       <div style={{padding:"10px 14px",borderBottom:"1px solid #f1f5f9",display:"flex",gap:8}}>
         <div style={{width:28,height:28,borderRadius:7,background:`${c.color||"#3498db"}20`,border:`1px solid ${c.color||"#3498db"}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>
@@ -1788,12 +1797,15 @@ function CheerTab({ matches, user }) {
         <div style={{flex:1,minWidth:0}}>
           <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:3,flexWrap:"wrap"}}>
             <span style={{fontSize:15,fontWeight:700,color:c.color||"#2563eb"}}>{c.author}</span>
-            <span style={{fontSize:13,color:"#64748b",background:`${c.color||"#3498db"}20`,color:`${c.color||"#2563eb"}`,padding:"2px 7px",borderRadius:8,fontWeight:600}}>{c.role}</span>
-            {m&&null}
+            <span style={{fontSize:13,background:`${c.color||"#3498db"}20`,color:`${c.color||"#2563eb"}`,padding:"2px 7px",borderRadius:8,fontWeight:600}}>{c.role}</span>
             <span style={{fontSize:13,color:"#64748b",marginLeft:"auto"}}>{c.displayTime}</span>
           </div>
           {c.text&&<div style={{fontSize:15,color:"#64748b",lineHeight:1.6,wordBreak:"break-word"}}>{c.text}</div>}
           {c.imgUrl&&<img src={c.imgUrl} alt="사진" onError={e=>{e.target.style.display="none";}} style={{marginTop:6,maxWidth:"100%",maxHeight:220,borderRadius:8,objectFit:"cover",display:"block"}}/>}
+          {/* 좋아요 */}
+          <button onClick={handleLike} style={{marginTop:5,background:liked?"#fee2e2":"transparent",border:liked?"1px solid #fca5a5":"none",borderRadius:20,padding:"2px 8px",cursor:"pointer",display:"flex",alignItems:"center",gap:3}}>
+            <span style={{fontSize:13,fontWeight:700,color:liked?"#ef4444":"#94a3b8"}}>{liked?"❤️ 좋아요":"🤍 좋아요"}{likes.length>0?" "+likes.length:""}</span>
+          </button>
         </div>
       </div>
     );
@@ -1804,17 +1816,14 @@ function CheerTab({ matches, user }) {
       {/* 전체화면 사진 뷰어 */}
       {viewerPhoto&&<PhotoViewer post={viewerPhoto} allPosts={photoList} initialIndex={photoList.indexOf(viewerPhoto)} onClose={()=>setViewerPhoto(null)} user={user}/>}
       {/* 탭 헤더 */}
-      <div style={{position:"sticky",top:60,zIndex:10,background:"#f1f5f9",padding:"12px 16px 0",borderBottom:"1px solid #1e3060"}}>
-        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
-          <div style={{fontSize:16,fontWeight:800}}>💬 댓글 · 포토</div>
-          <div style={{display:"flex",background:"#ffffff",borderRadius:20,padding:2,border:"1px solid #e2e8f0"}}>
-            <button onClick={()=>setInnerTab("glory")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="glory"?"#f1c40f":"transparent",color:innerTab==="glory"?"#000":"#64748b",fontSize:14,fontWeight:700,cursor:"pointer"}}>
-              💬 댓글{innerTab==="glory"?` (${gloryList.length})`:""}
-            </button>
-            <button onClick={()=>setInnerTab("photo")} style={{padding:"5px 14px",borderRadius:18,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:14,fontWeight:700,cursor:"pointer"}}>
-              📷 포토{innerTab==="photo"?` (${photoList.length})`:""}
-            </button>
-          </div>
+      <div style={{position:"sticky",top:60,zIndex:10,background:"#f1f5f9",padding:"12px 16px 0",borderBottom:"1px solid #e2e8f0"}}>
+        <div style={{display:"flex",background:"#ffffff",borderRadius:12,padding:3,border:"1px solid #e2e8f0",marginBottom:10}}>
+          <button onClick={()=>setInnerTab("glory")} style={{flex:1,padding:"10px 0",borderRadius:10,border:"none",background:innerTab==="glory"?"#f1c40f":"transparent",color:innerTab==="glory"?"#000":"#64748b",fontSize:15,fontWeight:700,cursor:"pointer",transition:"all .15s"}}>
+            💬 댓글{innerTab==="glory"?` (${gloryList.length})`:""}
+          </button>
+          <button onClick={()=>setInnerTab("photo")} style={{flex:1,padding:"10px 0",borderRadius:10,border:"none",background:innerTab==="photo"?"#3498db":"transparent",color:innerTab==="photo"?"#fff":"#64748b",fontSize:15,fontWeight:700,cursor:"pointer",transition:"all .15s"}}>
+            📷 포토{innerTab==="photo"?` (${photoList.length})`:""}
+          </button>
         </div>
       </div>
 
@@ -1881,14 +1890,30 @@ function CheerTab({ matches, user }) {
                 {displayList.map(c=>{
                   const thumb=c.imgUrls?.[0]||c.imgUrl;
                   const cnt=(c.imgUrls?.length||1);
+                  const likes=c.likes||[];
+                  const liked=likes.includes(user.name);
+                  const fbId=c.fbId||c.id;
+                  const handleLike=(e)=>{
+                    e.stopPropagation();
+                    if(fbId?.startsWith("tmp_")) return;
+                    FB.toggleLike(fbId,user.name).then(updated=>
+                      setAllComments(prev=>prev.map(x=>(x.fbId||x.id)===fbId?{...x,likes:updated}:x))
+                    ).catch(()=>{});
+                  };
                   return(
-                    <div key={c.fbId||c.id} onClick={()=>setViewerPhoto(c)} style={{background:"#f8fafc",border:"1px solid #e2e8f0",borderRadius:10,overflow:"hidden",cursor:"pointer",position:"relative"}}>
-                      <img src={thumb} alt="사진" onError={e=>{e.target.style.display="none";}} style={{width:"100%",aspectRatio:"1",objectFit:"cover",display:"block"}}/>
-                      {cnt>1&&<div style={{position:"absolute",top:5,right:5,background:"rgba(0,0,0,.55)",borderRadius:10,padding:"2px 7px",display:"flex",alignItems:"center",gap:3}}><span style={{fontSize:10,color:"#fff"}}>⧉</span><span style={{fontSize:10,color:"#fff",fontWeight:700}}>{cnt}</span></div>}
-                      <div style={{padding:"6px 8px"}}>
+                    <div key={fbId} style={{background:"#ffffff",border:"1px solid #e2e8f0",borderRadius:10,overflow:"hidden",cursor:"pointer",position:"relative",boxShadow:"0 1px 3px rgba(0,0,0,.06)"}}>
+                      <div onClick={()=>setViewerPhoto(c)} style={{position:"relative"}}>
+                        <img src={thumb} alt="사진" onError={e=>{e.target.style.display="none";}} style={{width:"100%",aspectRatio:"1",objectFit:"cover",display:"block"}}/>
+                        {cnt>1&&<div style={{position:"absolute",top:5,right:5,background:"rgba(0,0,0,.55)",borderRadius:10,padding:"2px 7px",display:"flex",alignItems:"center",gap:3}}><span style={{fontSize:10,color:"#fff"}}>⧉</span><span style={{fontSize:10,color:"#fff",fontWeight:700}}>{cnt}</span></div>}
+                      </div>
+                      <div style={{padding:"7px 8px"}}>
                         <div style={{fontSize:13,fontWeight:700,color:c.color||"#2563eb"}}>{c.author}</div>
-                        {c.text&&<div style={{fontSize:13,color:"#64748b",marginTop:2,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{c.text}</div>}
-                        <div style={{fontSize:12,color:"#64748b",marginTop:2}}>{c.displayTime}</div>
+                        {c.text&&<div style={{fontSize:12,color:"#64748b",marginTop:1,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{c.text}</div>}
+                        <div style={{fontSize:11,color:"#94a3b8",marginTop:1}}>{c.displayTime}</div>
+                        {/* 좋아요 */}
+                        <button onClick={handleLike} style={{marginTop:5,background:liked?"#fee2e2":"#f8fafc",border:`1px solid ${liked?"#fca5a5":"#e2e8f0"}`,borderRadius:20,padding:"3px 10px",cursor:"pointer",display:"flex",alignItems:"center",gap:3}}>
+                          <span style={{fontSize:12,fontWeight:700,color:liked?"#ef4444":"#94a3b8"}}>{liked?"❤️":"🤍"} 좋아요{likes.length>0?" "+likes.length:""}</span>
+                        </button>
                       </div>
                     </div>
                   );
