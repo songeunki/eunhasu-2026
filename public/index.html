@@ -3140,9 +3140,9 @@ function App() {
           <div style={{marginLeft:"auto",display:"flex",alignItems:"center",gap:7}}>
             {liveCount>0&&<div style={{background:"#ff4757",color:"#fff",fontSize:15,fontWeight:800,padding:"2px 7px",borderRadius:20,animation:"blink 1.5s infinite"}}>LIVE {liveCount}</div>}
             {/* 로그아웃: 반드시 확인 모달 거침 */}
-            <button onClick={()=>setShowLogout(true)} style={{background:`${user.color}20`,border:`1px solid ${user.color}40`,borderRadius:20,padding:"4px 10px",display:"flex",alignItems:"center",gap:4,cursor:"pointer"}}>
+            <button onClick={()=>setShowLogout(true)} style={{background:"rgba(255,255,255,.18)",border:"1px solid rgba(255,255,255,.4)",borderRadius:20,padding:"5px 12px",display:"flex",alignItems:"center",gap:5,cursor:"pointer"}}>
               <span style={{fontSize:15}}>{user.icon}</span>
-              <span style={{fontSize:15,fontWeight:700,color:user.color}}>{user.name}</span>
+              <span style={{fontSize:14,fontWeight:700,color:"#ffffff"}}>{user.name}</span>
             </button>
           </div>
         </div>
