@@ -1192,7 +1192,7 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
           </div>
           <div style={{textAlign:"center",padding:"0 10px"}}>
             {isPre?(
-              <div><div style={{fontSize:15,fontWeight:900,color:"rgba(255,255,255,.7)"}}>VS</div><div style={{fontSize:15,color:"#2563eb",marginTop:4,background:"rgba(59,130,246,.1)",padding:"3px 10px",borderRadius:20}}>{match.time}</div></div>
+              <div><div style={{fontSize:15,fontWeight:900,color:"rgba(255,255,255,.7)"}}>VS</div><div style={{fontSize:15,color:"#ffffff",fontWeight:700,marginTop:4,background:"rgba(255,255,255,.25)",padding:"3px 10px",borderRadius:20}}>{match.time}</div></div>
             ):(
               <div>
                 <div style={{fontSize:23,fontWeight:900,letterSpacing:4,lineHeight:1}}>
@@ -1211,7 +1211,7 @@ function MatchDetail({ matchId, matches, onUpdateMatch, onBack, user }) {
             <div style={{fontSize:15,fontWeight:800,marginTop:6,color:"#ffffff"}}>{match.away.name}</div>
           </div>
         </div>
-        <div style={{display:"flex",borderTop:"1px solid #e2e8f0"}}>
+        <div style={{display:"flex",borderTop:"1px solid rgba(255,255,255,.25)",background:"transparent"}}>
           {["타임라인","라인업","통계"].map((t,i)=>{
             const k=["timeline","lineup","stats"][i];
             return <button key={t} onClick={()=>setTab(k)} style={{flex:1,padding:"11px 0",border:"none",background:"transparent",cursor:"pointer",fontSize:15,fontWeight:tab===k?800:500,color:tab===k?"#2ecc71":"#64748b",borderBottom:tab===k?"2px solid #2ecc71":"2px solid transparent"}}>{t}</button>;
@@ -2511,7 +2511,7 @@ function CommentSection({ storageKey, user }) {
               😊
             </button>
             <button onClick={submit} disabled={!text.trim()}
-              style={{width:34,height:34,borderRadius:7,background:text.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#e2e8f0",border:"none",color:text.trim()?"#000":"#64748b",fontSize:17,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
+              style={{width:34,height:34,borderRadius:7,background:text.trim()?"linear-gradient(135deg,#2ecc71,#27ae60)":"#f1f5f9",border:"1px solid #e2e8f0",color:text.trim()?"#000":"#94a3b8",fontSize:17,cursor:text.trim()?"pointer":"not-allowed",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900}}>
               ↑
             </button>
           </div>
