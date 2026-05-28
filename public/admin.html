@@ -1606,6 +1606,7 @@ function InfoTab({ info, teams, preparations, reception, admin }) {
   const [prepEditOpen, setPrepEditOpen] = useState(false);
   const [receptionEditOpen, setReceptionEditOpen] = useState(false);
   const [mapUrl, setMapUrl] = useState("");
+  const [viewerOpen, setViewerOpen] = useState(false);
 
   useEffect(() => {
     FB.getDownloadURL("map/aerial.jpg").then(setMapUrl).catch(() => setMapUrl(""));
@@ -1724,7 +1725,7 @@ function InfoTab({ info, teams, preparations, reception, admin }) {
               borderRadius: 10,
               display: "block",
             }}
-            onClick={() => window.open(mapUrl, "_blank")}
+            onClick={() => setViewerOpen(true)}
           />
         ) : (
           <div
@@ -1998,6 +1999,15 @@ function InfoTab({ info, teams, preparations, reception, admin }) {
             items={reception}
           />
         </>
+      )}
+
+      {/* 항공뷰 지도 전체화면 뷰어 */}
+      {viewerOpen && mapUrl && (
+        <PhotoViewer
+          images={[mapUrl]}
+          startIndex={0}
+          onClose={() => setViewerOpen(false)}
+        />
       )}
     </div>
   );
@@ -2575,6 +2585,7 @@ function MatchTab({ now, info, matches, teamByCode, admin }) {
 
 // 대진표 원본 이미지 카드 (각 구장 상단에 표시)
 function MatchImageCard({ imgUrl, onImgUploaded, storageKey, imgLabel, admin }) {
+  const [viewerOpen, setViewerOpen] = useState(false);
   return (
     <Card style={{ padding: 8 }}>
       <div
@@ -2600,7 +2611,7 @@ function MatchImageCard({ imgUrl, onImgUploaded, storageKey, imgLabel, admin }) 
           src={imgUrl}
           alt={imgLabel}
           style={{ width: "100%", borderRadius: 8, display: "block", cursor: "pointer" }}
-          onClick={() => window.open(imgUrl, "_blank")}
+          onClick={() => setViewerOpen(true)}
         />
       ) : (
         <div
@@ -2624,8 +2635,15 @@ function MatchImageCard({ imgUrl, onImgUploaded, storageKey, imgLabel, admin }) 
       )}
       {imgUrl && (
         <div style={{ fontSize: 11, color: C.muted, textAlign: "center", marginTop: 6 }}>
-          🔍 이미지를 누르면 크게 볼 수 있습니다
+          🔍 이미지를 누르면 크게 보고 확대할 수 있습니다
         </div>
+      )}
+      {viewerOpen && imgUrl && (
+        <PhotoViewer
+          images={[imgUrl]}
+          startIndex={0}
+          onClose={() => setViewerOpen(false)}
+        />
       )}
     </Card>
   );
