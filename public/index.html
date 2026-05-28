@@ -103,9 +103,9 @@ const DEFAULT_INFO = {
 };
 
 // ========================
-// 참가팀
+// 기본 시드 데이터 (Firestore가 비어있을 때 자동 업로드용)
 // ========================
-const TEAMS = {
+const DEFAULT_TEAMS = {
   U9: [
     { code: "B1", name: "슈퍼판다", emoji: "🐼", color: "#2ecc71" },
     { code: "B2", name: "불사조", emoji: "🔥", color: "#f39c12" },
@@ -125,292 +125,46 @@ const TEAMS = {
   ],
 };
 
-// ========================
-// 대진표
-// ========================
-const MATCHES_FIELD1 = [
-  { no: 1, t1: "11:00~11:10", t2: "11:15~11:25", a: "A1", b: "A2" },
-  { no: 2, t1: "11:30~11:40", t2: "11:45~11:55", a: "A3", b: "A4" },
-  { no: 3, t1: "12:00~12:10", t2: "12:15~12:25", a: "A5", b: "A1" },
-  { no: 4, t1: "12:30~12:40", t2: "12:45~12:55", a: "A2", b: "A3" },
-  { no: 5, t1: "13:00~13:10", t2: "13:15~13:25", a: "A4", b: "A5" },
-  { no: 6, t1: "13:30~13:40", t2: "13:45~13:55", a: "A3", b: "A1" },
-  { no: 7, t1: "14:00~14:10", t2: "14:15~14:25", a: "A2", b: "A4" },
-  { no: 8, t1: "14:30~14:40", t2: "14:45~14:55", a: "A5", b: "A3" },
-  { no: 9, t1: "15:00~15:10", t2: "15:15~15:25", a: "A1", b: "A4" },
-  { no: 10, t1: "15:30~15:40", t2: "15:45~15:55", a: "A2", b: "A5" },
-];
-
-const MATCHES_FIELD2 = [
-  { no: 1, kind: "U9", quarter: "1쿼터", t1: "11:00~11:15", a: "B1", b: "B2" },
-  { no: 2, kind: "U13", t1: "11:20~11:30", t2: "11:35~11:45", a: "C1", b: "C2" },
-  { no: 3, kind: "U13", t1: "11:50~12:00", t2: "12:05~12:15", a: "C3", b: "C4" },
-  { no: 4, kind: "U9", quarter: "2쿼터", t1: "12:20~12:35", a: "B2", b: "B1" },
-  { no: 5, kind: "U13", t1: "12:40~12:50", t2: "12:55~13:05", a: "C3", b: "C1" },
-  { no: "*", kind: "REST", t1: "13:05~13:30", title: "경기 휴식시간" },
-  { no: 6, kind: "U13", t1: "13:30~13:40", t2: "13:45~13:55", a: "C2", b: "C4" },
-  { no: 7, kind: "U9", quarter: "3쿼터", t1: "14:00~14:15", a: "B1", b: "B2" },
-  { no: 8, kind: "U13", t1: "14:20~14:30", t2: "14:35~14:45", a: "C4", b: "C1" },
-  { no: 9, kind: "U13", t1: "14:50~15:00", t2: "15:05~15:15", a: "C2", b: "C3" },
-];
-
-const TEAM_BY_CODE = {};
-[...TEAMS.U9, ...TEAMS.U11, ...TEAMS.U13].forEach((t) => {
-  TEAM_BY_CODE[t.code] = t;
-});
-
-// ========================
-// 찬양 가사 (전체)
-// ========================
-const HYMNS = {
-  opening: [
-    {
-      id: "opening_1",
-      title: "가자 때가 됐다",
-      source: "조슈아 정 1집",
-      storageKey: "hymns/opening_1.mp3",
-      lyrics: `가자 때가 됐다
-이제는 가야한다
-하늘도 기다리고 저 구름도 서서 기다린다
-때가 됐다 제때 제 일
-하나님 말씀하시기를
-
-순간의 때를 너는 놓치지 말아라
-내 항상 명심하고 이 잠언을
-뇌 속에 뼛속에 넣고 행합니다
-
-그러니 어딜가도 그 생각에
-때에 오는 모든 것을
-능큼능큼 행해버려
-얻을 것 얻습니다`,
-    },
-    {
-      id: "opening_2",
-      title: "멋있게 뛰는 거야",
-      source: "명곡의 사연",
-      storageKey: "hymns/opening_2.mp3",
-      lyrics: `축구를 할 때도 멋있게 뛰는 거야
-멋있게 패스야
-멋있게 단독 드리블
-쇼트 패스 하면서
-멋있게 슈팅을 하는 거야
-
-슛! 골인~
-멋있게 사는 거야
-
-인생을 멋있게
-섭리를 멋있게
-하나님 멋있게
-성령님 멋있게
-사랑하는 거야
-
-(간주)
-
-슛! 골인~
-슛! 골인~
-
-축구를 할 때도 멋있게 뛰는 거야
-멋있게 패스야
-멋있게 단독 드리블
-쇼트 패스 하면서
-멋있게 슈팅을 하는 거야
-
-슛! 골인~
-멋있게 사는 거야
-
-인생을 멋있게
-섭리를 멋있게
-하나님 멋있게
-성령님 멋있게
-사랑하는 거야
-
-슛! 골인~`,
-    },
-    {
-      id: "opening_3",
-      title: "주님은 나의 소망이요 기쁨",
-      source: "명곡의 사연",
-      storageKey: "hymns/opening_3.mp3",
-      lyrics: `주님 없이는 너도 나도 살 수가 없어요
-재미있게 희망차서 살 수가 없어요
-주님은 나의 소망이요 기쁨이요
-자랑거리요 자부심거리입니다
-
-(간주)
-
-어디 가나 님을 생각하면
-자랑하고 싶어요
-어떤 사람 앞에서도
-말하고 싶어요
-끝이 없는 그 사연들을 말해 주고 싶어요
-
-누구나 들으면
-충격을 받을 겁니다
-놀랄 겁니다
-
-나는 사랑하는 그의 신부니까
-그의 사랑거리니까요
-그의 기쁨거리니까요
-
-언제나 빛난 내 얼굴만 봐도
-알고 싶어 할 것입니다
-시대의 비밀은
-말 안 하면 알 수 없는
-주님의 그 비밀은
-정말로 아는 자가 말해 줘야 합니다
-아는 자가 고해 줘야 합니다
-증거해야 알 수가 있습니다
-
-(짧은 간주)
-
-님은 언젠가 말했지요
-나를 증거하라
-땅끝까지
-나를 증거하라
-주 하나님 너와 함께 말해 주리라
-성령님 감동으로 깨우쳐 주리라
-
-(간주)
-
-주님 없이는 너도 나도 살 수가 없어요
-재미있게 희망차서 살 수가 없어요
-주님은 나의 소망이요 기쁨이요
-자랑거리요
-자부심거리입니다`,
-    },
+const DEFAULT_MATCHES = {
+  field1: [
+    { no: 1, t1: "11:00~11:10", t2: "11:15~11:25", a: "A1", b: "A2" },
+    { no: 2, t1: "11:30~11:40", t2: "11:45~11:55", a: "A3", b: "A4" },
+    { no: 3, t1: "12:00~12:10", t2: "12:15~12:25", a: "A5", b: "A1" },
+    { no: 4, t1: "12:30~12:40", t2: "12:45~12:55", a: "A2", b: "A3" },
+    { no: 5, t1: "13:00~13:10", t2: "13:15~13:25", a: "A4", b: "A5" },
+    { no: 6, t1: "13:30~13:40", t2: "13:45~13:55", a: "A3", b: "A1" },
+    { no: 7, t1: "14:00~14:10", t2: "14:15~14:25", a: "A2", b: "A4" },
+    { no: 8, t1: "14:30~14:40", t2: "14:45~14:55", a: "A5", b: "A3" },
+    { no: 9, t1: "15:00~15:10", t2: "15:15~15:25", a: "A1", b: "A4" },
+    { no: 10, t1: "15:30~15:40", t2: "15:45~15:55", a: "A2", b: "A5" },
   ],
-  closing: [
-    {
-      id: "closing_1",
-      title: "주님은 이기고 이기신다",
-      source: "명곡의 사연",
-      storageKey: "hymns/closing_1.mp3",
-      lyrics: `사탄도 이기었다
-원수 사탄 마귀 귀신
-하나님 골칫거리
-우리들도 골칫거리
-거기다가 악평자 일어나고
-이 민족 저 민족
-기성들 모두 와서 괴롭히던 섭리역사
-이기었다
-
-주님은 이기고 이기신다
-또 이기고 이기신다
-하나님 우리와 함께
-성령님 우리와 함께
-성자는 앞질러 행하셨던 지난날
-이제는 세상을 쓸어 버리고
-영웅 되어
-하나님 신부
-성령님 성자 신부 되어서
-우리가 이기었다 승리하였다
-낙심 말고 행하던 우리의 신앙은
-꿈이 아닌 현실을 이루었다
-섭리의 나라다
-하나님 나라다
-온 세상 전해 주자`,
-    },
-    {
-      id: "closing_2",
-      title: "성령의 바람 타고 날아갑니다",
-      source: "조슈아 정 2집 버전",
-      storageKey: "hymns/closing_2.mp3",
-      lyrics: `나는 갑니다
-성령의 바람 타고
-날아갑니다
-하나님 목적을 찾아서
-달려갑니다
-멋있게 재미있게 좋아하며
-성령님 따라갑니다
-쫓아갑니다
-
-(간주)
-
-성령님 언제나 말씀하시길
-내가 너와 함께하리니
-네 곁에 있으니
-나를 잊지 말고
-생각을 해야 한다
-
-사람은 조석으로
-변한다더니 그러합니다
-늘 생각한다고 하면서도
-현실에 임하면
-잊어버리고 사는 사람들
-
-너나 나나
-오늘도 주님 생각 함께 행하며
-성령 안에서 행하며
-사는 낙이다`,
-    },
-    {
-      id: "closing_3",
-      title: "천국의 삶",
-      source: "명곡의 사연",
-      storageKey: "hymns/closing_3.mp3",
-      lyrics: `하나님 창조하신 천지 만물 지구 세상
-주님 모시고 산다면 거기가 바로 천국의 삶
-주와 함께 하나님 성령님 모시고서
-지상에서 휴거를 이루네 황금 천국의 삶
-
-하나님 창조하신 천지 만물
-지구 세상 천국이란다
-주님 모신 곳
-주와 함께 살아가면
-거기가 천국이란다
-
-하나님 창조하신 천지 만물
-지구 세상 천국이란다
-주님 모신 곳
-주와 함께 살아가면
-거기가 천국이란다
-
-하나님 성령님 성자가 사시는 저 하늘
-저 하늘나라
-거기는 영들이 사는 천국이란단다
-
-오늘도 주님 함께
-하나님 모시고 성령님 모시고서
-지상에서 휴거 되어 천국의 삶이란다
-황금 천국 삶이란다
-
-오늘도 주님 함께
-하나님 모시고 성령님 모시고서
-지상에서 휴거 되어 천국의 삶이란다
-황금 천국 삶이란다`,
-    },
+  field2: [
+    { no: 1, kind: "U9", quarter: "1쿼터", t1: "11:00~11:15", a: "B1", b: "B2" },
+    { no: 2, kind: "U13", t1: "11:20~11:30", t2: "11:35~11:45", a: "C1", b: "C2" },
+    { no: 3, kind: "U13", t1: "11:50~12:00", t2: "12:05~12:15", a: "C3", b: "C4" },
+    { no: 4, kind: "U9", quarter: "2쿼터", t1: "12:20~12:35", a: "B2", b: "B1" },
+    { no: 5, kind: "U13", t1: "12:40~12:50", t2: "12:55~13:05", a: "C3", b: "C1" },
+    { no: "*", kind: "REST", t1: "13:05~13:30", title: "경기 휴식시간" },
+    { no: 6, kind: "U13", t1: "13:30~13:40", t2: "13:45~13:55", a: "C2", b: "C4" },
+    { no: 7, kind: "U9", quarter: "3쿼터", t1: "14:00~14:15", a: "B1", b: "B2" },
+    { no: 8, kind: "U13", t1: "14:20~14:30", t2: "14:35~14:45", a: "C4", b: "C1" },
+    { no: 9, kind: "U13", t1: "14:50~15:00", t2: "15:05~15:15", a: "C2", b: "C3" },
   ],
 };
 
-// ========================
-// 조건기도 / 이벤트 / 시상 / 준비물
-// ========================
-const PRAYERS = [
-  "은하수축구대회를 열어주시고 영광돌릴수 있게 허락해 주셔서 감사합니다.",
-  "처음부터 끝까지 하늘의 구상과 성령의 감동으로 가장 이상적인 날씨 속에 순조롭고 은혜롭게 잘 진행되길 기도합니다.",
-  "축구를 통해 신앙의 힘을 키우고, 서로 배려하고 화목한 사랑과 평화의 축구대회가 되길 기도합니다.",
-  "책임분담하며 실력을 갖추고 선생님과 일체되어 감각있게 안전하게 잘 뛰길 기도합니다.",
-  "경기마다 성삼위 예수님 선생님 찾고 부르며, 나와 함께 하심을 실감나게 느끼고, 기쁘게 영광 돌려 감사하는 시간이 되길 기도합니다.",
-  "끝까지 포기하지 않고, 최선을 다해 주님정신으로 주일체 되어 행복하고 사연있는 대회가 되길 주님의 이름으로 기도드립니다. 아멘 🙏",
-];
+const DEFAULT_PRAYERS = {
+  header: "🙏 선생님의 건강을 지켜주시고, 선생님의 기도가 하나님 뜻대로 다 이루어지길 기도합니다.",
+  items: [
+    "은하수축구대회를 열어주시고 영광돌릴수 있게 허락해 주셔서 감사합니다.",
+    "처음부터 끝까지 하늘의 구상과 성령의 감동으로 가장 이상적인 날씨 속에 순조롭고 은혜롭게 잘 진행되길 기도합니다.",
+    "축구를 통해 신앙의 힘을 키우고, 서로 배려하고 화목한 사랑과 평화의 축구대회가 되길 기도합니다.",
+    "책임분담하며 실력을 갖추고 선생님과 일체되어 감각있게 안전하게 잘 뛰길 기도합니다.",
+    "경기마다 성삼위 예수님 선생님 찾고 부르며, 나와 함께 하심을 실감나게 느끼고, 기쁘게 영광 돌려 감사하는 시간이 되길 기도합니다.",
+    "끝까지 포기하지 않고, 최선을 다해 주님정신으로 주일체 되어 행복하고 사연있는 대회가 되길 주님의 이름으로 기도드립니다. 아멘 🙏",
+  ],
+};
 
-const EVENTS = [
-  { icon: "🍦", title: "아이스크림 전원 제공", desc: "참가자 모두에게 제공됩니다" },
-  { icon: "📸", title: "포토존 촬영", desc: "기념사진 남기기 좋은 공간 마련" },
-  { icon: "🎨", title: "페이스페인팅", desc: "만화부 주관 부스 (경기 중 동시운영)" },
-  { icon: "🪭", title: "부채꾸미기", desc: "만화부 주관 부스 (경기 중 동시운영)" },
-  { icon: "🎟️", title: "행운권 추첨", desc: "본부석에서 이름 넣기" },
-  { icon: "🥇", title: "평화축구선수상", desc: "참가자 전원에게 상장과 메달 수여" },
-];
-
-const PRIZES = [
-  { rank: "우승", icon: "🏆", color: "#facc15" },
-  { rank: "준우승", icon: "🥈", color: "#cbd5e1" },
-  { rank: "공동 3위", icon: "🥉", color: "#fb923c" },
-  { rank: "공동 3위", icon: "🥉", color: "#fb923c" },
-];
-
-const PREPARATIONS = [
+const DEFAULT_PREPARATIONS = [
   { icon: "🧦", text: "신가드(정강이 보호대)" },
   { icon: "👟", text: "풋살화 또는 운동화 (축구화 금지)" },
   { icon: "🧤", text: "골키퍼 장갑" },
@@ -419,6 +173,109 @@ const PREPARATIONS = [
   { icon: "🍱", text: "점심 도시락 & 간식" },
   { icon: "💧", text: "물 (운영진 제공)" },
 ];
+
+const DEFAULT_EVENTS = [
+  { icon: "🍦", title: "아이스크림 전원 제공", desc: "참가자 모두에게 제공됩니다" },
+  { icon: "📸", title: "포토존 촬영", desc: "기념사진 남기기 좋은 공간 마련" },
+  { icon: "🎨", title: "페이스페인팅", desc: "만화부 주관 부스 (경기 중 동시운영)" },
+  { icon: "🪭", title: "부채꾸미기", desc: "만화부 주관 부스 (경기 중 동시운영)" },
+  { icon: "🎟️", title: "행운권 추첨", desc: "본부석에서 이름 넣기" },
+  { icon: "🥇", title: "평화축구선수상", desc: "참가자 전원에게 상장과 메달 수여" },
+];
+
+const DEFAULT_PRIZES = [
+  { rank: "우승", icon: "🏆", color: "#facc15" },
+  { rank: "준우승", icon: "🥈", color: "#cbd5e1" },
+  { rank: "공동 3위", icon: "🥉", color: "#fb923c" },
+  { rank: "공동 3위", icon: "🥉", color: "#fb923c" },
+];
+
+const DEFAULT_RECEPTION = [
+  "🌈 선수 · 가족 · 지인 참가 전원",
+  "🌈 본부석에서 접수해주세요",
+  "🌈 물 & 응원도구 수령",
+  "🌈 행운권 추첨 이름 넣기",
+  "🌈 개회식 단체사진 후 말씀노트 선물 🎁",
+];
+
+const DEFAULT_IMPORTANT_NOTES = {
+  highlight: "⭐ 시상 후 팀별 기념사진은 모든 행사 종료 후 찍어주세요\n(시상식 중에는 이동 금지)",
+  items: [
+    "🍱 도시락은 지원되지 않습니다 (개인 준비)",
+    "💧 물과 아이스크림은 운영진이 제공",
+    "🏪 축구장 근처에 편의점과 하나로마트가 있습니다",
+    "⛺ 관람석에 천막 설치 예정 (선수단 · 관계자)",
+  ],
+};
+
+// ========================
+// 찬양 기본값 (가사 + Storage 키)
+// ========================
+const DEFAULT_HYMNS = {
+  opening: [
+    {
+      id: "opening_1",
+      title: "가자 때가 됐다",
+      source: "조슈아 정 1집",
+      storageKey: "hymns/opening_1.mp3",
+      lyrics: "가자 때가 됐다\n이제는 가야한다\n하늘도 기다리고 저 구름도 서서 기다린다\n때가 됐다 제때 제 일\n하나님 말씀하시기를\n\n순간의 때를 너는 놓치지 말아라\n내 항상 명심하고 이 잠언을\n뇌 속에 뼛속에 넣고 행합니다\n\n그러니 어딜가도 그 생각에\n때에 오는 모든 것을\n능큼능큼 행해버려\n얻을 것 얻습니다",
+    },
+    {
+      id: "opening_2",
+      title: "멋있게 뛰는 거야",
+      source: "명곡의 사연",
+      storageKey: "hymns/opening_2.mp3",
+      lyrics: "축구를 할 때도 멋있게 뛰는 거야\n멋있게 패스야\n멋있게 단독 드리블\n쇼트 패스 하면서\n멋있게 슈팅을 하는 거야\n\n슛! 골인~\n멋있게 사는 거야\n\n인생을 멋있게\n섭리를 멋있게\n하나님 멋있게\n성령님 멋있게\n사랑하는 거야\n\n(간주)\n\n슛! 골인~\n슛! 골인~\n\n축구를 할 때도 멋있게 뛰는 거야\n멋있게 패스야\n멋있게 단독 드리블\n쇼트 패스 하면서\n멋있게 슈팅을 하는 거야\n\n슛! 골인~\n멋있게 사는 거야\n\n인생을 멋있게\n섭리를 멋있게\n하나님 멋있게\n성령님 멋있게\n사랑하는 거야\n\n슛! 골인~",
+    },
+    {
+      id: "opening_3",
+      title: "주님은 나의 소망이요 기쁨",
+      source: "명곡의 사연",
+      storageKey: "hymns/opening_3.mp3",
+      lyrics: "주님 없이는 너도 나도 살 수가 없어요\n재미있게 희망차서 살 수가 없어요\n주님은 나의 소망이요 기쁨이요\n자랑거리요 자부심거리입니다\n\n(간주)\n\n어디 가나 님을 생각하면\n자랑하고 싶어요\n어떤 사람 앞에서도\n말하고 싶어요\n끝이 없는 그 사연들을 말해 주고 싶어요\n\n누구나 들으면\n충격을 받을 겁니다\n놀랄 겁니다\n\n나는 사랑하는 그의 신부니까\n그의 사랑거리니까요\n그의 기쁨거리니까요\n\n언제나 빛난 내 얼굴만 봐도\n알고 싶어 할 것입니다\n시대의 비밀은\n말 안 하면 알 수 없는\n주님의 그 비밀은\n정말로 아는 자가 말해 줘야 합니다\n아는 자가 고해 줘야 합니다\n증거해야 알 수가 있습니다\n\n(짧은 간주)\n\n님은 언젠가 말했지요\n나를 증거하라\n땅끝까지\n나를 증거하라\n주 하나님 너와 함께 말해 주리라\n성령님 감동으로 깨우쳐 주리라\n\n(간주)\n\n주님 없이는 너도 나도 살 수가 없어요\n재미있게 희망차서 살 수가 없어요\n주님은 나의 소망이요 기쁨이요\n자랑거리요\n자부심거리입니다",
+    },
+  ],
+  closing: [
+    {
+      id: "closing_1",
+      title: "주님은 이기고 이기신다",
+      source: "명곡의 사연",
+      storageKey: "hymns/closing_1.mp3",
+      lyrics: "사탄도 이기었다\n원수 사탄 마귀 귀신\n하나님 골칫거리\n우리들도 골칫거리\n거기다가 악평자 일어나고\n이 민족 저 민족\n기성들 모두 와서 괴롭히던 섭리역사\n이기었다\n\n주님은 이기고 이기신다\n또 이기고 이기신다\n하나님 우리와 함께\n성령님 우리와 함께\n성자는 앞질러 행하셨던 지난날\n이제는 세상을 쓸어 버리고\n영웅 되어\n하나님 신부\n성령님 성자 신부 되어서\n우리가 이기었다 승리하였다\n낙심 말고 행하던 우리의 신앙은\n꿈이 아닌 현실을 이루었다\n섭리의 나라다\n하나님 나라다\n온 세상 전해 주자",
+    },
+    {
+      id: "closing_2",
+      title: "성령의 바람 타고 날아갑니다",
+      source: "조슈아 정 2집 버전",
+      storageKey: "hymns/closing_2.mp3",
+      lyrics: "나는 갑니다\n성령의 바람 타고\n날아갑니다\n하나님 목적을 찾아서\n달려갑니다\n멋있게 재미있게 좋아하며\n성령님 따라갑니다\n쫓아갑니다\n\n(간주)\n\n성령님 언제나 말씀하시길\n내가 너와 함께하리니\n네 곁에 있으니\n나를 잊지 말고\n생각을 해야 한다\n\n사람은 조석으로\n변한다더니 그러합니다\n늘 생각한다고 하면서도\n현실에 임하면\n잊어버리고 사는 사람들\n\n너나 나나\n오늘도 주님 생각 함께 행하며\n성령 안에서 행하며\n사는 낙이다",
+    },
+    {
+      id: "closing_3",
+      title: "천국의 삶",
+      source: "명곡의 사연",
+      storageKey: "hymns/closing_3.mp3",
+      lyrics: "하나님 창조하신 천지 만물 지구 세상\n주님 모시고 산다면 거기가 바로 천국의 삶\n주와 함께 하나님 성령님 모시고서\n지상에서 휴거를 이루네 황금 천국의 삶\n\n하나님 창조하신 천지 만물\n지구 세상 천국이란다\n주님 모신 곳\n주와 함께 살아가면\n거기가 천국이란다\n\n하나님 창조하신 천지 만물\n지구 세상 천국이란다\n주님 모신 곳\n주와 함께 살아가면\n거기가 천국이란다\n\n하나님 성령님 성자가 사시는 저 하늘\n저 하늘나라\n거기는 영들이 사는 천국이란단다\n\n오늘도 주님 함께\n하나님 모시고 성령님 모시고서\n지상에서 휴거 되어 천국의 삶이란다\n황금 천국 삶이란다\n\n오늘도 주님 함께\n하나님 모시고 성령님 모시고서\n지상에서 휴거 되어 천국의 삶이란다\n황금 천국 삶이란다",
+    },
+  ],
+};
+
+
+
+// ========================
+// 대진표
+// ========================
+
+
+
+
+
+// ========================
+// 조건기도 / 이벤트 / 시상 / 준비물
+// ========================
+
+
+
 
 // ========================
 // Firebase 연동
@@ -498,6 +355,29 @@ const FB = {
   deleteNotice(fbId) {
     if (!this.init()) return Promise.reject("Firebase not ready");
     return this.db.collection("kickoff_notices").doc(fbId).delete();
+  },
+
+  // ----- 범용 단일 문서 watch/save (teams, matches, hymns, prayers, ...) -----
+  watchDoc(docId, cb) {
+    if (!this.init()) return () => {};
+    return this.db.collection("kickoff").doc(docId).onSnapshot(
+      (snap) => {
+        if (snap.exists) cb(snap.data());
+        else cb(null);
+      },
+      (err) => console.error("watchDoc " + docId + ":", err)
+    );
+  },
+  saveDoc(docId, data) {
+    if (!this.init()) return Promise.reject("Firebase not ready");
+    return this.db.collection("kickoff").doc(docId).set(data, { merge: false });
+  },
+  // 한 번만 (초기 데이터 시드용)
+  getDoc(docId) {
+    if (!this.init()) return Promise.reject("Firebase not ready");
+    return this.db.collection("kickoff").doc(docId).get().then((snap) => {
+      return snap.exists ? snap.data() : null;
+    });
   },
 
   // ----- Storage: 파일 업로드 -----
@@ -613,8 +493,26 @@ function App() {
   const [tab, setTab] = useState("info");
   const [now, setNow] = useState(new Date());
   const [info, setInfo] = useState(DEFAULT_INFO);
+  const [teams, setTeams] = useState(DEFAULT_TEAMS);
+  const [matches, setMatches] = useState(DEFAULT_MATCHES);
+  const [hymns, setHymns] = useState(DEFAULT_HYMNS);
+  const [prayers, setPrayers] = useState(DEFAULT_PRAYERS);
+  const [preparations, setPreparations] = useState(DEFAULT_PREPARATIONS);
+  const [events, setEvents] = useState(DEFAULT_EVENTS);
+  const [prizes, setPrizes] = useState(DEFAULT_PRIZES);
+  const [reception, setReception] = useState(DEFAULT_RECEPTION);
+  const [importantNotes, setImportantNotes] = useState(DEFAULT_IMPORTANT_NOTES);
   const [notices, setNotices] = useState([]);
   const admin = useAdmin();
+
+  // 팀 코드 → 팀 정보 lookup (실시간 갱신)
+  const teamByCode = useMemo(() => {
+    const m = {};
+    [...(teams.U9 || []), ...(teams.U11 || []), ...(teams.U13 || [])].forEach((t) => {
+      m[t.code] = t;
+    });
+    return m;
+  }, [teams]);
 
   // 1분마다 현재시간 갱신
   useEffect(() => {
@@ -622,17 +520,50 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
-  // Firebase 구독: info, notices
+  // Firebase 구독: 모든 컬렉션
   useEffect(() => {
-    const unsubInfo = FB.watchInfo((data) => {
-      if (data) {
-        setInfo({ ...DEFAULT_INFO, ...data });
+    // 최초 시드: Firestore가 비어있으면 기본값 자동 업로드
+    (async () => {
+      try {
+        const seedTargets = [
+          { id: "info", data: DEFAULT_INFO },
+          { id: "teams", data: DEFAULT_TEAMS },
+          { id: "matches", data: DEFAULT_MATCHES },
+          { id: "hymns", data: DEFAULT_HYMNS },
+          { id: "prayers", data: DEFAULT_PRAYERS },
+          { id: "preparations", data: { items: DEFAULT_PREPARATIONS } },
+          { id: "events", data: { items: DEFAULT_EVENTS } },
+          { id: "prizes", data: { items: DEFAULT_PRIZES } },
+          { id: "reception", data: { items: DEFAULT_RECEPTION } },
+          { id: "importantNotes", data: DEFAULT_IMPORTANT_NOTES },
+        ];
+        for (const t of seedTargets) {
+          const existing = await FB.getDoc(t.id);
+          if (!existing) {
+            await FB.saveDoc(t.id, t.data);
+            console.log(`[seed] ${t.id} 초기화 완료`);
+          }
+        }
+      } catch (e) {
+        console.warn("초기 시드 실패 (무시 가능):", e);
       }
-    });
-    const unsubNotices = FB.watchNotices((list) => setNotices(list));
+    })();
+
+    const unsubs = [
+      FB.watchDoc("info", (d) => d && setInfo({ ...DEFAULT_INFO, ...d })),
+      FB.watchDoc("teams", (d) => d && setTeams(d)),
+      FB.watchDoc("matches", (d) => d && setMatches(d)),
+      FB.watchDoc("hymns", (d) => d && setHymns(d)),
+      FB.watchDoc("prayers", (d) => d && setPrayers(d)),
+      FB.watchDoc("preparations", (d) => d && d.items && setPreparations(d.items)),
+      FB.watchDoc("events", (d) => d && d.items && setEvents(d.items)),
+      FB.watchDoc("prizes", (d) => d && d.items && setPrizes(d.items)),
+      FB.watchDoc("reception", (d) => d && d.items && setReception(d.items)),
+      FB.watchDoc("importantNotes", (d) => d && setImportantNotes(d)),
+      FB.watchNotices((list) => setNotices(list)),
+    ];
     return () => {
-      if (typeof unsubInfo === "function") unsubInfo();
-      if (typeof unsubNotices === "function") unsubNotices();
+      unsubs.forEach((u) => typeof u === "function" && u());
     };
   }, []);
 
@@ -649,17 +580,35 @@ function App() {
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, paddingBottom: 80 }}>
       <Header now={now} info={info} admin={admin} />
 
-      {/* 관리자 진입 모드일 때 인증 화면 표시 */}
       {admin.isAdminMode && !admin.authed ? (
         <AdminLogin admin={admin} />
       ) : (
         <main style={{ maxWidth: 720, margin: "0 auto", padding: "16px 14px" }}>
           {admin.isAdminMode && admin.authed && <AdminBanner admin={admin} />}
-          {tab === "info" && <InfoTab info={info} admin={admin} />}
+          {tab === "info" && (
+            <InfoTab
+              info={info}
+              teams={teams}
+              preparations={preparations}
+              reception={reception}
+              admin={admin}
+            />
+          )}
           {tab === "order" && <OrderTab info={info} now={now} admin={admin} />}
-          {tab === "match" && <MatchTab now={now} info={info} />}
-          {tab === "hymn" && <HymnTab admin={admin} />}
-          {tab === "event" && <EventTab />}
+          {tab === "match" && (
+            <MatchTab now={now} info={info} matches={matches} teamByCode={teamByCode} admin={admin} />
+          )}
+          {tab === "hymn" && (
+            <HymnTab hymns={hymns} prayers={prayers} admin={admin} />
+          )}
+          {tab === "event" && (
+            <EventTab
+              events={events}
+              prizes={prizes}
+              importantNotes={importantNotes}
+              admin={admin}
+            />
+          )}
           {tab === "notice" && <NoticeTab notices={notices} admin={admin} />}
         </main>
       )}
@@ -1221,12 +1170,14 @@ function AdminBanner({ admin }) {
 // =========================================================
 // 1) 안내 탭
 // =========================================================
-function InfoTab({ info, admin }) {
+function InfoTab({ info, teams, preparations, reception, admin }) {
   const [copied, setCopied] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const [teamsEditOpen, setTeamsEditOpen] = useState(false);
+  const [prepEditOpen, setPrepEditOpen] = useState(false);
+  const [receptionEditOpen, setReceptionEditOpen] = useState(false);
   const [mapUrl, setMapUrl] = useState("");
 
-  // 항공뷰 지도 URL 로드
   useEffect(() => {
     FB.getDownloadURL("map/aerial.jpg").then(setMapUrl).catch(() => setMapUrl(""));
   }, []);
@@ -1437,58 +1388,89 @@ function InfoTab({ info, admin }) {
       </Card>
 
       {/* 참가팀 */}
-      <SectionTitle icon="👥">
-        참가팀 ({TEAMS.U9.length + TEAMS.U11.length + TEAMS.U13.length}팀)
+      <SectionTitle
+        icon="👥"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setTeamsEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        참가팀 ({(teams.U9?.length || 0) + (teams.U11?.length || 0) + (teams.U13?.length || 0)}팀)
       </SectionTitle>
       {[
-        { key: "U9", label: "U-9 (1~2학년)", teams: TEAMS.U9 },
-        { key: "U11", label: "U-11 (3~4학년)", teams: TEAMS.U11 },
-        { key: "U13", label: "U-13 (5~6학년)", teams: TEAMS.U13 },
+        { key: "U9", label: "U-9 (1~2학년)", teams: teams.U9 || [] },
+        { key: "U11", label: "U-11 (3~4학년)", teams: teams.U11 || [] },
+        { key: "U13", label: "U-13 (5~6학년)", teams: teams.U13 || [] },
       ].map((g) => (
         <Card key={g.key}>
           <div style={{ fontSize: 13, fontWeight: 700, color: C.primary, marginBottom: 10 }}>
             {g.label}
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {g.teams.map((t) => (
-              <div
-                key={t.code}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  padding: "6px 10px",
-                  background: C.soft,
-                  borderRadius: 10,
-                  border: `1px solid ${C.border}`,
-                }}
-              >
-                <span style={{ fontSize: 16 }}>{t.emoji}</span>
-                <span style={{ fontSize: 13, fontWeight: 600 }}>{t.name}</span>
-              </div>
-            ))}
+            {g.teams.length === 0 ? (
+              <div style={{ fontSize: 12, color: C.muted }}>등록된 팀이 없습니다</div>
+            ) : (
+              g.teams.map((t) => (
+                <div
+                  key={t.code}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    padding: "6px 10px",
+                    background: C.soft,
+                    borderRadius: 10,
+                    border: `1px solid ${C.border}`,
+                  }}
+                >
+                  <span style={{ fontSize: 16 }}>{t.emoji}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600 }}>{t.name}</span>
+                  <span style={{ fontSize: 10, color: C.muted }}>· {t.code}</span>
+                </div>
+              ))
+            )}
           </div>
         </Card>
       ))}
 
       {/* 준비물 */}
-      <SectionTitle icon="🎒">준비물 체크리스트</SectionTitle>
+      <SectionTitle
+        icon="🎒"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setPrepEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        준비물 체크리스트
+      </SectionTitle>
       <Card>
-        {PREPARATIONS.map((p, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "8px 0",
-              borderBottom: i < PREPARATIONS.length - 1 ? `1px solid ${C.border}` : "none",
-            }}
-          >
-            <div style={{ fontSize: 18 }}>{p.icon}</div>
-            <div style={{ fontSize: 14, color: C.text }}>{p.text}</div>
+        {preparations.length === 0 ? (
+          <div style={{ fontSize: 13, color: C.muted, textAlign: "center", padding: 10 }}>
+            등록된 준비물이 없습니다
           </div>
-        ))}
+        ) : (
+          preparations.map((p, i) => (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "8px 0",
+                borderBottom: i < preparations.length - 1 ? `1px solid ${C.border}` : "none",
+              }}
+            >
+              <div style={{ fontSize: 18 }}>{p.icon}</div>
+              <div style={{ fontSize: 14, color: C.text }}>{p.text}</div>
+            </div>
+          ))
+        )}
       </Card>
 
       {/* 참가비 / 후원계좌 */}
@@ -1547,20 +1529,46 @@ function InfoTab({ info, admin }) {
       </Card>
 
       {/* 접수 안내 */}
-      <SectionTitle icon="✅">접수 안내</SectionTitle>
+      <SectionTitle
+        icon="✅"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setReceptionEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        접수 안내
+      </SectionTitle>
       <Card>
         <div style={{ fontSize: 14, lineHeight: 1.8, color: C.text }}>
-          <div>🌈 선수 · 가족 · 지인 참가 전원</div>
-          <div>🌈 본부석에서 접수해주세요</div>
-          <div>🌈 물 & 응원도구 수령</div>
-          <div>🌈 행운권 추첨 이름 넣기</div>
-          <div>🌈 개회식 단체사진 후 말씀노트 선물 🎁</div>
+          {reception.map((line, i) => (
+            <div key={i}>{line}</div>
+          ))}
         </div>
       </Card>
 
       {/* 정보 편집 모달 */}
       {admin.authed && (
-        <InfoEditModal open={editOpen} onClose={() => setEditOpen(false)} info={info} />
+        <>
+          <InfoEditModal open={editOpen} onClose={() => setEditOpen(false)} info={info} />
+          <TeamsEditModal
+            open={teamsEditOpen}
+            onClose={() => setTeamsEditOpen(false)}
+            teams={teams}
+          />
+          <PreparationsEditModal
+            open={prepEditOpen}
+            onClose={() => setPrepEditOpen(false)}
+            items={preparations}
+          />
+          <ReceptionEditModal
+            open={receptionEditOpen}
+            onClose={() => setReceptionEditOpen(false)}
+            items={reception}
+          />
+        </>
       )}
     </div>
   );
@@ -2036,18 +2044,32 @@ function OrderEditModal({ open, onClose, info, which }) {
 // =========================================================
 // 3) 대진 탭
 // =========================================================
-function MatchTab({ now, info }) {
+function MatchTab({ now, info, matches, teamByCode, admin }) {
   const [field, setField] = useState(1);
+  const [editOpen, setEditOpen] = useState(false);
 
   const isToday = useMemo(() => {
     return now.toISOString().slice(0, 10) === info.dateISO;
   }, [now, info.dateISO]);
 
   const curMin = now.getHours() * 60 + now.getMinutes();
+  const field1 = matches.field1 || [];
+  const field2 = matches.field2 || [];
 
   return (
     <div>
-      <SectionTitle icon="⚽">경기 대진표</SectionTitle>
+      <SectionTitle
+        icon="⚽"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        경기 대진표
+      </SectionTitle>
 
       <div
         style={{
@@ -2063,7 +2085,7 @@ function MatchTab({ now, info }) {
           on={field === 1}
           onClick={() => setField(1)}
           label="제1구장"
-          sub="U-11 · 10경기"
+          sub={`U-11 · ${field1.length}경기`}
         />
         <FieldToggle
           on={field === 2}
@@ -2074,9 +2096,18 @@ function MatchTab({ now, info }) {
       </div>
 
       {field === 1 ? (
-        <Field1 isToday={isToday} curMin={curMin} />
+        <Field1 isToday={isToday} curMin={curMin} matches={field1} teamByCode={teamByCode} />
       ) : (
-        <Field2 isToday={isToday} curMin={curMin} />
+        <Field2 isToday={isToday} curMin={curMin} matches={field2} teamByCode={teamByCode} />
+      )}
+
+      {admin.authed && (
+        <MatchesEditModal
+          open={editOpen}
+          onClose={() => setEditOpen(false)}
+          matches={matches}
+          teamByCode={teamByCode}
+        />
       )}
     </div>
   );
@@ -2104,7 +2135,7 @@ function FieldToggle({ on, onClick, label, sub }) {
   );
 }
 
-function Field1({ isToday, curMin }) {
+function Field1({ isToday, curMin, matches, teamByCode }) {
   return (
     <div>
       <div
@@ -2120,16 +2151,24 @@ function Field1({ isToday, curMin }) {
       >
         💡 U-11 · 풀리그 순위결정 · 전후반 각 10분
       </div>
-      {MATCHES_FIELD1.map((m) => {
-        const live = isMatchLive([m.t1, m.t2], curMin, isToday);
-        const done = isMatchDone([m.t1, m.t2], curMin, isToday);
-        return <MatchCard key={m.no} match={m} kind="U11" live={live} done={done} />;
-      })}
+      {matches.length === 0 ? (
+        <Card>
+          <div style={{ textAlign: "center", padding: 20, color: C.muted }}>
+            등록된 경기가 없습니다
+          </div>
+        </Card>
+      ) : (
+        matches.map((m, i) => {
+          const live = isMatchLive([m.t1, m.t2], curMin, isToday);
+          const done = isMatchDone([m.t1, m.t2], curMin, isToday);
+          return <MatchCard key={i} match={m} kind="U11" live={live} done={done} teamByCode={teamByCode} />;
+        })
+      )}
     </div>
   );
 }
 
-function Field2({ isToday, curMin }) {
+function Field2({ isToday, curMin, matches, teamByCode }) {
   return (
     <div>
       <div
@@ -2147,37 +2186,45 @@ function Field2({ isToday, curMin }) {
         💡 U-9 (파란색): 15분씩 3쿼터 진행<br />
         💡 U-13 (주황색): 전후반 각 10분
       </div>
-      {MATCHES_FIELD2.map((m, idx) => {
-        if (m.kind === "REST") {
-          return (
-            <div
-              key={idx}
-              style={{
-                background: "linear-gradient(135deg,#d1fae5,#a7f3d0)",
-                padding: "14px 16px",
-                borderRadius: 12,
-                marginBottom: 10,
-                textAlign: "center",
-                fontWeight: 700,
-                color: "#065f46",
-                fontSize: 14,
-              }}
-            >
-              ☕ {m.title} · {m.t1}
-            </div>
-          );
-        }
-        const live = isMatchLive([m.t1, m.t2], curMin, isToday);
-        const done = isMatchDone([m.t1, m.t2], curMin, isToday);
-        return <MatchCard key={idx} match={m} kind={m.kind} live={live} done={done} />;
-      })}
+      {matches.length === 0 ? (
+        <Card>
+          <div style={{ textAlign: "center", padding: 20, color: C.muted }}>
+            등록된 경기가 없습니다
+          </div>
+        </Card>
+      ) : (
+        matches.map((m, idx) => {
+          if (m.kind === "REST") {
+            return (
+              <div
+                key={idx}
+                style={{
+                  background: "linear-gradient(135deg,#d1fae5,#a7f3d0)",
+                  padding: "14px 16px",
+                  borderRadius: 12,
+                  marginBottom: 10,
+                  textAlign: "center",
+                  fontWeight: 700,
+                  color: "#065f46",
+                  fontSize: 14,
+                }}
+              >
+                ☕ {m.title} · {m.t1}
+              </div>
+            );
+          }
+          const live = isMatchLive([m.t1, m.t2], curMin, isToday);
+          const done = isMatchDone([m.t1, m.t2], curMin, isToday);
+          return <MatchCard key={idx} match={m} kind={m.kind} live={live} done={done} teamByCode={teamByCode} />;
+        })
+      )}
     </div>
   );
 }
 
-function MatchCard({ match, kind, live, done }) {
-  const a = TEAM_BY_CODE[match.a];
-  const b = TEAM_BY_CODE[match.b];
+function MatchCard({ match, kind, live, done, teamByCode }) {
+  const a = teamByCode[match.a];
+  const b = teamByCode[match.b];
   const isU9 = kind === "U9";
   const kindColor = kind === "U11" ? "#2563eb" : kind === "U13" ? "#ea580c" : "#0891b2";
   const kindLabel = kind === "U11" ? "U-11" : kind === "U13" ? "U-13" : "U-9";
@@ -2366,8 +2413,7 @@ function TimeChip({ label, time, color }) {
 // =========================================================
 // 4) 찬양 탭 (음원 플레이어 + 가사)
 // =========================================================
-function HymnTab({ admin }) {
-  // 현재 재생 중인 곡 id
+function HymnTab({ hymns, prayers, admin }) {
   const [playingId, setPlayingId] = useState(null);
   const [audioState, setAudioState] = useState({
     duration: 0,
@@ -2375,14 +2421,17 @@ function HymnTab({ admin }) {
     paused: true,
     loading: false,
   });
-  // 각 곡의 다운로드 URL 캐시
   const [urlCache, setUrlCache] = useState({});
-  // 가사 펼침 상태
   const [expandedId, setExpandedId] = useState(null);
+  const [editHymn, setEditHymn] = useState(null); // 편집 중인 곡
+  const [addingTo, setAddingTo] = useState(null); // 'opening' | 'closing' 추가 모드
+  const [prayersEditOpen, setPrayersEditOpen] = useState(false);
 
   const audioRef = useRef(null);
 
-  const allHymns = useMemo(() => [...HYMNS.opening, ...HYMNS.closing], []);
+  const opening = hymns.opening || [];
+  const closing = hymns.closing || [];
+  const allHymns = useMemo(() => [...opening, ...closing], [opening, closing]);
 
   // 곡 재생 시작
   const playHymn = useCallback(
@@ -2500,10 +2549,21 @@ function HymnTab({ admin }) {
 
   return (
     <div>
-      <SectionTitle icon="🎵">개막식 찬양</SectionTitle>
-      {HYMNS.opening.map((h, i) => (
+      <SectionTitle
+        icon="🎵"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setAddingTo("opening")} variant="ghost">
+              + 곡 추가
+            </Btn>
+          )
+        }
+      >
+        개막식 찬양
+      </SectionTitle>
+      {opening.map((h, i) => (
         <HymnCard
-          key={h.id}
+          key={h.id || i}
           no={i + 1}
           hymn={h}
           color="#2563eb"
@@ -2514,14 +2574,26 @@ function HymnTab({ admin }) {
           expanded={expandedId === h.id}
           onPlay={() => playHymn(h)}
           onExpand={() => setExpandedId(expandedId === h.id ? null : h.id)}
+          onEdit={() => setEditHymn({ ...h, _section: "opening", _index: i })}
           admin={admin}
         />
       ))}
 
-      <SectionTitle icon="🕊️">폐막식 찬양</SectionTitle>
-      {HYMNS.closing.map((h, i) => (
+      <SectionTitle
+        icon="🕊️"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setAddingTo("closing")} variant="ghost">
+              + 곡 추가
+            </Btn>
+          )
+        }
+      >
+        폐막식 찬양
+      </SectionTitle>
+      {closing.map((h, i) => (
         <HymnCard
-          key={h.id}
+          key={h.id || i}
           no={i + 1}
           hymn={h}
           color="#dc2626"
@@ -2532,11 +2604,23 @@ function HymnTab({ admin }) {
           expanded={expandedId === h.id}
           onPlay={() => playHymn(h)}
           onExpand={() => setExpandedId(expandedId === h.id ? null : h.id)}
+          onEdit={() => setEditHymn({ ...h, _section: "closing", _index: i })}
           admin={admin}
         />
       ))}
 
-      <SectionTitle icon="✨">은하수축구대회 조건기도</SectionTitle>
+      <SectionTitle
+        icon="✨"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setPrayersEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        은하수축구대회 조건기도
+      </SectionTitle>
       <Card
         style={{
           background: "linear-gradient(135deg,#fff7ed,#fef3c7)",
@@ -2552,9 +2636,9 @@ function HymnTab({ admin }) {
             fontStyle: "italic",
           }}
         >
-          🙏 선생님의 건강을 지켜주시고, 선생님의 기도가 하나님 뜻대로 다 이루어지길 기도합니다.
+          {prayers.header}
         </div>
-        {PRAYERS.map((p, i) => (
+        {(prayers.items || []).map((p, i) => (
           <div
             key={i}
             style={{
@@ -2586,7 +2670,7 @@ function HymnTab({ admin }) {
         ))}
       </Card>
 
-      {/* 고정 플레이어 (하단 네비 위에 떠 있음) */}
+      {/* 고정 플레이어 */}
       {playingId && (
         <FixedPlayer
           hymn={allHymns.find((h) => h.id === playingId)}
@@ -2610,6 +2694,27 @@ function HymnTab({ admin }) {
           canNext={allHymns.findIndex((h) => h.id === playingId) < allHymns.length - 1}
         />
       )}
+
+      {/* 곡 편집 모달 */}
+      {admin.authed && (
+        <>
+          <HymnEditModal
+            open={!!editHymn || !!addingTo}
+            onClose={() => {
+              setEditHymn(null);
+              setAddingTo(null);
+            }}
+            hymn={editHymn}
+            section={addingTo}
+            hymns={hymns}
+          />
+          <PrayersEditModal
+            open={prayersEditOpen}
+            onClose={() => setPrayersEditOpen(false)}
+            prayers={prayers}
+          />
+        </>
+      )}
     </div>
   );
 }
@@ -2625,6 +2730,7 @@ function HymnCard({
   expanded,
   onPlay,
   onExpand,
+  onEdit,
   admin,
 }) {
   return (
@@ -2658,6 +2764,24 @@ function HymnCard({
           <div style={{ fontSize: 16, fontWeight: 800, color: C.text }}>{hymn.title}</div>
           <div style={{ fontSize: 11, color: C.sub, marginTop: 2 }}>♪ {hymn.source}</div>
         </div>
+        {admin.authed && (
+          <button
+            onClick={onEdit}
+            style={{
+              padding: "5px 9px",
+              background: "#fff",
+              border: `1px solid ${color}40`,
+              borderRadius: 6,
+              fontSize: 11,
+              fontWeight: 700,
+              cursor: "pointer",
+              color: color,
+              flexShrink: 0,
+            }}
+          >
+            ✏️
+          </button>
+        )}
         <button
           onClick={onPlay}
           disabled={loading}
@@ -2964,41 +3088,75 @@ function FixedPlayer({
 // =========================================================
 // 5) 이벤트 탭
 // =========================================================
-function EventTab() {
+function EventTab({ events, prizes, importantNotes, admin }) {
+  const [eventsEditOpen, setEventsEditOpen] = useState(false);
+  const [prizesEditOpen, setPrizesEditOpen] = useState(false);
+  const [notesEditOpen, setNotesEditOpen] = useState(false);
+
   return (
     <div>
-      <SectionTitle icon="🎁">특별 이벤트</SectionTitle>
-      {EVENTS.map((e, i) => (
-        <Card key={i} style={{ padding: 14 }}>
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <div
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 12,
-                background: "linear-gradient(135deg,#fef3c7,#fde68a)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 24,
-                flexShrink: 0,
-              }}
-            >
-              {e.icon}
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 15, fontWeight: 800, color: C.text }}>{e.title}</div>
-              <div style={{ fontSize: 13, color: C.sub, marginTop: 2 }}>{e.desc}</div>
-            </div>
+      <SectionTitle
+        icon="🎁"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setEventsEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        특별 이벤트
+      </SectionTitle>
+      {events.length === 0 ? (
+        <Card>
+          <div style={{ textAlign: "center", padding: 20, color: C.muted }}>
+            등록된 이벤트가 없습니다
           </div>
         </Card>
-      ))}
+      ) : (
+        events.map((e, i) => (
+          <Card key={i} style={{ padding: 14 }}>
+            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+              <div
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 12,
+                  background: "linear-gradient(135deg,#fef3c7,#fde68a)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 24,
+                  flexShrink: 0,
+                }}
+              >
+                {e.icon}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: C.text }}>{e.title}</div>
+                <div style={{ fontSize: 13, color: C.sub, marginTop: 2 }}>{e.desc}</div>
+              </div>
+            </div>
+          </Card>
+        ))
+      )}
 
-      <SectionTitle icon="🏆">시상</SectionTitle>
+      <SectionTitle
+        icon="🏆"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setPrizesEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        시상
+      </SectionTitle>
       <Card>
         <div style={{ fontSize: 13, color: C.sub, marginBottom: 12 }}>트로피 수여 부문</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-          {PRIZES.map((p, i) => (
+          {prizes.map((p, i) => (
             <div
               key={i}
               style={{
@@ -3041,21 +3199,59 @@ function EventTab() {
         </div>
       </Card>
 
-      <SectionTitle icon="📢">중요 안내</SectionTitle>
-      <Card style={{ background: "#fef2f2", border: "1px solid #fecaca" }}>
-        <div style={{ fontSize: 14, lineHeight: 1.8, color: "#7f1d1d" }}>
-          ⭐ 시상 후 팀별 기념사진은 <b>모든 행사 종료 후</b> 찍어주세요<br />
-          <span style={{ fontSize: 12, color: "#991b1b" }}>(시상식 중에는 이동 금지)</span>
-        </div>
-      </Card>
+      <SectionTitle
+        icon="📢"
+        action={
+          admin.authed && (
+            <Btn onClick={() => setNotesEditOpen(true)} variant="ghost">
+              ✏️ 편집
+            </Btn>
+          )
+        }
+      >
+        중요 안내
+      </SectionTitle>
+      {importantNotes.highlight && (
+        <Card style={{ background: "#fef2f2", border: "1px solid #fecaca" }}>
+          <div
+            style={{
+              fontSize: 14,
+              lineHeight: 1.8,
+              color: "#7f1d1d",
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {importantNotes.highlight}
+          </div>
+        </Card>
+      )}
       <Card>
         <div style={{ fontSize: 14, lineHeight: 1.8, color: C.text }}>
-          🍱 도시락은 지원되지 않습니다 (개인 준비)<br />
-          💧 물과 아이스크림은 운영진이 제공<br />
-          🏪 축구장 근처에 편의점과 하나로마트가 있습니다<br />
-          ⛺ 관람석에 천막 설치 예정 (선수단 · 관계자)
+          {(importantNotes.items || []).map((it, i) => (
+            <div key={i}>{it}</div>
+          ))}
         </div>
       </Card>
+
+      {admin.authed && (
+        <>
+          <EventsEditModal
+            open={eventsEditOpen}
+            onClose={() => setEventsEditOpen(false)}
+            items={events}
+          />
+          <PrizesEditModal
+            open={prizesEditOpen}
+            onClose={() => setPrizesEditOpen(false)}
+            items={prizes}
+          />
+          <ImportantNotesEditModal
+            open={notesEditOpen}
+            onClose={() => setNotesEditOpen(false)}
+            notes={importantNotes}
+          />
+        </>
+      )}
     </div>
   );
 }
@@ -3329,6 +3525,1479 @@ function NoticeComposeModal({ open, onClose, notice }) {
         </div>
       </label>
       <div style={{ display: "flex", gap: 8 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// =========================================================
+// 편집 모달들 (관리자 전용)
+// =========================================================
+
+// ----- 공통: 리스트 편집기 (위/아래 이동, 삭제) -----
+function ListItemControls({ idx, total, onUp, onDown, onDelete }) {
+  return (
+    <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+      <button
+        onClick={onUp}
+        disabled={idx === 0}
+        style={{
+          width: 28,
+          height: 28,
+          background: "#fff",
+          border: `1px solid ${C.border}`,
+          borderRadius: 6,
+          cursor: idx === 0 ? "not-allowed" : "pointer",
+          opacity: idx === 0 ? 0.4 : 1,
+          fontSize: 12,
+        }}
+      >
+        ▲
+      </button>
+      <button
+        onClick={onDown}
+        disabled={idx === total - 1}
+        style={{
+          width: 28,
+          height: 28,
+          background: "#fff",
+          border: `1px solid ${C.border}`,
+          borderRadius: 6,
+          cursor: idx === total - 1 ? "not-allowed" : "pointer",
+          opacity: idx === total - 1 ? 0.4 : 1,
+          fontSize: 12,
+        }}
+      >
+        ▼
+      </button>
+      <button
+        onClick={onDelete}
+        style={{
+          width: 28,
+          height: 28,
+          background: "#fef2f2",
+          border: "1px solid #fecaca",
+          borderRadius: 6,
+          cursor: "pointer",
+          color: C.danger,
+          fontSize: 12,
+        }}
+      >
+        🗑
+      </button>
+    </div>
+  );
+}
+
+// ----- 1) 참가팀 편집 -----
+function TeamsEditModal({ open, onClose, teams }) {
+  const [form, setForm] = useState(teams);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (open) setForm(JSON.parse(JSON.stringify(teams)));
+  }, [teams, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("teams", form);
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const updateTeam = (group, idx, key, value) => {
+    setForm((f) => {
+      const next = { ...f };
+      next[group] = [...next[group]];
+      next[group][idx] = { ...next[group][idx], [key]: value };
+      return next;
+    });
+  };
+
+  const addTeam = (group) => {
+    setForm((f) => {
+      const next = { ...f };
+      const prefix = group === "U9" ? "B" : group === "U11" ? "A" : "C";
+      const nextNum = (next[group]?.length || 0) + 1;
+      next[group] = [
+        ...(next[group] || []),
+        { code: `${prefix}${nextNum}`, name: "새 팀", emoji: "⚽", color: "#3498db" },
+      ];
+      return next;
+    });
+  };
+
+  const removeTeam = (group, idx) => {
+    if (!confirm("이 팀을 삭제하시겠어요? (대진표의 해당 팀도 영향받을 수 있습니다)")) return;
+    setForm((f) => {
+      const next = { ...f };
+      next[group] = next[group].filter((_, i) => i !== idx);
+      return next;
+    });
+  };
+
+  const moveTeam = (group, idx, dir) => {
+    setForm((f) => {
+      const next = { ...f };
+      const arr = [...next[group]];
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= arr.length) return f;
+      [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+      next[group] = arr;
+      return next;
+    });
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="👥 참가팀 편집" width={460}>
+      {[
+        { key: "U9", label: "U-9 (1~2학년)", color: "#0891b2" },
+        { key: "U11", label: "U-11 (3~4학년)", color: "#2563eb" },
+        { key: "U13", label: "U-13 (5~6학년)", color: "#ea580c" },
+      ].map((g) => (
+        <div key={g.key} style={{ marginBottom: 16 }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 6,
+            }}
+          >
+            <div style={{ fontSize: 13, fontWeight: 700, color: g.color }}>{g.label}</div>
+            <button
+              onClick={() => addTeam(g.key)}
+              style={{
+                padding: "4px 10px",
+                background: g.color,
+                color: "#fff",
+                border: "none",
+                borderRadius: 6,
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              + 팀 추가
+            </button>
+          </div>
+          {(form[g.key] || []).map((t, idx) => (
+            <div
+              key={idx}
+              style={{
+                background: C.soft,
+                padding: 8,
+                borderRadius: 8,
+                marginBottom: 6,
+                display: "flex",
+                gap: 6,
+                alignItems: "center",
+              }}
+            >
+              <input
+                value={t.code}
+                onChange={(e) => updateTeam(g.key, idx, "code", e.target.value)}
+                placeholder="코드"
+                style={{
+                  width: 50,
+                  padding: 6,
+                  border: `1px solid ${C.border}`,
+                  borderRadius: 6,
+                  fontSize: 12,
+                  fontFamily: "monospace",
+                  textAlign: "center",
+                }}
+              />
+              <input
+                value={t.emoji}
+                onChange={(e) => updateTeam(g.key, idx, "emoji", e.target.value)}
+                placeholder="이모지"
+                style={{
+                  width: 40,
+                  padding: 6,
+                  border: `1px solid ${C.border}`,
+                  borderRadius: 6,
+                  fontSize: 16,
+                  textAlign: "center",
+                }}
+              />
+              <input
+                value={t.name}
+                onChange={(e) => updateTeam(g.key, idx, "name", e.target.value)}
+                placeholder="팀명"
+                style={{
+                  flex: 1,
+                  minWidth: 0,
+                  padding: 6,
+                  border: `1px solid ${C.border}`,
+                  borderRadius: 6,
+                  fontSize: 13,
+                }}
+              />
+              <input
+                type="color"
+                value={t.color}
+                onChange={(e) => updateTeam(g.key, idx, "color", e.target.value)}
+                style={{
+                  width: 32,
+                  height: 32,
+                  padding: 0,
+                  border: `1px solid ${C.border}`,
+                  borderRadius: 6,
+                  cursor: "pointer",
+                }}
+              />
+              <ListItemControls
+                idx={idx}
+                total={form[g.key].length}
+                onUp={() => moveTeam(g.key, idx, -1)}
+                onDown={() => moveTeam(g.key, idx, 1)}
+                onDelete={() => removeTeam(g.key, idx)}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+      <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 2) 대진표 편집 -----
+function MatchesEditModal({ open, onClose, matches, teamByCode }) {
+  const [form, setForm] = useState(matches);
+  const [saving, setSaving] = useState(false);
+  const [tab, setTab] = useState("field1");
+
+  useEffect(() => {
+    if (open) setForm(JSON.parse(JSON.stringify(matches)));
+  }, [matches, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("matches", form);
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const updateMatch = (field, idx, key, value) => {
+    setForm((f) => {
+      const next = { ...f };
+      next[field] = [...(next[field] || [])];
+      next[field][idx] = { ...next[field][idx], [key]: value };
+      return next;
+    });
+  };
+
+  const addMatch = (field) => {
+    setForm((f) => {
+      const next = { ...f };
+      const arr = next[field] || [];
+      const newMatch =
+        field === "field1"
+          ? { no: arr.length + 1, t1: "11:00~11:10", t2: "11:15~11:25", a: "A1", b: "A2" }
+          : { no: arr.length + 1, kind: "U13", t1: "11:00~11:10", t2: "11:15~11:25", a: "C1", b: "C2" };
+      next[field] = [...arr, newMatch];
+      return next;
+    });
+  };
+
+  const addRest = () => {
+    setForm((f) => {
+      const next = { ...f };
+      next.field2 = [
+        ...(next.field2 || []),
+        { no: "*", kind: "REST", t1: "13:05~13:30", title: "경기 휴식시간" },
+      ];
+      return next;
+    });
+  };
+
+  const removeMatch = (field, idx) => {
+    if (!confirm("이 경기를 삭제하시겠어요?")) return;
+    setForm((f) => ({
+      ...f,
+      [field]: f[field].filter((_, i) => i !== idx),
+    }));
+  };
+
+  const moveMatch = (field, idx, dir) => {
+    setForm((f) => {
+      const arr = [...f[field]];
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= arr.length) return f;
+      [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+      return { ...f, [field]: arr };
+    });
+  };
+
+  const currentMatches = form[tab] || [];
+
+  return (
+    <Modal open={open} onClose={onClose} title="⚽ 대진표 편집" width={500}>
+      <div
+        style={{
+          display: "flex",
+          background: C.soft,
+          padding: 4,
+          borderRadius: 8,
+          marginBottom: 12,
+        }}
+      >
+        <button
+          onClick={() => setTab("field1")}
+          style={{
+            flex: 1,
+            padding: "8px 6px",
+            background: tab === "field1" ? C.primary : "transparent",
+            color: tab === "field1" ? "#fff" : C.sub,
+            border: "none",
+            borderRadius: 6,
+            cursor: "pointer",
+            fontSize: 13,
+            fontWeight: 700,
+          }}
+        >
+          제1구장 (U-11)
+        </button>
+        <button
+          onClick={() => setTab("field2")}
+          style={{
+            flex: 1,
+            padding: "8px 6px",
+            background: tab === "field2" ? C.primary : "transparent",
+            color: tab === "field2" ? "#fff" : C.sub,
+            border: "none",
+            borderRadius: 6,
+            cursor: "pointer",
+            fontSize: 13,
+            fontWeight: 700,
+          }}
+        >
+          제2구장 (U-9·U-13)
+        </button>
+      </div>
+
+      <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
+        <button
+          onClick={() => addMatch(tab)}
+          style={{
+            flex: 1,
+            padding: "8px",
+            background: C.primary,
+            color: "#fff",
+            border: "none",
+            borderRadius: 6,
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+        >
+          + 경기 추가
+        </button>
+        {tab === "field2" && (
+          <button
+            onClick={addRest}
+            style={{
+              flex: 1,
+              padding: "8px",
+              background: C.success,
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            + 휴식시간 추가
+          </button>
+        )}
+      </div>
+
+      <div style={{ maxHeight: 400, overflowY: "auto" }}>
+        {currentMatches.map((m, idx) => (
+          <div
+            key={idx}
+            style={{
+              background: m.kind === "REST" ? "#d1fae5" : C.soft,
+              padding: 10,
+              borderRadius: 8,
+              marginBottom: 8,
+              border: `1px solid ${C.border}`,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                gap: 6,
+                marginBottom: 6,
+                alignItems: "center",
+                fontSize: 11,
+                color: C.sub,
+                fontWeight: 700,
+              }}
+            >
+              <span>#{idx + 1}</span>
+              {tab === "field2" && m.kind !== "REST" && (
+                <select
+                  value={m.kind || "U13"}
+                  onChange={(e) => updateMatch(tab, idx, "kind", e.target.value)}
+                  style={{
+                    padding: "2px 6px",
+                    border: `1px solid ${C.border}`,
+                    borderRadius: 4,
+                    fontSize: 11,
+                  }}
+                >
+                  <option value="U9">U-9</option>
+                  <option value="U13">U-13</option>
+                </select>
+              )}
+              {m.kind === "REST" && <span style={{ color: C.success }}>☕ 휴식</span>}
+              <input
+                value={m.no || ""}
+                onChange={(e) => updateMatch(tab, idx, "no", e.target.value)}
+                placeholder="경기번호"
+                style={{
+                  width: 60,
+                  padding: "2px 6px",
+                  border: `1px solid ${C.border}`,
+                  borderRadius: 4,
+                  fontSize: 11,
+                  marginLeft: "auto",
+                }}
+              />
+              <ListItemControls
+                idx={idx}
+                total={currentMatches.length}
+                onUp={() => moveMatch(tab, idx, -1)}
+                onDown={() => moveMatch(tab, idx, 1)}
+                onDelete={() => removeMatch(tab, idx)}
+              />
+            </div>
+
+            {m.kind === "REST" ? (
+              <div style={{ display: "flex", gap: 6 }}>
+                <input
+                  value={m.title || ""}
+                  onChange={(e) => updateMatch(tab, idx, "title", e.target.value)}
+                  placeholder="휴식 제목"
+                  style={{
+                    flex: 1,
+                    padding: 6,
+                    border: `1px solid ${C.border}`,
+                    borderRadius: 6,
+                    fontSize: 12,
+                  }}
+                />
+                <input
+                  value={m.t1 || ""}
+                  onChange={(e) => updateMatch(tab, idx, "t1", e.target.value)}
+                  placeholder="13:05~13:30"
+                  style={{
+                    width: 110,
+                    padding: 6,
+                    border: `1px solid ${C.border}`,
+                    borderRadius: 6,
+                    fontSize: 12,
+                    fontFamily: "monospace",
+                  }}
+                />
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
+                  <input
+                    value={m.a || ""}
+                    onChange={(e) => updateMatch(tab, idx, "a", e.target.value)}
+                    placeholder="팀A"
+                    style={{
+                      width: 60,
+                      padding: 6,
+                      border: `1px solid ${C.border}`,
+                      borderRadius: 6,
+                      fontSize: 12,
+                      fontFamily: "monospace",
+                      textAlign: "center",
+                    }}
+                  />
+                  <div
+                    style={{
+                      flex: 1,
+                      padding: 6,
+                      fontSize: 11,
+                      color: C.muted,
+                    }}
+                  >
+                    {teamByCode[m.a]?.name || "—"}
+                  </div>
+                  <span style={{ alignSelf: "center", fontWeight: 700, color: C.muted }}>vs</span>
+                  <input
+                    value={m.b || ""}
+                    onChange={(e) => updateMatch(tab, idx, "b", e.target.value)}
+                    placeholder="팀B"
+                    style={{
+                      width: 60,
+                      padding: 6,
+                      border: `1px solid ${C.border}`,
+                      borderRadius: 6,
+                      fontSize: 12,
+                      fontFamily: "monospace",
+                      textAlign: "center",
+                    }}
+                  />
+                  <div
+                    style={{
+                      flex: 1,
+                      padding: 6,
+                      fontSize: 11,
+                      color: C.muted,
+                    }}
+                  >
+                    {teamByCode[m.b]?.name || "—"}
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <input
+                    value={m.t1 || ""}
+                    onChange={(e) => updateMatch(tab, idx, "t1", e.target.value)}
+                    placeholder={m.kind === "U9" ? "1쿼터 시간" : "전반 시간"}
+                    style={{
+                      flex: 1,
+                      padding: 6,
+                      border: `1px solid ${C.border}`,
+                      borderRadius: 6,
+                      fontSize: 12,
+                      fontFamily: "monospace",
+                    }}
+                  />
+                  {m.kind !== "U9" && (
+                    <input
+                      value={m.t2 || ""}
+                      onChange={(e) => updateMatch(tab, idx, "t2", e.target.value)}
+                      placeholder="후반 시간"
+                      style={{
+                        flex: 1,
+                        padding: 6,
+                        border: `1px solid ${C.border}`,
+                        borderRadius: 6,
+                        fontSize: 12,
+                        fontFamily: "monospace",
+                      }}
+                    />
+                  )}
+                  {m.kind === "U9" && (
+                    <input
+                      value={m.quarter || ""}
+                      onChange={(e) => updateMatch(tab, idx, "quarter", e.target.value)}
+                      placeholder="쿼터명"
+                      style={{
+                        width: 100,
+                        padding: 6,
+                        border: `1px solid ${C.border}`,
+                        borderRadius: 6,
+                        fontSize: 12,
+                      }}
+                    />
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 3) 찬양 곡 편집 (개별 곡 추가/수정) -----
+function HymnEditModal({ open, onClose, hymn, section, hymns }) {
+  const isAdd = !!section;
+  const targetSection = isAdd ? section : hymn?._section;
+  const [form, setForm] = useState({
+    id: "",
+    title: "",
+    source: "",
+    storageKey: "",
+    lyrics: "",
+  });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (hymn && !isAdd) {
+      setForm({
+        id: hymn.id || "",
+        title: hymn.title || "",
+        source: hymn.source || "",
+        storageKey: hymn.storageKey || "",
+        lyrics: hymn.lyrics || "",
+      });
+    } else if (isAdd) {
+      const list = hymns[section] || [];
+      const nextNum = list.length + 1;
+      setForm({
+        id: `${section}_${nextNum}`,
+        title: "",
+        source: "",
+        storageKey: `hymns/${section}_${nextNum}.mp3`,
+        lyrics: "",
+      });
+    }
+  }, [hymn, section, isAdd, hymns, open]);
+
+  const save = async () => {
+    if (!form.title.trim()) {
+      alert("곡 제목을 입력해주세요");
+      return;
+    }
+    setSaving(true);
+    try {
+      const next = { ...hymns };
+      const arr = [...(next[targetSection] || [])];
+      if (isAdd) {
+        arr.push(form);
+      } else {
+        arr[hymn._index] = form;
+      }
+      next[targetSection] = arr;
+      await FB.saveDoc("hymns", next);
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const remove = async () => {
+    if (!confirm("이 곡을 삭제하시겠어요?\n(Storage의 MP3 파일은 별도로 삭제하지 않습니다)")) return;
+    setSaving(true);
+    try {
+      const next = { ...hymns };
+      next[targetSection] = (next[targetSection] || []).filter((_, i) => i !== hymn._index);
+      await FB.saveDoc("hymns", next);
+      onClose();
+    } catch (e) {
+      alert("삭제 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const upd = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      title={isAdd ? "🎵 새 곡 추가" : "🎵 곡 편집"}
+      width={460}
+    >
+      <Field label="곡 ID (영문, 변경 비추천)">
+        <Input value={form.id} onChange={(v) => upd("id", v)} placeholder="opening_1" />
+      </Field>
+      <Field label="곡 제목">
+        <Input value={form.title} onChange={(v) => upd("title", v)} placeholder="가자 때가 됐다" />
+      </Field>
+      <Field label="출처">
+        <Input value={form.source} onChange={(v) => upd("source", v)} placeholder="조슈아 정 1집" />
+      </Field>
+      <Field label="MP3 경로 (Storage)">
+        <Input
+          value={form.storageKey}
+          onChange={(v) => upd("storageKey", v)}
+          placeholder="hymns/opening_1.mp3"
+        />
+      </Field>
+      <Field label="가사">
+        <Textarea
+          value={form.lyrics}
+          onChange={(v) => upd("lyrics", v)}
+          placeholder="가사를 입력하세요"
+          rows={12}
+        />
+      </Field>
+      <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+        {!isAdd && (
+          <Btn onClick={remove} variant="danger" disabled={saving}>
+            🗑 삭제
+          </Btn>
+        )}
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 4) 조건기도 편집 -----
+function PrayersEditModal({ open, onClose, prayers }) {
+  const [form, setForm] = useState({ header: "", items: [] });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (open) setForm({
+      header: prayers.header || "",
+      items: [...(prayers.items || [])],
+    });
+  }, [prayers, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("prayers", form);
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const updateItem = (idx, value) => {
+    setForm((f) => {
+      const items = [...f.items];
+      items[idx] = value;
+      return { ...f, items };
+    });
+  };
+  const addItem = () => setForm((f) => ({ ...f, items: [...f.items, ""] }));
+  const removeItem = (idx) => {
+    if (!confirm("이 기도문을 삭제하시겠어요?")) return;
+    setForm((f) => ({ ...f, items: f.items.filter((_, i) => i !== idx) }));
+  };
+  const moveItem = (idx, dir) => {
+    setForm((f) => {
+      const items = [...f.items];
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= items.length) return f;
+      [items[idx], items[newIdx]] = [items[newIdx], items[idx]];
+      return { ...f, items };
+    });
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="✨ 조건기도 편집" width={460}>
+      <Field label="상단 문구">
+        <Textarea value={form.header} onChange={(v) => setForm((f) => ({ ...f, header: v }))} rows={2} />
+      </Field>
+      <Field label="기도문 목록">
+        {form.items.map((it, idx) => (
+          <div
+            key={idx}
+            style={{
+              background: C.soft,
+              padding: 8,
+              borderRadius: 8,
+              marginBottom: 6,
+              display: "flex",
+              gap: 6,
+              alignItems: "flex-start",
+            }}
+          >
+            <div
+              style={{
+                minWidth: 24,
+                height: 24,
+                borderRadius: "50%",
+                background: "#d97706",
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 11,
+                fontWeight: 800,
+                marginTop: 4,
+              }}
+            >
+              {idx + 1}
+            </div>
+            <textarea
+              value={it}
+              onChange={(e) => updateItem(idx, e.target.value)}
+              rows={2}
+              style={{
+                flex: 1,
+                padding: 6,
+                border: `1px solid ${C.border}`,
+                borderRadius: 6,
+                fontSize: 13,
+                fontFamily: "inherit",
+                resize: "vertical",
+              }}
+            />
+            <ListItemControls
+              idx={idx}
+              total={form.items.length}
+              onUp={() => moveItem(idx, -1)}
+              onDown={() => moveItem(idx, 1)}
+              onDelete={() => removeItem(idx)}
+            />
+          </div>
+        ))}
+        <button
+          onClick={addItem}
+          style={{
+            width: "100%",
+            padding: 8,
+            background: "#fff",
+            border: `1px dashed ${C.primary}`,
+            borderRadius: 6,
+            color: C.primary,
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+            marginTop: 4,
+          }}
+        >
+          + 기도문 추가
+        </button>
+      </Field>
+      <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 5) 준비물 편집 -----
+function PreparationsEditModal({ open, onClose, items }) {
+  const [list, setList] = useState([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (open) setList(items.map((i) => ({ ...i })));
+  }, [items, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("preparations", { items: list });
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="🎒 준비물 편집" width={420}>
+      {list.map((it, idx) => (
+        <div
+          key={idx}
+          style={{
+            background: C.soft,
+            padding: 8,
+            borderRadius: 8,
+            marginBottom: 6,
+            display: "flex",
+            gap: 6,
+            alignItems: "center",
+          }}
+        >
+          <input
+            value={it.icon}
+            onChange={(e) => {
+              const next = [...list];
+              next[idx] = { ...next[idx], icon: e.target.value };
+              setList(next);
+            }}
+            style={{
+              width: 50,
+              padding: 6,
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              fontSize: 18,
+              textAlign: "center",
+            }}
+          />
+          <input
+            value={it.text}
+            onChange={(e) => {
+              const next = [...list];
+              next[idx] = { ...next[idx], text: e.target.value };
+              setList(next);
+            }}
+            style={{
+              flex: 1,
+              padding: 6,
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              fontSize: 13,
+            }}
+          />
+          <ListItemControls
+            idx={idx}
+            total={list.length}
+            onUp={() => {
+              const next = [...list];
+              if (idx === 0) return;
+              [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+              setList(next);
+            }}
+            onDown={() => {
+              const next = [...list];
+              if (idx === next.length - 1) return;
+              [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+              setList(next);
+            }}
+            onDelete={() => {
+              if (!confirm("이 준비물을 삭제하시겠어요?")) return;
+              setList(list.filter((_, i) => i !== idx));
+            }}
+          />
+        </div>
+      ))}
+      <button
+        onClick={() => setList([...list, { icon: "📌", text: "새 준비물" }])}
+        style={{
+          width: "100%",
+          padding: 8,
+          background: "#fff",
+          border: `1px dashed ${C.primary}`,
+          borderRadius: 6,
+          color: C.primary,
+          fontSize: 12,
+          fontWeight: 700,
+          cursor: "pointer",
+          marginTop: 4,
+        }}
+      >
+        + 준비물 추가
+      </button>
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 6) 접수 안내 편집 -----
+function ReceptionEditModal({ open, onClose, items }) {
+  const [list, setList] = useState([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (open) setList([...items]);
+  }, [items, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("reception", { items: list });
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="✅ 접수 안내 편집" width={420}>
+      {list.map((it, idx) => (
+        <div
+          key={idx}
+          style={{
+            background: C.soft,
+            padding: 8,
+            borderRadius: 8,
+            marginBottom: 6,
+            display: "flex",
+            gap: 6,
+            alignItems: "center",
+          }}
+        >
+          <input
+            value={it}
+            onChange={(e) => {
+              const next = [...list];
+              next[idx] = e.target.value;
+              setList(next);
+            }}
+            style={{
+              flex: 1,
+              padding: 6,
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              fontSize: 13,
+            }}
+          />
+          <ListItemControls
+            idx={idx}
+            total={list.length}
+            onUp={() => {
+              const next = [...list];
+              if (idx === 0) return;
+              [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+              setList(next);
+            }}
+            onDown={() => {
+              const next = [...list];
+              if (idx === next.length - 1) return;
+              [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+              setList(next);
+            }}
+            onDelete={() => {
+              if (!confirm("이 항목을 삭제하시겠어요?")) return;
+              setList(list.filter((_, i) => i !== idx));
+            }}
+          />
+        </div>
+      ))}
+      <button
+        onClick={() => setList([...list, "🌈 새 안내사항"])}
+        style={{
+          width: "100%",
+          padding: 8,
+          background: "#fff",
+          border: `1px dashed ${C.primary}`,
+          borderRadius: 6,
+          color: C.primary,
+          fontSize: 12,
+          fontWeight: 700,
+          cursor: "pointer",
+          marginTop: 4,
+        }}
+      >
+        + 안내 추가
+      </button>
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 7) 이벤트 편집 -----
+function EventsEditModal({ open, onClose, items }) {
+  const [list, setList] = useState([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (open) setList(items.map((i) => ({ ...i })));
+  }, [items, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("events", { items: list });
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="🎁 이벤트 편집" width={440}>
+      {list.map((it, idx) => (
+        <div
+          key={idx}
+          style={{
+            background: C.soft,
+            padding: 10,
+            borderRadius: 8,
+            marginBottom: 8,
+          }}
+        >
+          <div style={{ display: "flex", gap: 6, marginBottom: 6, alignItems: "center" }}>
+            <input
+              value={it.icon}
+              onChange={(e) => {
+                const next = [...list];
+                next[idx] = { ...next[idx], icon: e.target.value };
+                setList(next);
+              }}
+              style={{
+                width: 50,
+                padding: 6,
+                border: `1px solid ${C.border}`,
+                borderRadius: 6,
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            />
+            <input
+              value={it.title}
+              onChange={(e) => {
+                const next = [...list];
+                next[idx] = { ...next[idx], title: e.target.value };
+                setList(next);
+              }}
+              placeholder="제목"
+              style={{
+                flex: 1,
+                padding: 6,
+                border: `1px solid ${C.border}`,
+                borderRadius: 6,
+                fontSize: 13,
+                fontWeight: 700,
+              }}
+            />
+            <ListItemControls
+              idx={idx}
+              total={list.length}
+              onUp={() => {
+                const next = [...list];
+                if (idx === 0) return;
+                [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+                setList(next);
+              }}
+              onDown={() => {
+                const next = [...list];
+                if (idx === next.length - 1) return;
+                [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+                setList(next);
+              }}
+              onDelete={() => {
+                if (!confirm("이 이벤트를 삭제하시겠어요?")) return;
+                setList(list.filter((_, i) => i !== idx));
+              }}
+            />
+          </div>
+          <input
+            value={it.desc}
+            onChange={(e) => {
+              const next = [...list];
+              next[idx] = { ...next[idx], desc: e.target.value };
+              setList(next);
+            }}
+            placeholder="설명"
+            style={{
+              width: "100%",
+              padding: 6,
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              fontSize: 12,
+            }}
+          />
+        </div>
+      ))}
+      <button
+        onClick={() => setList([...list, { icon: "✨", title: "새 이벤트", desc: "설명" }])}
+        style={{
+          width: "100%",
+          padding: 8,
+          background: "#fff",
+          border: `1px dashed ${C.primary}`,
+          borderRadius: 6,
+          color: C.primary,
+          fontSize: 12,
+          fontWeight: 700,
+          cursor: "pointer",
+          marginTop: 4,
+        }}
+      >
+        + 이벤트 추가
+      </button>
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 8) 시상 편집 -----
+function PrizesEditModal({ open, onClose, items }) {
+  const [list, setList] = useState([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (open) setList(items.map((i) => ({ ...i })));
+  }, [items, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("prizes", { items: list });
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="🏆 시상 편집" width={420}>
+      {list.map((it, idx) => (
+        <div
+          key={idx}
+          style={{
+            background: C.soft,
+            padding: 8,
+            borderRadius: 8,
+            marginBottom: 6,
+            display: "flex",
+            gap: 6,
+            alignItems: "center",
+          }}
+        >
+          <input
+            value={it.icon}
+            onChange={(e) => {
+              const next = [...list];
+              next[idx] = { ...next[idx], icon: e.target.value };
+              setList(next);
+            }}
+            style={{
+              width: 50,
+              padding: 6,
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              fontSize: 20,
+              textAlign: "center",
+            }}
+          />
+          <input
+            value={it.rank}
+            onChange={(e) => {
+              const next = [...list];
+              next[idx] = { ...next[idx], rank: e.target.value };
+              setList(next);
+            }}
+            placeholder="등수"
+            style={{
+              flex: 1,
+              padding: 6,
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 700,
+            }}
+          />
+          <input
+            type="color"
+            value={it.color}
+            onChange={(e) => {
+              const next = [...list];
+              next[idx] = { ...next[idx], color: e.target.value };
+              setList(next);
+            }}
+            style={{
+              width: 32,
+              height: 32,
+              padding: 0,
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              cursor: "pointer",
+            }}
+          />
+          <ListItemControls
+            idx={idx}
+            total={list.length}
+            onUp={() => {
+              const next = [...list];
+              if (idx === 0) return;
+              [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+              setList(next);
+            }}
+            onDown={() => {
+              const next = [...list];
+              if (idx === next.length - 1) return;
+              [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+              setList(next);
+            }}
+            onDelete={() => {
+              if (!confirm("이 시상을 삭제하시겠어요?")) return;
+              setList(list.filter((_, i) => i !== idx));
+            }}
+          />
+        </div>
+      ))}
+      <button
+        onClick={() => setList([...list, { icon: "🏅", rank: "특별상", color: "#3498db" }])}
+        style={{
+          width: "100%",
+          padding: 8,
+          background: "#fff",
+          border: `1px dashed ${C.primary}`,
+          borderRadius: 6,
+          color: C.primary,
+          fontSize: 12,
+          fontWeight: 700,
+          cursor: "pointer",
+          marginTop: 4,
+        }}
+      >
+        + 시상 추가
+      </button>
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
+          취소
+        </Btn>
+        <Btn onClick={save} disabled={saving} style={{ flex: 2 }}>
+          {saving ? "저장 중..." : "💾 저장"}
+        </Btn>
+      </div>
+    </Modal>
+  );
+}
+
+// ----- 9) 중요 안내 편집 -----
+function ImportantNotesEditModal({ open, onClose, notes }) {
+  const [form, setForm] = useState({ highlight: "", items: [] });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (open) setForm({
+      highlight: notes.highlight || "",
+      items: [...(notes.items || [])],
+    });
+  }, [notes, open]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await FB.saveDoc("importantNotes", form);
+      onClose();
+    } catch (e) {
+      alert("저장 실패: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title="📢 중요 안내 편집" width={440}>
+      <Field label="강조 박스 (빨간색 안내)">
+        <Textarea
+          value={form.highlight}
+          onChange={(v) => setForm((f) => ({ ...f, highlight: v }))}
+          rows={3}
+          placeholder="가장 중요한 안내사항"
+        />
+      </Field>
+      <Field label="일반 안내 목록">
+        {form.items.map((it, idx) => (
+          <div
+            key={idx}
+            style={{
+              background: C.soft,
+              padding: 8,
+              borderRadius: 8,
+              marginBottom: 6,
+              display: "flex",
+              gap: 6,
+              alignItems: "center",
+            }}
+          >
+            <input
+              value={it}
+              onChange={(e) => {
+                const items = [...form.items];
+                items[idx] = e.target.value;
+                setForm((f) => ({ ...f, items }));
+              }}
+              style={{
+                flex: 1,
+                padding: 6,
+                border: `1px solid ${C.border}`,
+                borderRadius: 6,
+                fontSize: 13,
+              }}
+            />
+            <ListItemControls
+              idx={idx}
+              total={form.items.length}
+              onUp={() => {
+                const items = [...form.items];
+                if (idx === 0) return;
+                [items[idx - 1], items[idx]] = [items[idx], items[idx - 1]];
+                setForm((f) => ({ ...f, items }));
+              }}
+              onDown={() => {
+                const items = [...form.items];
+                if (idx === items.length - 1) return;
+                [items[idx], items[idx + 1]] = [items[idx + 1], items[idx]];
+                setForm((f) => ({ ...f, items }));
+              }}
+              onDelete={() => {
+                if (!confirm("이 항목을 삭제하시겠어요?")) return;
+                setForm((f) => ({ ...f, items: f.items.filter((_, i) => i !== idx) }));
+              }}
+            />
+          </div>
+        ))}
+        <button
+          onClick={() => setForm((f) => ({ ...f, items: [...f.items, "📌 새 안내"] }))}
+          style={{
+            width: "100%",
+            padding: 8,
+            background: "#fff",
+            border: `1px dashed ${C.primary}`,
+            borderRadius: 6,
+            color: C.primary,
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+            marginTop: 4,
+          }}
+        >
+          + 안내 추가
+        </button>
+      </Field>
+      <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
         <Btn onClick={onClose} variant="ghost" style={{ flex: 1 }}>
           취소
         </Btn>
