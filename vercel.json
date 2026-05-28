@@ -1,8 +1,22 @@
 {
-  "routes": [
-    { "src": "/admin/?$", "dest": "/admin/index.html" },
-    { "src": "/admin/(.+)", "dest": "/admin/index.html" },
-    { "src": "/favicon.ico", "dest": "/public/index.html" },
-    { "src": "/(.*)", "dest": "/public/index.html" }
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/og-(.*).png",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
   ]
 }
