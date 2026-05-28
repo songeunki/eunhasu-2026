@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="theme-color" content="#2563eb"/>
   <title>🔧 관리자 모드 - 제22회 국제은하수 평화축구대회</title>
-
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="제22회 국제은하수 평화축구대회"/>
   <meta property="og:title" content="🔧 관리자 모드 - 제22회 국제은하수 평화축구대회"/>
@@ -16,16 +15,13 @@
   <meta property="og:image:alt" content="🔧 관리자 모드 - 제22회 국제은하수 평화축구대회"/>
   <meta property="og:url" content="https://eunhasu-2026.vercel.app/admin"/>
   <meta property="og:locale" content="ko_KR"/>
-
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="🔧 관리자 모드 - 제22회 국제은하수 평화축구대회"/>
   <meta name="twitter:description" content="관리자 전용 페이지 · 비밀번호 입력 후 모든 정보 수정 가능"/>
   <meta name="twitter:image" content="https://eunhasu-2026.vercel.app/og-admin.png"/>
-
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta http-equiv="Expires" content="0"/>
-
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -34,8 +30,7 @@
     ::-webkit-scrollbar{display:none;}
     input::placeholder,textarea::placeholder{color:#94a3b8;}
     @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
-    button{font-family:inherit;}
-    a{color:inherit;}
+    button{font-family:inherit;} a{color:inherit;}
   </style>
 </head>
 <body>
@@ -2076,6 +2071,14 @@ function OrderEditModal({ open, onClose, info, which }) {
 function MatchTab({ now, info, matches, teamByCode, admin }) {
   const [field, setField] = useState(1);
   const [editOpen, setEditOpen] = useState(false);
+  const [imgU11, setImgU11] = useState("");
+  const [imgU13, setImgU13] = useState("");
+
+  // 대진표 이미지 URL 로드
+  useEffect(() => {
+    FB.getDownloadURL("matches/u11.png").then(setImgU11).catch(() => setImgU11(""));
+    FB.getDownloadURL("matches/u13.png").then(setImgU13).catch(() => setImgU13(""));
+  }, []);
 
   const isToday = useMemo(() => {
     return now.toISOString().slice(0, 10) === info.dateISO;
@@ -2125,9 +2128,29 @@ function MatchTab({ now, info, matches, teamByCode, admin }) {
       </div>
 
       {field === 1 ? (
-        <Field1 isToday={isToday} curMin={curMin} matches={field1} teamByCode={teamByCode} />
+        <Field1
+          isToday={isToday}
+          curMin={curMin}
+          matches={field1}
+          teamByCode={teamByCode}
+          imgUrl={imgU11}
+          onImgUploaded={setImgU11}
+          storageKey="matches/u11.png"
+          imgLabel="U-11 제1구장 대진표"
+          admin={admin}
+        />
       ) : (
-        <Field2 isToday={isToday} curMin={curMin} matches={field2} teamByCode={teamByCode} />
+        <Field2
+          isToday={isToday}
+          curMin={curMin}
+          matches={field2}
+          teamByCode={teamByCode}
+          imgUrl={imgU13}
+          onImgUploaded={setImgU13}
+          storageKey="matches/u13.png"
+          imgLabel="U-9·U-13 제2구장 대진표"
+          admin={admin}
+        />
       )}
 
       {admin.authed && (
@@ -2139,6 +2162,122 @@ function MatchTab({ now, info, matches, teamByCode, admin }) {
         />
       )}
     </div>
+  );
+}
+
+// 대진표 원본 이미지 카드 (각 구장 상단에 표시)
+function MatchImageCard({ imgUrl, onImgUploaded, storageKey, imgLabel, admin }) {
+  return (
+    <Card style={{ padding: 8 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "4px 6px 8px",
+        }}
+      >
+        <div style={{ fontSize: 12, fontWeight: 700, color: C.sub }}>
+          📋 {imgLabel} (원본)
+        </div>
+        {admin.authed && (
+          <MatchImageUploader
+            storageKey={storageKey}
+            onUploaded={onImgUploaded}
+          />
+        )}
+      </div>
+      {imgUrl ? (
+        <img
+          src={imgUrl}
+          alt={imgLabel}
+          style={{ width: "100%", borderRadius: 8, display: "block", cursor: "pointer" }}
+          onClick={() => window.open(imgUrl, "_blank")}
+        />
+      ) : (
+        <div
+          style={{
+            padding: 24,
+            textAlign: "center",
+            background: C.soft,
+            borderRadius: 8,
+            color: C.muted,
+            fontSize: 13,
+          }}
+        >
+          <div style={{ fontSize: 28, marginBottom: 6 }}>📋</div>
+          대진표 이미지가 아직 업로드되지 않았습니다
+          {admin.authed && (
+            <div style={{ fontSize: 11, marginTop: 4 }}>
+              위 "이미지 교체" 버튼으로 업로드하세요
+            </div>
+          )}
+        </div>
+      )}
+      {imgUrl && (
+        <div style={{ fontSize: 11, color: C.muted, textAlign: "center", marginTop: 6 }}>
+          🔍 이미지를 누르면 크게 볼 수 있습니다
+        </div>
+      )}
+    </Card>
+  );
+}
+
+// 대진표 이미지 업로더 (관리자 전용)
+function MatchImageUploader({ storageKey, onUploaded }) {
+  const inputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const handleFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      alert("10MB 이하 이미지만 가능합니다");
+      return;
+    }
+    setUploading(true);
+    setProgress(0);
+    try {
+      const url = await FB.uploadFile(storageKey, file, setProgress);
+      // 캐시 무력화를 위해 timestamp 쿼리 추가
+      onUploaded(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now());
+      alert("대진표 이미지 업로드 완료");
+    } catch (err) {
+      alert("업로드 실패: " + err.message);
+    } finally {
+      setUploading(false);
+      setProgress(0);
+      e.target.value = "";
+    }
+  };
+
+  return (
+    <>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFile}
+        style={{ display: "none" }}
+      />
+      <button
+        onClick={() => inputRef.current?.click()}
+        disabled={uploading}
+        style={{
+          padding: "5px 10px",
+          background: C.primary,
+          color: "#fff",
+          border: "none",
+          borderRadius: 6,
+          fontSize: 12,
+          fontWeight: 700,
+          cursor: uploading ? "wait" : "pointer",
+        }}
+      >
+        {uploading ? `업로드 ${progress.toFixed(0)}%` : "✏️ 이미지 교체"}
+      </button>
+    </>
   );
 }
 
@@ -2164,15 +2303,23 @@ function FieldToggle({ on, onClick, label, sub }) {
   );
 }
 
-function Field1({ isToday, curMin, matches, teamByCode }) {
+function Field1({ isToday, curMin, matches, teamByCode, imgUrl, onImgUploaded, storageKey, imgLabel, admin }) {
   return (
     <div>
+      <MatchImageCard
+        imgUrl={imgUrl}
+        onImgUploaded={onImgUploaded}
+        storageKey={storageKey}
+        imgLabel={imgLabel}
+        admin={admin}
+      />
       <div
         style={{
           background: "#eff6ff",
           padding: "10px 14px",
           borderRadius: 10,
           marginBottom: 12,
+          marginTop: 12,
           fontSize: 13,
           color: C.primary,
           fontWeight: 600,
@@ -2197,15 +2344,23 @@ function Field1({ isToday, curMin, matches, teamByCode }) {
   );
 }
 
-function Field2({ isToday, curMin, matches, teamByCode }) {
+function Field2({ isToday, curMin, matches, teamByCode, imgUrl, onImgUploaded, storageKey, imgLabel, admin }) {
   return (
     <div>
+      <MatchImageCard
+        imgUrl={imgUrl}
+        onImgUploaded={onImgUploaded}
+        storageKey={storageKey}
+        imgLabel={imgLabel}
+        admin={admin}
+      />
       <div
         style={{
           background: "#fef3c7",
           padding: "10px 14px",
           borderRadius: 10,
           marginBottom: 12,
+          marginTop: 12,
           fontSize: 13,
           color: "#92400e",
           fontWeight: 600,
