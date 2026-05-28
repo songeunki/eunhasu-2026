@@ -5,6 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="theme-color" content="#2563eb"/>
   <title>제22회 국제은하수 평화축구대회</title>
+
+  <!-- ===== Open Graph (카톡/페이스북/트위터 등 링크 미리보기) ===== -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="제22회 국제은하수 평화축구대회"/>
+  <meta property="og:title" content="제22회 국제은하수 평화축구대회"/>
+  <meta property="og:description" content="2026.5.30(토) 운주면생활체육공원 · 11개팀 72명 참가 · 대진표·찬양·일정 안내"/>
+  <meta property="og:image" content="https://eunhasu-2026.vercel.app/og-user.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="제22회 국제은하수 평화축구대회"/>
+  <meta property="og:url" content="https://eunhasu-2026.vercel.app/"/>
+  <meta property="og:locale" content="ko_KR"/>
+
+  <!-- Twitter Card (트위터/X 호환) -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="제22회 국제은하수 평화축구대회"/>
+  <meta name="twitter:description" content="2026.5.30(토) 운주면생활체육공원 · 11개팀 72명 참가 · 대진표·찬양·일정 안내"/>
+  <meta name="twitter:image" content="https://eunhasu-2026.vercel.app/og-user.png"/>
+
+  <!-- 카카오톡 인앱 브라우저 캐시 우회 -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -19,6 +43,7 @@
 </head>
 <body>
   <div id="root"></div>
+  
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -411,11 +436,18 @@ const FB = {
 const ADMIN_DEFAULT_PASSWORD = "eunhasu2026";
 
 function useAdmin() {
-  // URL 쿼리에서 admin 모드 진입 여부 판단
+  // 관리자 모드 진입 여부 판단:
+  // 1) ?admin=1 쿼리 파라미터
+  // 2) 경로가 /admin 으로 시작
+  // 3) window.__ADMIN_MODE = true 가 HTML에서 사전 설정됨 (admin.html)
   const isAdminMode = useMemo(() => {
     if (typeof window === "undefined") return false;
+    if (window.__ADMIN_MODE === true) return true;
     const params = new URLSearchParams(window.location.search);
-    return params.get("admin") === "1";
+    if (params.get("admin") === "1") return true;
+    const path = window.location.pathname || "";
+    if (path === "/admin" || path.startsWith("/admin/") || path.endsWith("/admin.html")) return true;
+    return false;
   }, []);
 
   // 비밀번호 인증 여부 (sessionStorage)
@@ -1054,7 +1086,7 @@ function AdminLogin({ admin }) {
               textDecoration: "none",
             }}
           >
-            ← 일반 모드로 돌아가기
+            ← 일반 모드 페이지로 이동
           </a>
         </div>
       </Card>
