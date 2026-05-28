@@ -987,6 +987,350 @@ function Modal({ open, onClose, title, children, width = 380 }) {
   );
 }
 
+// 전체화면 사진 슬라이드 뷰어 (스와이프 + 화살표 + 인디케이터)
+function PhotoViewer({ images, startIndex = 0, onClose }) {
+  const [idx, setIdx] = useState(startIndex);
+  const [scale, setScale] = useState(1);
+  const [tx, setTx] = useState(0); // 이동 X
+  const [ty, setTy] = useState(0); // 이동 Y
+
+  const total = images.length;
+
+  // 제스처 추적용 ref
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
+  const pinchStartDist = useRef(null);
+  const pinchStartScale = useRef(1);
+  const panStart = useRef(null); // { x, y, tx, ty }
+  const lastTap = useRef(0);
+
+  const resetZoom = useCallback(() => {
+    setScale(1);
+    setTx(0);
+    setTy(0);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setIdx((i) => (i > 0 ? i - 1 : i));
+    resetZoom();
+  }, [resetZoom]);
+  const goNext = useCallback(() => {
+    setIdx((i) => (i < total - 1 ? i + 1 : i));
+    resetZoom();
+  }, [total, resetZoom]);
+
+  // 키보드 조작
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") goPrev();
+      else if (e.key === "ArrowRight") goNext();
+      else if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [goPrev, goNext, onClose]);
+
+  // 두 손가락 거리 계산
+  const getDist = (touches) => {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  const onTouchStart = (e) => {
+    if (e.touches.length === 2) {
+      // 핀치 시작
+      pinchStartDist.current = getDist(e.touches);
+      pinchStartScale.current = scale;
+      touchStartX.current = null;
+    } else if (e.touches.length === 1) {
+      if (scale > 1) {
+        // 확대 상태: 팬 시작
+        panStart.current = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+          tx,
+          ty,
+        };
+      } else {
+        // 일반 상태: 스와이프 추적
+        touchStartX.current = e.touches[0].clientX;
+        touchEndX.current = null;
+      }
+      // 더블탭 감지
+      const now = Date.now();
+      if (now - lastTap.current < 300) {
+        // 더블탭 → 줌 토글
+        if (scale > 1) {
+          resetZoom();
+        } else {
+          setScale(2.5);
+        }
+        lastTap.current = 0;
+      } else {
+        lastTap.current = now;
+      }
+    }
+  };
+
+  const onTouchMove = (e) => {
+    if (e.touches.length === 2 && pinchStartDist.current) {
+      // 핀치 줌
+      e.preventDefault();
+      const dist = getDist(e.touches);
+      const ratio = dist / pinchStartDist.current;
+      let newScale = pinchStartScale.current * ratio;
+      newScale = Math.max(1, Math.min(newScale, 4)); // 1~4배 제한
+      setScale(newScale);
+      if (newScale === 1) {
+        setTx(0);
+        setTy(0);
+      }
+    } else if (e.touches.length === 1) {
+      if (scale > 1 && panStart.current) {
+        // 팬 (확대 상태 이동)
+        e.preventDefault();
+        const dx = e.touches[0].clientX - panStart.current.x;
+        const dy = e.touches[0].clientY - panStart.current.y;
+        // 이동 범위 제한 (확대 비율에 비례)
+        const maxOffset = (scale - 1) * 200;
+        setTx(Math.max(-maxOffset, Math.min(maxOffset, panStart.current.tx + dx)));
+        setTy(Math.max(-maxOffset, Math.min(maxOffset, panStart.current.ty + dy)));
+      } else if (scale === 1) {
+        // 스와이프 추적
+        touchEndX.current = e.touches[0].clientX;
+      }
+    }
+  };
+
+  const onTouchEnd = (e) => {
+    // 핀치 종료
+    if (pinchStartDist.current && e.touches.length < 2) {
+      pinchStartDist.current = null;
+    }
+    // 팬 종료
+    if (panStart.current && e.touches.length === 0) {
+      panStart.current = null;
+    }
+    // 스와이프 판정 (줌 안 된 상태에서만)
+    if (scale === 1 && touchStartX.current != null && touchEndX.current != null) {
+      const diff = touchStartX.current - touchEndX.current;
+      const threshold = 50;
+      if (diff > threshold) goNext();
+      else if (diff < -threshold) goPrev();
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  if (!images || total === 0) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.92)",
+        zIndex: 2000,
+        display: "flex",
+        flexDirection: "column",
+      }}
+      onClick={onClose}
+    >
+      {/* 상단 바 */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "16px 18px",
+          color: "#fff",
+          flexShrink: 0,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div style={{ fontSize: 15, fontWeight: 700 }}>
+          {idx + 1} / {total}
+          {scale > 1 && (
+            <span style={{ fontSize: 12, opacity: 0.7, marginLeft: 8 }}>
+              {scale.toFixed(1)}x
+            </span>
+          )}
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          {scale > 1 && (
+            <button
+              onClick={resetZoom}
+              style={{
+                height: 40,
+                padding: "0 14px",
+                background: "rgba(255,255,255,0.15)",
+                border: "none",
+                borderRadius: 20,
+                color: "#fff",
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              원래대로
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            style={{
+              width: 40,
+              height: 40,
+              background: "rgba(255,255,255,0.15)",
+              border: "none",
+              borderRadius: 20,
+              color: "#fff",
+              fontSize: 22,
+              cursor: "pointer",
+              lineHeight: 1,
+            }}
+          >
+            ×
+          </button>
+        </div>
+      </div>
+
+      {/* 이미지 영역 */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          overflow: "hidden",
+          touchAction: "none",
+        }}
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <img
+          src={images[idx]}
+          alt={`사진 ${idx + 1}`}
+          style={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "contain",
+            userSelect: "none",
+            transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
+            transition: panStart.current || pinchStartDist.current ? "none" : "transform .2s",
+            cursor: scale > 1 ? "move" : "zoom-in",
+          }}
+          draggable={false}
+          onDoubleClick={() => {
+            // PC 더블클릭 줌
+            if (scale > 1) resetZoom();
+            else setScale(2.5);
+          }}
+        />
+
+        {/* 화살표 (줌 안 된 상태에서만) */}
+        {scale === 1 && idx > 0 && (
+          <button
+            onClick={goPrev}
+            style={{
+              position: "absolute",
+              left: 12,
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 44,
+              height: 44,
+              background: "rgba(255,255,255,0.2)",
+              border: "none",
+              borderRadius: 22,
+              color: "#fff",
+              fontSize: 22,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            ‹
+          </button>
+        )}
+        {scale === 1 && idx < total - 1 && (
+          <button
+            onClick={goNext}
+            style={{
+              position: "absolute",
+              right: 12,
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 44,
+              height: 44,
+              background: "rgba(255,255,255,0.2)",
+              border: "none",
+              borderRadius: 22,
+              color: "#fff",
+              fontSize: 22,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            ›
+          </button>
+        )}
+      </div>
+
+      {/* 하단 인디케이터 (줌 안 된 상태에서만) */}
+      {scale === 1 && total > 1 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 8,
+            padding: "16px 0 12px",
+            flexShrink: 0,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setIdx(i);
+                resetZoom();
+              }}
+              style={{
+                width: i === idx ? 24 : 8,
+                height: 8,
+                borderRadius: 4,
+                background: i === idx ? "#fff" : "rgba(255,255,255,0.4)",
+                border: "none",
+                cursor: "pointer",
+                transition: "all .2s",
+                padding: 0,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      <div
+        style={{
+          textAlign: "center",
+          color: "rgba(255,255,255,0.5)",
+          fontSize: 12,
+          paddingBottom: 16,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {scale > 1 ? "끌어서 이동 · 더블탭으로 원래대로" : "두 손가락으로 확대 · 더블탭 확대"}
+      </div>
+    </div>
+  );
+}
+
 function Btn({ children, onClick, variant = "primary", style, type = "button", disabled }) {
   const styles = {
     primary: { background: C.primary, color: "#fff" },
@@ -3513,6 +3857,8 @@ function EventTab({ events, prizes, importantNotes, admin }) {
 function NoticeTab({ notices, admin }) {
   const [composing, setComposing] = useState(false);
   const [editing, setEditing] = useState(null); // notice 객체
+  // 사진 뷰어 상태: { images: [...], index: n } 또는 null
+  const [viewer, setViewer] = useState(null);
 
   const fmtDate = (ts) => {
     if (!ts) return "";
@@ -3697,7 +4043,7 @@ function NoticeTab({ notices, admin }) {
                       cursor: "pointer",
                       background: C.soft,
                     }}
-                    onClick={() => window.open(url, "_blank")}
+                    onClick={() => setViewer({ images: n.images, index: ii })}
                   />
                 ))}
               </div>
@@ -3714,6 +4060,15 @@ function NoticeTab({ notices, admin }) {
             setEditing(null);
           }}
           notice={editing}
+        />
+      )}
+
+      {/* 사진 전체화면 슬라이드 뷰어 */}
+      {viewer && (
+        <PhotoViewer
+          images={viewer.images}
+          startIndex={viewer.index}
+          onClose={() => setViewer(null)}
         />
       )}
     </div>
