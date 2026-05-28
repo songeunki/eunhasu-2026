@@ -510,6 +510,67 @@ function fmtTime(sec) {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
+// 이미지 압축 (긴 변 1600px, JPEG 품질 80%)
+// 업로드 속도와 다운로드 속도를 크게 개선
+function compressImage(file, maxSize = 1600, quality = 0.8) {
+  return new Promise((resolve, reject) => {
+    // 이미지가 아니면 원본 그대로 반환
+    if (!file.type.startsWith("image/")) {
+      resolve(file);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        // 긴 변 기준으로 리사이즈 (원본이 더 작으면 그대로)
+        if (width > maxSize || height > maxSize) {
+          if (width >= height) {
+            height = Math.round((height * maxSize) / width);
+            width = maxSize;
+          } else {
+            width = Math.round((width * maxSize) / height);
+            height = maxSize;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              resolve(file); // 실패 시 원본
+              return;
+            }
+            // 압축본이 원본보다 크면 원본 사용
+            if (blob.size >= file.size) {
+              resolve(file);
+              return;
+            }
+            // Blob → File 로 변환 (이름 유지, 확장자 jpg)
+            const newName = file.name.replace(/\.[^.]+$/, "") + ".jpg";
+            const compressed = new File([blob], newName, {
+              type: "image/jpeg",
+              lastModified: Date.now(),
+            });
+            resolve(compressed);
+          },
+          "image/jpeg",
+          quality
+        );
+      };
+      img.onerror = () => resolve(file);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error("파일 읽기 실패"));
+    reader.readAsDataURL(file);
+  });
+}
+
+
 // =========================================================
 // 메인 앱
 // =========================================================
@@ -1714,15 +1775,18 @@ function MapUploader({ onUploaded }) {
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 10 * 1024 * 1024) {
-      alert("10MB 이하 이미지만 가능합니다");
-      return;
-    }
     setUploading(true);
     setProgress(0);
     try {
-      const url = await FB.uploadFile("map/aerial.jpg", file, setProgress);
-      onUploaded(url);
+      // 지도는 디테일이 중요하므로 2000px로 압축
+      const compressed = await compressImage(file, 2000, 0.85).catch(() => file);
+      if (compressed.size > 10 * 1024 * 1024) {
+        alert("압축 후에도 10MB를 초과합니다");
+        setUploading(false);
+        return;
+      }
+      const url = await FB.uploadFile("map/aerial.jpg", compressed, setProgress);
+      onUploaded(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now());
       alert("업로드 완료");
     } catch (err) {
       alert("업로드 실패: " + err.message);
@@ -2232,14 +2296,17 @@ function MatchImageUploader({ storageKey, onUploaded }) {
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 10 * 1024 * 1024) {
-      alert("10MB 이하 이미지만 가능합니다");
-      return;
-    }
     setUploading(true);
     setProgress(0);
     try {
-      const url = await FB.uploadFile(storageKey, file, setProgress);
+      // 대진표는 글자 가독성이 중요하므로 2000px, 품질 88%
+      const compressed = await compressImage(file, 2000, 0.88).catch(() => file);
+      if (compressed.size > 10 * 1024 * 1024) {
+        alert("압축 후에도 10MB를 초과합니다");
+        setUploading(false);
+        return;
+      }
+      const url = await FB.uploadFile(storageKey, compressed, setProgress);
       // 캐시 무력화를 위해 timestamp 쿼리 추가
       onUploaded(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now());
       alert("대진표 이미지 업로드 완료");
@@ -3662,6 +3729,7 @@ function NoticeComposeModal({ open, onClose, notice }) {
   const [images, setImages] = useState([]); // 이미지 URL 배열
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadStage, setUploadStage] = useState("");
   const imgInputRef = useRef(null);
   // 신규 공지용 임시 ID (Storage 경로에 사용)
   const draftIdRef = useRef(null);
@@ -3687,7 +3755,7 @@ function NoticeComposeModal({ open, onClose, notice }) {
     }
   }, [notice, open]);
 
-  // 이미지 업로드
+  // 이미지 업로드 (압축 후 병렬 업로드)
   const handleImageSelect = async (e) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
@@ -3699,24 +3767,43 @@ function NoticeComposeModal({ open, onClose, notice }) {
     setUploading(true);
     try {
       const folderId = draftIdRef.current;
-      const newUrls = [];
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+
+      // 1) 모든 사진 동시 압축
+      setUploadStage("압축 중");
+      const compressedFiles = await Promise.all(
+        files.map((f) => compressImage(f, 1600, 0.8).catch(() => f))
+      );
+
+      // 2) 압축본을 병렬 업로드
+      setUploadStage("업로드 중");
+      let completed = 0;
+      const total = compressedFiles.length;
+      const uploadPromises = compressedFiles.map((file, i) => {
         if (file.size > 10 * 1024 * 1024) {
-          alert(`"${file.name}"은 10MB를 초과해 건너뜁니다`);
-          continue;
+          alert(`"${file.name}"은 압축 후에도 10MB를 초과해 건너뜁니다`);
+          return Promise.resolve(null);
         }
         const fname = `notices/${folderId}/${Date.now()}_${i}_${file.name.replace(/[^\w.\-]/g, "_")}`;
-        setUploadProgress(0);
-        const url = await FB.uploadFile(fname, file, setUploadProgress);
-        newUrls.push(url);
-      }
-      setImages((prev) => [...prev, ...newUrls]);
+        return FB.uploadFile(fname, file, null)
+          .then((url) => {
+            completed++;
+            setUploadProgress(Math.round((completed / total) * 100));
+            return url;
+          })
+          .catch((err) => {
+            console.error("업로드 실패:", err);
+            return null;
+          });
+      });
+
+      const urls = (await Promise.all(uploadPromises)).filter(Boolean);
+      setImages((prev) => [...prev, ...urls]);
     } catch (err) {
       alert("사진 업로드 실패: " + err.message);
     } finally {
       setUploading(false);
       setUploadProgress(0);
+      setUploadStage("");
       e.target.value = "";
     }
   };
@@ -3810,7 +3897,11 @@ function NoticeComposeModal({ open, onClose, notice }) {
               cursor: uploading || images.length >= MAX_IMAGES ? "not-allowed" : "pointer",
             }}
           >
-            {uploading ? `업로드 ${uploadProgress.toFixed(0)}%` : "+ 사진 추가"}
+            {uploading
+              ? uploadStage === "압축 중"
+                ? "🗜 압축 중..."
+                : `⬆ 업로드 ${uploadProgress}%`
+              : "+ 사진 추가"}
           </button>
         </div>
         <input
