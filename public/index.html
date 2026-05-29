@@ -710,9 +710,16 @@ function App() {
 // =========================================================
 function Header({ now, info, admin }) {
   const dDay = useMemo(() => {
-    const target = new Date(info.dateISO + "T10:00:00+09:00");
-    const diff = target - now;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    // 날짜만 비교 (시간 무시) - KST 기준
+    // now와 target을 모두 KST 자정으로 정규화한 뒤 일수 차이 계산
+    const KST_OFFSET_MS = 9 * 60 * 60 * 1000; // UTC+9
+    const nowKstMidnight = Math.floor((now.getTime() + KST_OFFSET_MS) / 86400000);
+    const [y, m, d] = info.dateISO.split("-").map(Number);
+    // target ISO 날짜를 KST 자정 기준 일수로 변환
+    const targetKstMidnight = Math.floor(
+      (Date.UTC(y, m - 1, d) + KST_OFFSET_MS) / 86400000
+    );
+    const days = targetKstMidnight - nowKstMidnight;
     if (days > 0) return `D-${days}`;
     if (days === 0) return "오늘 ⭐";
     return "종료";
